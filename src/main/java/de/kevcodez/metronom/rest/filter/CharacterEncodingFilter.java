@@ -1,4 +1,4 @@
-package de.kevcodez.metronom.rest;
+package de.kevcodez.metronom.rest.filter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

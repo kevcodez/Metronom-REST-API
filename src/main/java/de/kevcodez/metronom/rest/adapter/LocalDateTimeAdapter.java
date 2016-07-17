@@ -1,4 +1,4 @@
-package de.kevcodez.metronom.rest;
+package de.kevcodez.metronom.rest.adapter;
 
 import java.time.LocalDateTime;
 

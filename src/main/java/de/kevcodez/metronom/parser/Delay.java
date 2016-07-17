@@ -1,6 +1,6 @@
 package de.kevcodez.metronom.parser;
 
-import de.kevcodez.metronom.rest.LocalDateTimeAdapter;
+import de.kevcodez.metronom.rest.adapter.LocalDateTimeAdapter;
 
 import java.time.LocalDateTime;
 
@@ -15,45 +15,57 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Delay {
 
   private String id;
-  private String text;
 
-  private LocalDateTime createdAt;
+  private String message;
 
-  public Delay(String id, String text, LocalDateTime createdAt) {
-    super();
+  private LocalDateTime creationDate;
+
+  /**
+   * Creates a new delay notification with the given ID, text and creation date.
+   * 
+   * @param id unique ID
+   * @param message text message
+   * @param creationDate creation date
+   */
+  public Delay(String id, String message, LocalDateTime creationDate) {
     this.id = id;
-    this.text = text;
-    this.createdAt = createdAt;
+    this.message = message;
+    this.creationDate = creationDate;
   }
 
+  /**
+   * Gets the unique ID.
+   * 
+   * @return unique ID
+   */
   public String getId() {
     return id;
   }
 
+  /**
+   * Sets the unique ID.
+   * 
+   * @param id unique ID
+   */
   public void setId(String id) {
     this.id = id;
   }
 
-  public String getText() {
-    return text;
+  public String getMessage() {
+    return message;
   }
 
-  public void setText(String text) {
-    this.text = text;
+  public void setMessage(String message) {
+    this.message = message;
   }
 
   @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
+  public LocalDateTime getCreationDate() {
+    return creationDate;
   }
 
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @Override
-  public String toString() {
-    return "Stoermeldung [id=" + id + ", text=" + text + ", createdAt=" + createdAt + "]";
+  public void setCreationDate(LocalDateTime creationDate) {
+    this.creationDate = creationDate;
   }
 
   @Override
@@ -66,19 +78,29 @@ public class Delay {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Delay other = (Delay) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     return true;
+  }
+
+  @Override
+  public String toString() {
+    return "Stoermeldung [id=" + id + ", text=" + message + ", createdAt=" + creationDate + "]";
   }
 
 }

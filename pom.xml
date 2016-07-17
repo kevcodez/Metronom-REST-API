@@ -5,6 +5,7 @@
 	<artifactId>de.kevcodez.metronom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
@@ -12,19 +13,13 @@
 			<version>7.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.9.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20160212</version>
-		</dependency>
 
-
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.4</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>de.kevcodez.metronom</finalName>

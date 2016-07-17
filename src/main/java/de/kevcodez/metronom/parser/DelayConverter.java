@@ -1,9 +1,9 @@
 package de.kevcodez.metronom.parser;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import org.json.JSONObject;
 
 /**
  * Converts the JSON object from the Metronom endpoint to the internal {@link Delay} object.
@@ -21,10 +21,10 @@ public class DelayConverter {
    * @param delay delay as JSON OBJECT
    * @return converted delay
    */
-  public static Delay convert(JSONObject delay) {
-    String meldung = delay.getString("Stoermeldung");
-    String empfangsdatum = delay.getString("Empfangsdatum");
-    String id = delay.getJSONObject("@attributes").getString("ID");
+  public static Delay convert(JsonNode delay) {
+    String meldung = delay.get("Stoermeldung").textValue();
+    String empfangsdatum = delay.get("Empfangsdatum").textValue();
+    String id = delay.get("@attributes").get("ID").textValue();
     LocalDateTime dateTime = LocalDateTime.parse(empfangsdatum, formatter);
 
     return new Delay(id, meldung, dateTime);
