@@ -1,4 +1,4 @@
-package de.kevcodez;
+package de.kevcodez.metronom.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

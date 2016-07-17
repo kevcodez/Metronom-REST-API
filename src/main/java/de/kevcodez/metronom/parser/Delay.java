@@ -1,9 +1,17 @@
-package de.kevcodez;
+package de.kevcodez.metronom.parser;
+
+import de.kevcodez.metronom.rest.LocalDateTimeAdapter;
 
 import java.time.LocalDateTime;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+/**
+ * Class that contains all relevant information for a single delay notification from the Metronom website.
+ * 
+ * @author Kevin Grüneberg
+ *
+ */
 public class Delay {
 
   private String id;

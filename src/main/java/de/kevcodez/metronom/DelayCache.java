@@ -1,10 +1,18 @@
-package de.kevcodez;
+package de.kevcodez.metronom;
+
+import de.kevcodez.metronom.parser.Delay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Singleton;
 
+/**
+ * Singleton to cache delay notifications.
+ * 
+ * @author Kevin Grüneberg
+ *
+ */
 @Singleton
 public class DelayCache {
 
