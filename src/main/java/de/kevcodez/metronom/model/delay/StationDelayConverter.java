@@ -33,7 +33,6 @@ public class StationDelayConverter {
       String targetStationName = singleDeparture.get("ziel").asText();
       int delayInMinutes = singleDeparture.get("prognosemin").asInt();
 
-      System.out.println(targetStationName);
       Station targetStation = stationProvider.findStationByName(targetStationName);
       DelayedDeparture delayedDeparture = new DelayedDeparture(train,
         targetStation, LocalTime.parse(time), delayInMinutes);

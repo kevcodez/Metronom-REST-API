@@ -6,7 +6,7 @@ Das Projekt basiert auf Java EE 7 und setzt einen Application-Server voraus. Die
 
 # REST-API:
 
-**Einstiegspunkt: /api/v1**
+`Einstiegspunkt: /api/v1`
 
 ## Alerts
 
@@ -14,13 +14,13 @@ Das Projekt basiert auf Java EE 7 und setzt einen Application-Server voraus. Die
 
 Gibt eine Liste von allen aktuellen Meldungen aus.
 
-##### GET /alert/since/<Datum in ISO-8601>
+##### GET /alert/since/`Datum in ISO-8601`
 
 Gibt eine Liste von allen Meldungen ab dem übergebenen Datum aus.
 
-##### GET /alert/contains/<text>
+##### GET /alert/contains/`text`
 
-Gibt eine Liste von allen Meldungen aus, die den übergebenen Text enhalten.
+Gibt eine Liste von allen Meldungen aus, die den übergebenen `text` enhalten.
 
 
 #### Beispiel-Response
@@ -33,17 +33,17 @@ Gibt eine Liste von allen Meldungen aus, die den übergebenen Text enhalten.
 
 Gibt eine Liste von allen Strecken aus.
 
-#### GET /route/stop/<stop>
+#### GET /route/stop/`stop`
 
-Gibt alle Strecken, welche die Haltestelle <stop> enthalten, z.B. Hamburg-Harburg.
+Gibt alle Strecken, welche die Haltestelle `stop` enthalten, z.B. Hamburg-Harburg.
 
-#### GET /route/name/<name>
+#### GET /route/name/`name`
 
-Gibt die Strecke mit dem Namen <name>, z.B. Elbe-Takt.
+Gibt die Strecke mit dem Namen `name`, z.B. Elbe-Takt.
 
-#### GET /route/<start>/to/<stop>
+#### GET /route/<start>/to/`stop`
 
-Gibt die Strecken, in dem die Haltestelle <start> UND die Haltestelle <stop> vorkommt.
+Gibt die Strecken, in dem die Haltestelle `start` UND die Haltestelle `stop` vorkommt.
 
 #### Beispiel
 
@@ -55,13 +55,13 @@ Gibt die Strecken, in dem die Haltestelle <start> UND die Haltestelle <stop> vor
 
 Gibt eine Liste von allen Haltestellen.
 
-#### GET /station/name/<name>
+#### GET /station/name/`name`
 
-Gibt die Haltestelle mit dem Namen <name>.
+Gibt die Haltestelle mit dem Namen `name`.
 
-#### GET /station/code/<code>
+#### GET /station/code/`code`
 
-Gibt die Haltestelle mit dem Kürzel <code>.
+Gibt die Haltestelle mit dem Kürzel `code`.
 
 #### Beispiel
 
@@ -69,13 +69,13 @@ Gibt die Haltestelle mit dem Kürzel <code>.
 
 ## StationDelay
 
-#### GET /stationDelay/<name>
+#### GET /stationDelay/`name`
 
-Gibt die Verspätungsinformationen zu der Haltestelle <name>.
+Gibt die Verspätungsinformationen zu der Haltestelle `name`.
 
-#### GET /stationDelay/code/<code>
+#### GET /stationDelay/code/`code`
 
-Gibt die Verspätungsinformationen zu der Haltestelle mit dem Kürzel <code>.
+Gibt die Verspätungsinformationen zu der Haltestelle mit dem Kürzel `code`.
 
 #### Beispiel
 
