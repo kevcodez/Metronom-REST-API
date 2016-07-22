@@ -4,6 +4,8 @@ API um Verkehrsmeldungen vom Metronom abzufragen.
 
 Das Projekt basiert auf Java EE 7 und setzt einen Application-Server voraus. Die Entwicklung lief auf dem WildFly 10.
 
+[![Build Status](http://kevcodez.de:8080/job/metronom-pipeline/badge/icon)](http://kevcodez.de:8080/job/metronom-pipeline/)
+
 # REST-API:
 
 `Einstiegspunkt: /api/v1`
