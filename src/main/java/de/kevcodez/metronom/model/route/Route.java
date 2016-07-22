@@ -1,5 +1,7 @@
 package de.kevcodez.metronom.model.route;
 
+import de.kevcodez.metronom.model.stop.Station;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class Route {
 
   private List<String> trains;
 
-  private List<String> stops;
+  private List<Station> stations;
 
   public Route(String name) {
     this.name = name;
@@ -37,12 +39,12 @@ public class Route {
     return trains;
   }
 
-  public List<String> getStops() {
-    if (stops == null) {
-      stops = new ArrayList<>();
+  public List<Station> getStations() {
+    if (stations == null) {
+      stations = new ArrayList<>();
     }
 
-    return stops;
+    return stations;
   }
 
 }

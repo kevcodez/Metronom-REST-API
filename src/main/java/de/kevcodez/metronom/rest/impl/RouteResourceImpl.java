@@ -31,7 +31,7 @@ public class RouteResourceImpl implements RouteResource {
   @Override
   public List<Route> findByStop(String stop) {
     return routeProvider.getRoutes().stream()
-      .filter(r -> r.getStops().contains(stop))
+      .filter(r -> r.getStations().contains(stop))
       .collect(toList());
   }
 
@@ -45,8 +45,8 @@ public class RouteResourceImpl implements RouteResource {
   @Override
   public List<Route> findByStartAndStop(String start, String stop) {
     return routeProvider.getRoutes().stream()
-      .filter(r -> r.getStops().contains(start))
-      .filter(r -> r.getStops().contains(stop))
+      .filter(r -> r.getStations().contains(start))
+      .filter(r -> r.getStations().contains(stop))
       .collect(toList());
   }
 

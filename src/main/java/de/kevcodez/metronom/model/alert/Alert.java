@@ -1,4 +1,4 @@
-package de.kevcodez.metronom.model.delay;
+package de.kevcodez.metronom.model.alert;
 
 import de.kevcodez.metronom.rest.adapter.LocalDateTimeAdapter;
 
@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * Class that contains all relevant information for a single delay notification from the Metronom website.
+ * Class that contains all relevant information for a single alert notification from the Metronom website.
  * 
  * @author Kevin Grüneberg
  *
  */
-public class Delay {
+public class Alert {
 
   private String id;
 
@@ -21,13 +21,13 @@ public class Delay {
   private LocalDateTime creationDate;
 
   /**
-   * Creates a new delay notification with the given ID, text and creation date.
+   * Creates a new alert notification with the given ID, text and creation date.
    * 
    * @param id unique ID
    * @param message text message
    * @param creationDate creation date
    */
-  public Delay(String id, String message, LocalDateTime creationDate) {
+  public Alert(String id, String message, LocalDateTime creationDate) {
     this.id = id;
     this.message = message;
     this.creationDate = creationDate;
@@ -87,7 +87,7 @@ public class Delay {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    Delay other = (Delay) obj;
+    Alert other = (Alert) obj;
     if (id == null) {
       if (other.id != null) {
         return false;

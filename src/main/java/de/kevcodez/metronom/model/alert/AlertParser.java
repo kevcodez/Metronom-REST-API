@@ -1,4 +1,4 @@
-package de.kevcodez.metronom.model.delay;
+package de.kevcodez.metronom.model.alert;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,33 +15,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to parse delay notifications from the Metronom SOAP endpoint.
+ * Class to parse alert notifications from the Metronom SOAP endpoint.
  * 
  * @author Kevin Grüneberg
  *
  */
-public class DelayParser {
+public class AlertParser {
 
-  private static final String METRONOM_DELAY_URL = "http://www.der-metronom.de/extern/sharepoint/sharepoint.soap.php";
+  private static final String METRONOM_ALERT_URL = "http://www.der-metronom.de/extern/sharepoint/sharepoint.soap.php";
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
-  public List<Delay> parseDelays() {
-    String pageSource = getWebPabeSource(METRONOM_DELAY_URL);
+  public List<Alert> parseAlerts() {
+    String pageSource = getWebPabeSource(METRONOM_ALERT_URL);
     try {
       JsonNode mainJsonNode = objectMapper.readTree(pageSource);
-      JsonNode delayJsonNode = mainJsonNode.get("ListItem");
+      JsonNode alertJsonNode = mainJsonNode.get("ListItem");
 
-      List<Delay> delays = new ArrayList<>();
-      delayJsonNode.forEach(jsonDelay -> delays.add(DelayConverter.convert(jsonDelay)));
+      List<Alert> alerts = new ArrayList<>();
+      alertJsonNode.forEach(jsonAlert -> alerts.add(AlertConverter.convert(jsonAlert)));
 
-      return delays;
+      return alerts;
     } catch (IOException exc) {
       throw Exceptions.unchecked(exc);
     }
   }
 
-  private String getWebPabeSource(String sURL) {
+  public static String getWebPabeSource(String sURL) {
     try {
       URL url = new URL(sURL);
       URLConnection urlConn = url.openConnection();
