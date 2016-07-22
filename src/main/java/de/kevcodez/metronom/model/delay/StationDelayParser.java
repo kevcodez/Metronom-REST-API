@@ -51,12 +51,24 @@ public class StationDelayParser {
   @Inject
   private StationDelayConverter stationDelayConverter;
 
+  /**
+   * Finds the delay for the station with the given name.
+   * 
+   * @param stationName station name to search for
+   * @return station delay
+   */
   public StationDelay findDelays(String stationName) {
     Station station = stationProvider.findStationByName(stationName);
 
     return findDelays(station);
   }
 
+  /**
+   * Finds the delay for the given station.
+   * 
+   * @param station station to search for
+   * @return station delay
+   */
   public StationDelay findDelays(Station station) {
     if (station == null) {
       return null;

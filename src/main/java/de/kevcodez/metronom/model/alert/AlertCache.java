@@ -35,6 +35,11 @@ public class AlertCache {
 
   private List<Alert> alerts;
 
+  /**
+   * Adds the given alert to the list of alerts.
+   * 
+   * @param alert alert to add
+   */
   public void addAlert(Alert alert) {
     alerts.add(alert);
   }
