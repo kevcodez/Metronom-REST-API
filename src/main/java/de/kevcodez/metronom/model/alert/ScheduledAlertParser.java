@@ -43,7 +43,7 @@ public class ScheduledAlertParser {
    */
   @Schedule(second = "*/30", minute = "*", hour = "*", persistent = false)
   public void parseAlerts() {
-    alertCache.setAlerts(alertParser.parseAlerts());
+    alertParser.parseAlerts().forEach(alertCache::addAlert);
   }
 
 }

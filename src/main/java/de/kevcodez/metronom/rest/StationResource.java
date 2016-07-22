@@ -18,7 +18,7 @@
  **/
 package de.kevcodez.metronom.rest;
 
-import de.kevcodez.metronom.model.stop.Station;
+import de.kevcodez.metronom.model.station.Station;
 
 import java.util.List;
 

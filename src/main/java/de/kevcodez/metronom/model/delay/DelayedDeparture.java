@@ -18,7 +18,7 @@
  **/
 package de.kevcodez.metronom.model.delay;
 
-import de.kevcodez.metronom.model.stop.Station;
+import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.rest.adapter.LocalTimeAdapter;
 
 import java.time.LocalTime;
@@ -41,6 +41,14 @@ public class DelayedDeparture {
 
   private int delayInMinutes;
 
+  /**
+   * Creates a new delayed departure with the given train, target station, time and delay in minutes.
+   * 
+   * @param train train
+   * @param targetStation target station
+   * @param time time
+   * @param delayInMinutes delay in minutes
+   */
   public DelayedDeparture(String train, Station targetStation, LocalTime time, int delayInMinutes) {
     this.train = train;
     this.targetStation = targetStation;

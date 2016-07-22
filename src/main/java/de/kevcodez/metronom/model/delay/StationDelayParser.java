@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.kevcodez.metronom.model.alert.AlertParser;
-import de.kevcodez.metronom.model.stop.Station;
-import de.kevcodez.metronom.model.stop.StationProvider;
+import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.model.station.StationProvider;
 import de.kevcodez.metronom.utility.Exceptions;
 
 import java.io.IOException;

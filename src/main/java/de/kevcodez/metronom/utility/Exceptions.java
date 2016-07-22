@@ -24,7 +24,7 @@ package de.kevcodez.metronom.utility;
  * @author Kevin Grüneberg
  *
  */
-public class Exceptions {
+public final class Exceptions {
 
   private Exceptions() {
     // Hidden constructor

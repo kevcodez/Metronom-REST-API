@@ -32,6 +32,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Class to parse alert notifications from the Metronom SOAP endpoint.
  * 
@@ -44,6 +46,14 @@ public class AlertParser {
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
+  @Inject
+  private AlertConverter alertConverter;
+
+  /**
+   * Parses the alerts from the Metronom SOAP endpoint.
+   * 
+   * @return list of alerts
+   */
   public List<Alert> parseAlerts() {
     String pageSource = getWebPabeSource(METRONOM_ALERT_URL);
     try {
@@ -51,7 +61,7 @@ public class AlertParser {
       JsonNode alertJsonNode = mainJsonNode.get("ListItem");
 
       List<Alert> alerts = new ArrayList<>();
-      alertJsonNode.forEach(jsonAlert -> alerts.add(AlertConverter.convert(jsonAlert)));
+      alertJsonNode.forEach(jsonAlert -> alerts.add(alertConverter.convert(jsonAlert)));
 
       return alerts;
     } catch (IOException exc) {
@@ -59,9 +69,15 @@ public class AlertParser {
     }
   }
 
-  public static String getWebPabeSource(String sURL) {
+  /**
+   * Gets the source of the web page at the given URL.
+   * 
+   * @param websiteUrl website URL
+   * @return page source
+   */
+  public static String getWebPabeSource(String websiteUrl) {
     try {
-      URL url = new URL(sURL);
+      URL url = new URL(websiteUrl);
       URLConnection urlConn = url.openConnection();
       BufferedReader inputStream = new BufferedReader(
         new InputStreamReader(urlConn.getInputStream(), StandardCharsets.UTF_8));

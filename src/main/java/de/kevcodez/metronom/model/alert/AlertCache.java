@@ -19,6 +19,7 @@
 package de.kevcodez.metronom.model.alert;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Singleton;
@@ -34,8 +35,8 @@ public class AlertCache {
 
   private List<Alert> alerts;
 
-  public void setAlerts(List<Alert> alerts) {
-    this.alerts = alerts;
+  public void addAlert(Alert alert) {
+    alerts.add(alert);
   }
 
   public List<Alert> getAlerts() {
@@ -43,7 +44,7 @@ public class AlertCache {
       alerts = new ArrayList<>();
     }
 
-    return alerts;
+    return Collections.unmodifiableList(alerts);
   }
 
 }

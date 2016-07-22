@@ -18,11 +18,12 @@
  **/
 package de.kevcodez.metronom.model.delay;
 
-import de.kevcodez.metronom.model.stop.Station;
+import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.rest.adapter.LocalTimeAdapter;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -40,9 +41,24 @@ public class StationDelay {
 
   private List<DelayedDeparture> departures;
 
+  /**
+   * Creates a new station delay with the given station and time.
+   * 
+   * @param station station
+   * @param time time
+   */
   public StationDelay(Station station, LocalTime time) {
     this.station = station;
     this.time = time;
+  }
+
+  /**
+   * Adds the given delayed depature to the list.
+   * 
+   * @param delayedDepature delayed departure to add
+   */
+  public void addDeparture(DelayedDeparture delayedDepature) {
+    departures.add(delayedDepature);
   }
 
   public Station getStation() {
@@ -67,7 +83,7 @@ public class StationDelay {
       departures = new ArrayList<>();
     }
 
-    return departures;
+    return Collections.unmodifiableList(departures);
   }
 
 }

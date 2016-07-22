@@ -16,9 +16,10 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.stop;
+package de.kevcodez.metronom.model.station;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,9 @@ public class StationProvider {
 
   private List<Station> stations = new ArrayList<>();
 
+  /**
+   * Creates the stations.
+   */
   @PostConstruct
   public void constructStations() {
     addStation("Hamburg Hbf", "AH");
@@ -119,7 +123,7 @@ public class StationProvider {
   }
 
   public List<Station> getStations() {
-    return stations;
+    return Collections.unmodifiableList(stations);
   }
 
   private void addStation(String name, String code) {

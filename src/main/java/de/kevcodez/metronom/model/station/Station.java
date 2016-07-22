@@ -16,7 +16,7 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.stop;
+package de.kevcodez.metronom.model.station;
 
 /**
  * Represents a single station.
@@ -29,6 +29,12 @@ public class Station {
   private String name;
   private String code;
 
+  /**
+   * Creates a new station with the given name and code.
+   * 
+   * @param name name
+   * @param code code
+   */
   public Station(String name, String code) {
     this.name = name;
     this.code = code;

@@ -55,7 +55,7 @@ public class CharacterEncodingFilter implements javax.servlet.Filter {
     // not used
   }
 
-  private String getUtf8Charset() {
+  private static String getUtf8Charset() {
     return StandardCharsets.UTF_8.name();
   }
 

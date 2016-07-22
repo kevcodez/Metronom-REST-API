@@ -18,10 +18,11 @@
  **/
 package de.kevcodez.metronom.model.route;
 
-import de.kevcodez.metronom.model.stop.StationProvider;
+import de.kevcodez.metronom.model.station.StationProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -42,6 +43,9 @@ public class RouteProvider {
 
   private List<Route> routes = new ArrayList<>();
 
+  /**
+   * Creates the routes.
+   */
   @PostConstruct
   public void constructRoutes() {
     addRouteElbeTakt();
@@ -52,12 +56,12 @@ public class RouteProvider {
   }
 
   public List<Route> getRoutes() {
-    return routes;
+    return Collections.unmodifiableList(routes);
   }
 
   private void addRouteElbeTakt() {
     Route route = new Route("Elbe-Takt");
-    route.getTrains().addAll(Arrays.asList(new String[] { "RB 31", "RE 3" }));
+    route.addTrains("RB 31", "RE 3");
 
     String[] stations = { "Hamburg HBF", "Hamburg-Harburg", "Meckelfeld", "Maschen", "Stelle",
       "Aushausen", "Winsen (Luhe)", "Radbruch", "Bardowick", "Lüneburg", "Bienenbüttel",
@@ -67,13 +71,9 @@ public class RouteProvider {
     routes.add(route);
   }
 
-  private void addStations(String[] stops, Route route) {
-    Arrays.stream(stops).map(stationProvider::findStationByName).forEach(route.getStations()::add);
-  }
-
   private void addRouteNordseeTakt() {
     Route route = new Route("Nordsee-Takt");
-    route.getTrains().add("RE 5");
+    route.addTrains("RE 5");
 
     String[] stations = { "Hamburg Hbf", "Hamburg-Harburg", "Buxtehude", "Horneburg", "Stade",
       "Hammah", "Himmepforten", "Hechthausen", "Hemmoor", "Wingst", "Cadenberge", "Cuxhaven" };
@@ -84,7 +84,7 @@ public class RouteProvider {
 
   private void addRouteWeserTakt() {
     Route route = new Route("Weser-Takt");
-    route.getTrains().addAll(Arrays.asList(new String[] { "RB41", "RE 4" }));
+    route.addTrains("RB41", "RE 4");
 
     String[] stations = { "Hamburg Hbf", "Hamburg-Harburg", "Hittfeld", "Klecken",
       "Buchholz (Nordheide)", "Sprötze", "Tostedt", "Lauenbrück", "Scheeßel", "Rotenburg (Wümme)",
@@ -96,7 +96,7 @@ public class RouteProvider {
 
   private void addRouteAllerTakt() {
     Route route = new Route("Aller-Takt");
-    route.getTrains().add("RE 2");
+    route.addTrains("RE 2");
 
     String[] stations = { "Uelzen", "Suderburg", "Unterlüß", "Eschede", "Celle", "Großburgwedel",
       "Isernhagen", "Langenhagen Mitte", "Hannover Hbf" };
@@ -107,7 +107,7 @@ public class RouteProvider {
 
   private void addRouteLeinetalTakt() {
     Route route = new Route("Leinetal-Takt");
-    route.getTrains().add("RE 2");
+    route.addTrains("RE 2");
 
     String[] stations = { "Hannover Hbf", "Sarstedt", "Nordstemmen", "Elze (Han)", "Banteln",
       "Alfeld (Leine)", "Freden (Leine)", "Kreiensen", "Einbeck Salzderhelden", "Northeim (Han)",
@@ -115,6 +115,10 @@ public class RouteProvider {
 
     addStations(stations, route);
     routes.add(route);
+  }
+
+  private void addStations(String[] stops, Route route) {
+    Arrays.stream(stops).map(stationProvider::findStationByName).forEach(route::addStation);
   }
 
 }

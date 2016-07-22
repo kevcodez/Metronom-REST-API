@@ -20,8 +20,8 @@ package de.kevcodez.metronom.model.delay;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import de.kevcodez.metronom.model.stop.Station;
-import de.kevcodez.metronom.model.stop.StationProvider;
+import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.model.station.StationProvider;
 
 import java.time.LocalTime;
 
@@ -38,6 +38,13 @@ public class StationDelayConverter {
   @Inject
   private StationProvider stationProvider;
 
+  /**
+   * Converts the given JSON node and station to a station delay.
+   * 
+   * @param station station
+   * @param node JSON node
+   * @return converted station delay
+   */
   public StationDelay convert(Station station, JsonNode node) {
     String timeAsString = node.get("stand").asText();
 
@@ -55,7 +62,7 @@ public class StationDelayConverter {
       DelayedDeparture delayedDeparture = new DelayedDeparture(train,
         targetStation, LocalTime.parse(time), delayInMinutes);
 
-      stationDelay.getDepartures().add(delayedDeparture);
+      stationDelay.addDeparture(delayedDeparture);
     }
 
     return stationDelay;

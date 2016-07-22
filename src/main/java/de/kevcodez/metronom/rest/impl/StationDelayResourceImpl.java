@@ -20,8 +20,8 @@ package de.kevcodez.metronom.rest.impl;
 
 import de.kevcodez.metronom.model.delay.StationDelay;
 import de.kevcodez.metronom.model.delay.StationDelayParser;
-import de.kevcodez.metronom.model.stop.Station;
-import de.kevcodez.metronom.model.stop.StationProvider;
+import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.model.station.StationProvider;
 import de.kevcodez.metronom.rest.StationDelayResource;
 
 import javax.inject.Inject;

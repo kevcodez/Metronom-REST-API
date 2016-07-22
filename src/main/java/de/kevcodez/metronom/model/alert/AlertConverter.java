@@ -39,7 +39,7 @@ public class AlertConverter {
    * @param alert alert as JSON OBJECT
    * @return converted alert
    */
-  public static Alert convert(JsonNode alert) {
+  public Alert convert(JsonNode alert) {
     String meldung = alert.get("Stoermeldung").textValue();
     String empfangsdatum = alert.get("Empfangsdatum").textValue();
     String id = alert.get("@attributes").get("ID").textValue();

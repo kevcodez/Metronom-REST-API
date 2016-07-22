@@ -18,9 +18,11 @@
  **/
 package de.kevcodez.metronom.model.route;
 
-import de.kevcodez.metronom.model.stop.Station;
+import de.kevcodez.metronom.model.station.Station;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,8 +39,31 @@ public class Route {
 
   private List<Station> stations;
 
+  /**
+   * Creates a new route with the given name.
+   * 
+   * @param name route name
+   */
   public Route(String name) {
     this.name = name;
+  }
+
+  /**
+   * Adds the given array of trains to the list of trains.
+   * 
+   * @param trains trains to add
+   */
+  public void addTrains(String... trains) {
+    this.trains.addAll(Arrays.asList(trains));
+  }
+
+  /**
+   * Adds the given station to the list of stations.
+   * 
+   * @param station station to add
+   */
+  public void addStation(Station station) {
+    stations.add(station);
   }
 
   public String getName() {
@@ -54,7 +79,7 @@ public class Route {
       trains = new ArrayList<>();
     }
 
-    return trains;
+    return Collections.unmodifiableList(trains);
   }
 
   public List<Station> getStations() {
@@ -62,7 +87,7 @@ public class Route {
       stations = new ArrayList<>();
     }
 
-    return stations;
+    return Collections.unmodifiableList(stations);
   }
 
 }
