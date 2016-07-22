@@ -2,8 +2,8 @@ package de.kevcodez.metronom.rest.impl;
 
 import static java.util.stream.Collectors.toList;
 
-import de.kevcodez.metronom.DelayCache;
-import de.kevcodez.metronom.parser.Delay;
+import de.kevcodez.metronom.model.delay.Delay;
+import de.kevcodez.metronom.model.delay.DelayCache;
 import de.kevcodez.metronom.rest.DelayResource;
 
 import java.time.LocalDateTime;

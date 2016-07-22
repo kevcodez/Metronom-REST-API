@@ -1,6 +1,4 @@
-package de.kevcodez.metronom.parser;
-
-import de.kevcodez.metronom.DelayCache;
+package de.kevcodez.metronom.model.delay;
 
 import java.io.IOException;
 

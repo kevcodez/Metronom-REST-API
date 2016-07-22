@@ -1,6 +1,4 @@
-package de.kevcodez.metronom;
-
-import de.kevcodez.metronom.parser.Delay;
+package de.kevcodez.metronom.model.delay;
 
 import java.util.ArrayList;
 import java.util.List;

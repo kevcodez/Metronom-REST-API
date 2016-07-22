@@ -1,4 +1,4 @@
-package de.kevcodez.metronom.parser;
+package de.kevcodez.metronom.model.delay;
 
 import de.kevcodez.metronom.rest.adapter.LocalDateTimeAdapter;
 

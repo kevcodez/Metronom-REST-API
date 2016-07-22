@@ -1,6 +1,6 @@
 package de.kevcodez.metronom.rest;
 
-import de.kevcodez.metronom.parser.Delay;
+import de.kevcodez.metronom.model.delay.Delay;
 
 import java.util.List;
 

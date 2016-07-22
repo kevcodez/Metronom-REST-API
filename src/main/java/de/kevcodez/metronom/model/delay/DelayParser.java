@@ -1,4 +1,4 @@
-package de.kevcodez.metronom.parser;
+package de.kevcodez.metronom.model.delay;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
