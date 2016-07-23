@@ -71,7 +71,7 @@ public class StationFinderTest {
 
   @Test
   public void shouldFindStartAndTargetStation() {
-    StartAndTargetStation startStopStation = stationFinder.findStation(text);
+    StartAndTargetStation startStopStation = stationFinder.findStartAndTarget(text);
 
     assertThat(startStopStation, is(notNullValue()));
     assertThat(startStopStation.getStart().getName(), is(expectedStart));

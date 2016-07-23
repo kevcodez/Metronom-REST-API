@@ -68,7 +68,7 @@ public class AlertParser {
       List<Alert> alerts = new ArrayList<>();
       alertJsonNode.forEach(jsonAlert -> {
         Alert alert = alertConverter.convert(jsonAlert);
-        StartAndTargetStation startAndTarget = stationFinder.findStation(alert.getMessage());
+        StartAndTargetStation startAndTarget = stationFinder.findStartAndTarget(alert.getMessage());
 
         if (startAndTarget != null) {
           alert.setStationStart(startAndTarget.getStart());

@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
  */
 public class StationFinder {
 
-  private static Logger log = LoggerFactory.getLogger(StationFinder.class);
+  private static final Logger LOG = LoggerFactory.getLogger(StationFinder.class);
 
-  private static String PATTERN_WORD = "[a-zA-ZäöüßÄÖÜ]+";
+  private static final String PATTERN_WORD = "[a-zA-ZäöüßÄÖÜ]+";
 
   private static List<Pattern> alertPatterns = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class StationFinder {
    * @param alert alert as text
    * @return start and target station
    */
-  public StartAndTargetStation findStation(String alert) {
+  public StartAndTargetStation findStartAndTarget(String alert) {
     for (Pattern pattern : alertPatterns) {
       Matcher matcher = pattern.matcher(alert);
 
@@ -50,22 +50,28 @@ public class StationFinder {
         String start = matcher.group("start");
         String target = matcher.group("target");
 
-        if (start != null && target != null) {
-          Station startStation = stationProvider.findStationByName(start);
-          Station targetStation = stationProvider.findStationByName(target);
-
-          // If the regex pattern matched, but the station provider cannot find any station, log it
-          if (startStation == null) {
-            log.warn("station not found {}", start);
-          }
-
-          if (targetStation == null) {
-            log.warn("station not found {}", target);
-          }
-
-          return new StartAndTargetStation(startStation, targetStation);
-        }
+        return findStartAndTarget(start, target);
       }
+    }
+
+    return null;
+  }
+
+  private StartAndTargetStation findStartAndTarget(String start, String target) {
+    if (start != null && target != null) {
+      Station startStation = stationProvider.findStationByName(start);
+      Station targetStation = stationProvider.findStationByName(target);
+
+      // If the regex pattern matched, but the station provider cannot find any station, log it
+      if (startStation == null) {
+        LOG.warn("station not found {}", start);
+      }
+
+      if (targetStation == null) {
+        LOG.warn("station not found {}", target);
+      }
+
+      return new StartAndTargetStation(startStation, targetStation);
     }
 
     return null;

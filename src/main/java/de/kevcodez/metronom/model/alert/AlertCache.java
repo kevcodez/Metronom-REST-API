@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class AlertCache {
 
-  private static Logger log = LoggerFactory.getLogger(AlertCache.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AlertCache.class);
 
   private List<Alert> alerts = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class AlertCache {
 
   private void verifyStartStation(Alert alert) {
     if (alert.getStationStart() == null) {
-      log.warn("start station not found for {}", alert.getMessage());
+      LOG.warn("start station not found for {}", alert.getMessage());
     }
   }
 
