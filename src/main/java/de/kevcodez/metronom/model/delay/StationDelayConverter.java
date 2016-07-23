@@ -51,6 +51,10 @@ public class StationDelayConverter {
 
     JsonNode nodeDeparture = node.get("abfahrt");
 
+    if (nodeDeparture == null) {
+      return null;
+    }
+
     StationDelay stationDelay = new StationDelay(station, LocalTime.parse(timeAsString));
 
     if (nodeDeparture.getNodeType() == JsonNodeType.OBJECT) {
