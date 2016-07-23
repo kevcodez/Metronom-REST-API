@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -75,7 +76,7 @@ public class Station {
 
   @JsonIgnore
   public List<String> getAlternativeNames() {
-    return alternativeNames;
+    return Collections.unmodifiableList(alternativeNames);
   }
 
   @Override
