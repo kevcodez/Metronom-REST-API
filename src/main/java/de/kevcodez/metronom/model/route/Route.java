@@ -35,9 +35,9 @@ public class Route {
 
   private String name;
 
-  private List<String> trains;
+  private List<String> trains = new ArrayList<>();
 
-  private List<Station> stations;
+  private List<Station> stations = new ArrayList<>();
 
   /**
    * Creates a new route with the given name.
@@ -75,19 +75,16 @@ public class Route {
   }
 
   public List<String> getTrains() {
-    if (trains == null) {
-      trains = new ArrayList<>();
-    }
-
     return Collections.unmodifiableList(trains);
   }
 
   public List<Station> getStations() {
-    if (stations == null) {
-      stations = new ArrayList<>();
-    }
-
     return Collections.unmodifiableList(stations);
+  }
+
+  @Override
+  public String toString() {
+    return "Route [name=" + name + ", trains=" + trains + ", stations=" + stations + "]";
   }
 
 }

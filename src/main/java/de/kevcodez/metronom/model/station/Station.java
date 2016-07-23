@@ -18,8 +18,15 @@
  **/
 package de.kevcodez.metronom.model.station;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * Represents a single station.
+ * Represents a single station. The station also contains a list of alternative names to resolve the station more
+ * easily. For example the station Hannover Hbf also has the alternative name Hannover.
  * 
  * @author Kevin Grüneberg
  *
@@ -27,6 +34,7 @@ package de.kevcodez.metronom.model.station;
 public class Station {
 
   private String name;
+  private List<String> alternativeNames = new ArrayList<>();
   private String code;
 
   /**
@@ -38,6 +46,15 @@ public class Station {
   public Station(String name, String code) {
     this.name = name;
     this.code = code;
+  }
+
+  /**
+   * Adds the given array of names to the list of alternative names.
+   * 
+   * @param names alternative namess
+   */
+  public void addAlternativeNames(String... names) {
+    alternativeNames.addAll(Arrays.asList(names));
   }
 
   public String getName() {
@@ -54,6 +71,16 @@ public class Station {
 
   public void setCode(String code) {
     this.code = code;
+  }
+
+  @JsonIgnore
+  public List<String> getAlternativeNames() {
+    return alternativeNames;
+  }
+
+  @Override
+  public String toString() {
+    return "Station [name=" + name + ", code=" + code + "]";
   }
 
 }

@@ -23,6 +23,11 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Singleton;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Singleton to cache alert notifications.
@@ -33,7 +38,12 @@ import javax.ejb.Singleton;
 @Singleton
 public class AlertCache {
 
-  private List<Alert> alerts;
+  private static Logger log = LoggerFactory.getLogger(AlertCache.class);
+
+  private List<Alert> alerts = new ArrayList<>();
+
+  @Inject
+  private Event<Alert> newAlert;
 
   /**
    * Adds the given alert to the list of alerts.
@@ -41,15 +51,22 @@ public class AlertCache {
    * @param alert alert to add
    */
   public void addAlert(Alert alert) {
-    alerts.add(alert);
+    if (!alerts.contains(alert)) {
+      verifyStartStation(alert);
+
+      newAlert.fire(alert);
+      alerts.add(alert);
+    }
   }
 
   public List<Alert> getAlerts() {
-    if (alerts == null) {
-      alerts = new ArrayList<>();
-    }
-
     return Collections.unmodifiableList(alerts);
+  }
+
+  private void verifyStartStation(Alert alert) {
+    if (alert.getStationStart() == null) {
+      log.warn("start station not found for {}", alert.getMessage());
+    }
   }
 
 }

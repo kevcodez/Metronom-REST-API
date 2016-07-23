@@ -21,6 +21,8 @@ package de.kevcodez.metronom.model.alert;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.kevcodez.metronom.model.station.StartAndTargetStation;
+import de.kevcodez.metronom.model.station.StationFinder;
 import de.kevcodez.metronom.utility.Exceptions;
 
 import java.io.BufferedReader;
@@ -49,6 +51,9 @@ public class AlertParser {
   @Inject
   private AlertConverter alertConverter;
 
+  @Inject
+  private StationFinder stationFinder;
+
   /**
    * Parses the alerts from the Metronom SOAP endpoint.
    * 
@@ -61,7 +66,17 @@ public class AlertParser {
       JsonNode alertJsonNode = mainJsonNode.get("ListItem");
 
       List<Alert> alerts = new ArrayList<>();
-      alertJsonNode.forEach(jsonAlert -> alerts.add(alertConverter.convert(jsonAlert)));
+      alertJsonNode.forEach(jsonAlert -> {
+        Alert alert = alertConverter.convert(jsonAlert);
+        StartAndTargetStation startAndTarget = stationFinder.findStation(alert.getMessage());
+
+        if (startAndTarget != null) {
+          alert.setStationStart(startAndTarget.getStart());
+          alert.setStationEnd(startAndTarget.getTarget());
+        }
+
+        alerts.add(alert);
+      });
 
       return alerts;
     } catch (IOException exc) {

@@ -89,4 +89,10 @@ public class DelayedDeparture {
     this.delayInMinutes = delayInMinutes;
   }
 
+  @Override
+  public String toString() {
+    return "DelayedDeparture [time=" + time + ", train=" + train + ", targetStation="
+      + targetStation + ", delayInMinutes=" + delayInMinutes + "]";
+  }
+
 }

@@ -43,31 +43,31 @@ public class StationProvider {
    */
   @PostConstruct
   public void constructStations() {
-    addStation("Hamburg Hbf", "AH");
+    addStation("Hamburg Hbf", "AH", "Hamburg");
     addStation("Hamburg-Harburg", "AHAR");
     addStation("Meckelfeld", "AMDH");
     addStation("Maschen", "AMA");
     addStation("Stelle", "ASTE");
     addStation("Ashausen", "AASN");
-    addStation("Winsen (Luhe)", "AWI");
+    addStation("Winsen (Luhe)", "AWI", "Winsen");
     addStation("Radbruch", "ARH");
     addStation("Bardowick", "ABAD");
     addStation("Lüneburg", "ALBG");
     addStation("Bienenbüttel", "ABIL");
     addStation("Bad Bevensen", "ABVS");
     addStation("Uelzen", "HU");
-    addStation("Hannover Hbf", "HH");
+    addStation("Hannover Hbf", "HH", "Hannover");
     addStation("Sarstedt", "HSRD");
     addStation("Nordstemmen", "HNOS");
-    addStation("Elze (Han)", "HELZ");
+    addStation("Elze (Han)", "HELZ", "Elze");
     addStation("Banteln", "HBAN");
-    addStation("Alfeld (Leine)", "HALF");
-    addStation("Freden (Leine)", "HFRE");
+    addStation("Alfeld (Leine)", "HALF", "Alfeld");
+    addStation("Freden (Leine)", "HFRE", "Freden");
     addStation("Kreiensen", "HK");
     addStation("Einbeck Salzderhelden", "HEB");
-    addStation("Northeim (Han)", "HN");
+    addStation("Northeim (Han)", "HN", "Northeim");
     addStation("Nörten-Hardenberg", "HNTH");
-    addStation("Göttigen", "HG");
+    addStation("Göttingen", "HG", "Goettingen", "Götingen");
     addStation("Buxtehude", "ABX");
     addStation("Horneburg", "AHOG");
     addStation("Stade", "AST");
@@ -80,24 +80,24 @@ public class StationProvider {
     addStation("Cuxhaven", "ACV");
     addStation("Hittfeld", "AHIF");
     addStation("Klecken", "AKC");
-    addStation("Buchholz (Nordheide)", "ABLZ");
+    addStation("Buchholz (Nordheide)", "ABLZ", "Buchholz");
     addStation("Sprötze", "ASP");
     addStation("Tostedt", "ATST");
     addStation("Lauenbrück", "ALUB");
     addStation("Scheeßel", "ASL");
-    addStation("Rotenburg (Wümme)", "AROG");
+    addStation("Rotenburg (Wümme)", "AROG", "Rotenburg");
     addStation("Sottrum", "AS");
-    addStation("Ottersberg (Han)", "AOBG");
+    addStation("Ottersberg (Han)", "AOBG", "Ottersberg");
     addStation("Sagehorn", "ASAG");
     addStation("Bremen-Oberneuland", "HBON");
-    addStation("Bremen Hbf", "HB");
+    addStation("Bremen Hbf", "HB", "Bremen");
     addStation("Suderburg", "HSUD");
     addStation("Unterlüß", "HUNL");
     addStation("Eschede", "HESD");
     addStation("Celle", "HC");
     addStation("Großburgwedel", "HGBW");
     addStation("Isernhagen", "HIHG");
-    addStation("Langenhagen Mitte", "HLGM");
+    addStation("Langenhagen Mitte", "HLGM", "Langenhagen");
   }
 
   /**
@@ -107,8 +107,9 @@ public class StationProvider {
    * @return matching station, or null
    */
   public Station findStationByName(String name) {
-    return stations.stream().filter(station -> station.getName().equals(name)).findFirst()
-      .orElse(null);
+    return stations.stream()
+      .filter(station -> station.getName().equals(name) || station.getAlternativeNames().contains(name))
+      .findFirst().orElse(null);
   }
 
   /**
@@ -126,8 +127,9 @@ public class StationProvider {
     return Collections.unmodifiableList(stations);
   }
 
-  private void addStation(String name, String code) {
+  private void addStation(String name, String code, String... names) {
     Station station = new Station(name, code);
+    station.addAlternativeNames(names);
     stations.add(station);
   }
 
