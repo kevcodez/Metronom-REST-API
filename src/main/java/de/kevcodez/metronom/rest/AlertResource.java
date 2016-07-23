@@ -47,6 +47,16 @@ public interface AlertResource {
   List<Alert> findAllAlerts();
 
   /**
+   * Finds the alerts relevant for the station with the given name that were created during the last hour.
+   * 
+   * @param station station name
+   * @return relevant alerts
+   */
+  @GET
+  @Path("station/{station}")
+  List<Alert> findRelevantAlertsForStation(@PathParam(value = "station") String station);
+
+  /**
    * Finds all alerts since the given date time. The date time must be in ISO-8601 format, otherwise an empty collection
    * will be returned.
    * 

@@ -84,4 +84,37 @@ public class Station {
     return "Station [name=" + name + ", code=" + code + "]";
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int codeHash = 0;
+    if (code != null) {
+      codeHash = code.hashCode();
+    }
+
+    return prime + codeHash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Station other = (Station) obj;
+    if (code == null) {
+      if (other.code != null) {
+        return false;
+      }
+    } else if (!code.equals(other.code)) {
+      return false;
+    }
+    return true;
+  }
+
 }

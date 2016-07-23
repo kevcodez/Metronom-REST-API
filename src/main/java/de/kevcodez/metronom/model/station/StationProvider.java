@@ -108,7 +108,7 @@ public class StationProvider {
    */
   public Station findStationByName(String name) {
     return stations.stream()
-      .filter(station -> station.getName().equals(name) || station.getAlternativeNames().contains(name))
+      .filter(station -> station.getName().equalsIgnoreCase(name) || station.getAlternativeNames().contains(name))
       .findFirst().orElse(null);
   }
 

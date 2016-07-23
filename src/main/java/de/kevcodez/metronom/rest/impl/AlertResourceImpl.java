@@ -22,7 +22,10 @@ import static java.util.stream.Collectors.toList;
 
 import de.kevcodez.metronom.model.alert.Alert;
 import de.kevcodez.metronom.model.alert.AlertCache;
+import de.kevcodez.metronom.model.route.Route;
+import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.rest.AlertResource;
+import de.kevcodez.metronom.rest.RouteResource;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -42,6 +45,9 @@ public class AlertResourceImpl implements AlertResource {
 
   @Inject
   private AlertCache alertCache;
+
+  @Inject
+  private RouteResource routeResource;
 
   @Override
   public List<Alert> findAllAlerts() {
@@ -67,6 +73,22 @@ public class AlertResourceImpl implements AlertResource {
 
   private Stream<Alert> streamAlerts() {
     return alertCache.getAlerts().stream();
+  }
+
+  @Override
+  public List<Alert> findRelevantAlertsForStation(String station) {
+    List<Route> routes = routeResource.findByStop(station);
+
+    List<Station> stations = routes.stream().map(Route::getStations).flatMap(l -> l.stream())
+      .distinct().collect(toList());
+
+    // Assume that only information that are max. 1 hour old are still relevant
+    LocalDateTime oneHourAgo = LocalDateTime.now().minusHours(1);
+
+    return findAllAlerts().stream()
+      .filter(alert -> stations.contains(alert.getStationStart()))
+      .filter(alert -> alert.getCreationDate().isAfter(oneHourAgo))
+      .collect(toList());
   }
 
 }

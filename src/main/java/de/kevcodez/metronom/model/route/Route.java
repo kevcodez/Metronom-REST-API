@@ -87,4 +87,37 @@ public class Route {
     return "Route [name=" + name + ", trains=" + trains + ", stations=" + stations + "]";
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int hashName = 0;
+    if (name != null) {
+      hashName = name.hashCode();
+    }
+
+    return prime + hashName;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Route other = (Route) obj;
+    if (name == null) {
+      if (other.name != null) {
+        return false;
+      }
+    } else if (!name.equals(other.name)) {
+      return false;
+    }
+    return true;
+  }
+
 }
