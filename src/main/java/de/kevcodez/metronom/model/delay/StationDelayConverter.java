@@ -19,6 +19,7 @@
 package de.kevcodez.metronom.model.delay;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.model.station.StationProvider;
@@ -52,20 +53,31 @@ public class StationDelayConverter {
 
     StationDelay stationDelay = new StationDelay(station, LocalTime.parse(timeAsString));
 
-    for (JsonNode singleDeparture : nodeDeparture) {
-      String time = singleDeparture.get("zeit").asText();
-      String train = singleDeparture.get("zug").asText();
-      String targetStationName = singleDeparture.get("ziel").asText();
-      int delayInMinutes = singleDeparture.get("prognosemin").asInt();
-
-      Station targetStation = stationProvider.findStationByName(targetStationName);
-      DelayedDeparture delayedDeparture = new DelayedDeparture(train,
-        targetStation, LocalTime.parse(time), delayInMinutes);
+    if (nodeDeparture.getNodeType() == JsonNodeType.OBJECT) {
+      // Parse single object
+      DelayedDeparture delayedDeparture = parseDelayedDeparture(nodeDeparture);
 
       stationDelay.addDeparture(delayedDeparture);
+    } else {
+      // Parse JSON array
+      for (JsonNode singleDeparture : nodeDeparture) {
+        DelayedDeparture delayedDeparture = parseDelayedDeparture(singleDeparture);
+
+        stationDelay.addDeparture(delayedDeparture);
+      }
     }
 
     return stationDelay;
+  }
+
+  private DelayedDeparture parseDelayedDeparture(JsonNode singleDeparture) {
+    String time = singleDeparture.get("zeit").asText();
+    String train = singleDeparture.get("zug").asText();
+    String targetStationName = singleDeparture.get("ziel").asText();
+    int delayInMinutes = singleDeparture.get("prognosemin").asInt();
+
+    Station targetStation = stationProvider.findStationByName(targetStationName);
+    return new DelayedDeparture(train, targetStation, LocalTime.parse(time), delayInMinutes);
   }
 
 }

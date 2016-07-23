@@ -54,7 +54,8 @@ public class StationFinderTest {
       { "ME 82118 von Uelzen nach Hamburg an Uelzen", "Uelzen", "Hamburg" },
       { "ME 82819 von Uelzen nach Göttingen ab Uelzen", "Uelzen", "Göttingen" },
       { "Busnotverkehr von Göttingen nach Hannover mit", "Göttingen", "Hannover" },
-      { "Zug 82818 von Göttingen nach Hannover leider entfallen", "Göttingen", "Hannover" }
+      { "Zug 82818 von Göttingen nach Hannover leider entfallen", "Göttingen", "Hannover" },
+      { "ME 82834 von Göttingen nach Hannover ab Göttingen", "Göttingen", "Hannover" }
     });
   }
 

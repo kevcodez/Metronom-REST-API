@@ -43,6 +43,7 @@ public class StationFinder {
    * @return start and target station
    */
   public StartAndTargetStation findStartAndTarget(String alert) {
+  
     for (Pattern pattern : alertPatterns) {
       Matcher matcher = pattern.matcher(alert);
 
