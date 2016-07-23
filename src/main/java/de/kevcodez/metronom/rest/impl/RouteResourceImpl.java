@@ -48,6 +48,10 @@ public class RouteResourceImpl implements RouteResource {
 
   @Override
   public List<Route> findByStop(String stop) {
+    if (stop == null) {
+      return null;
+    }
+
     return routeProvider.getRoutes().stream()
       .filter(r -> hasStation(r, stop))
       .collect(toList());

@@ -27,10 +27,13 @@ public class StationFinder {
   private static List<Pattern> alertPatterns = new ArrayList<>();
 
   static {
-    alertPatterns.add(Pattern.compile(format("on (?<start>%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
+    alertPatterns.add(Pattern.compile(format("on (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("nach (?<target>%1$s)(.+)ab (?<start>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("Strecke (?<start>%1$s)\\/(?<target>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("zwischen (?<start>%1$s) und (?<target>%1$s)", PATTERN_WORD)));
+
+    // Only start station
+    alertPatterns.add(Pattern.compile(format("ab (?<start>%1$s)", PATTERN_WORD)));
   }
 
   @Inject
@@ -43,13 +46,19 @@ public class StationFinder {
    * @return start and target station
    */
   public StartAndTargetStation findStartAndTarget(String alert) {
-  
     for (Pattern pattern : alertPatterns) {
       Matcher matcher = pattern.matcher(alert);
 
       if (matcher.find()) {
         String start = matcher.group("start");
-        String target = matcher.group("target");
+
+        String target = null;
+
+        try {
+          target = matcher.group("target");
+        } catch (IllegalArgumentException exc) {
+          // Ignore, target station is not always available
+        }
 
         return findStartAndTarget(start, target);
       }
@@ -59,23 +68,30 @@ public class StationFinder {
   }
 
   private StartAndTargetStation findStartAndTarget(String start, String target) {
-    if (start != null && target != null) {
-      Station startStation = stationProvider.findStationByName(start);
-      Station targetStation = stationProvider.findStationByName(target);
+    Station startStation = null;
+    Station targetStation = null;
+    if (start != null) {
+      startStation = stationProvider.findStationByName(start);
 
       // If the regex pattern matched, but the station provider cannot find any station, log it
       if (startStation == null) {
         LOG.warn("station not found {}", start);
       }
+    }
+
+    if (target != null) {
+      targetStation = stationProvider.findStationByName(target);
 
       if (targetStation == null) {
         LOG.warn("station not found {}", target);
       }
-
-      return new StartAndTargetStation(startStation, targetStation);
     }
 
-    return null;
+    if (targetStation == null && startStation == null) {
+      return null;
+    }
+
+    return new StartAndTargetStation(startStation, targetStation);
   }
 
 }

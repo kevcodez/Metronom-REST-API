@@ -55,7 +55,10 @@ public class StationFinderTest {
       { "ME 82819 von Uelzen nach Göttingen ab Uelzen", "Uelzen", "Göttingen" },
       { "Busnotverkehr von Göttingen nach Hannover mit", "Göttingen", "Hannover" },
       { "Zug 82818 von Göttingen nach Hannover leider entfallen", "Göttingen", "Hannover" },
-      { "ME 82834 von Göttingen nach Hannover ab Göttingen", "Göttingen", "Hannover" }
+      { "ME 82834 von Göttingen nach Hannover ab Göttingen", "Göttingen", "Hannover" },
+      { "von Hannover (planm. ab 20:33 Uhr) nach Goettingen: Fahrgaeste, die in Goettingen Anschluesse brauchen, koennen ICE 1087 (Abfahrt Hannover 21:01 Uhr) bis Goettingen",
+        "Hannover", "Goettingen" },
+      { " von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" }
     });
   }
 
@@ -66,6 +69,7 @@ public class StationFinderTest {
     mockStation("Cuxhaven");
     mockStation("Hamburg");
     mockStation("Göttingen");
+    mockStation("Goettingen");
     mockStation("Hannover");
     mockStation("Uelzen");
   }
