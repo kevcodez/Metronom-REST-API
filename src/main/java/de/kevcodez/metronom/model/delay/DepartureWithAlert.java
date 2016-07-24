@@ -2,10 +2,6 @@ package de.kevcodez.metronom.model.delay;
 
 import de.kevcodez.metronom.model.alert.Alert;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,8 +17,6 @@ public class DepartureWithAlert {
 
   private Alert alert;
 
-  private List<Alert> unassignedAlerts = new ArrayList<>();
-
   /**
    * Creates a new deparute alert with the given departure and alert.
    * 
@@ -32,14 +26,6 @@ public class DepartureWithAlert {
   public DepartureWithAlert(Departure departure, Alert alert) {
     this.departure = departure;
     this.alert = alert;
-  }
-
-  public void addUnassignedAlert(Alert alert) {
-    unassignedAlerts.add(alert);
-  }
-
-  public List<Alert> getUnassignedAlerts() {
-    return Collections.unmodifiableList(unassignedAlerts);
   }
 
   public Departure getDeparture() {

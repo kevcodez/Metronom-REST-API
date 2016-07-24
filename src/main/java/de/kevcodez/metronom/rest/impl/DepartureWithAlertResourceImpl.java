@@ -10,6 +10,7 @@ import de.kevcodez.metronom.rest.StationDelayResource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -38,6 +39,8 @@ public class DepartureWithAlertResourceImpl implements DepartureWithAlertResourc
     for (Departure departure : stationDelay.getDepartures()) {
       Alert alert = findAlert(departure, alerts);
 
+      alerts.remove(alert);
+
       departuresWithAlert.add(new DepartureWithAlert(departure, alert));
     }
 
@@ -45,7 +48,15 @@ public class DepartureWithAlertResourceImpl implements DepartureWithAlertResourc
   }
 
   private Alert findAlert(Departure departure, List<Alert> alerts) {
-    // TODO Auto-generated method stub
+    List<Alert> alertsForTrain = alerts.stream().filter(alert -> alert.getMessage().contains(departure.getTrain()))
+      .collect(Collectors.toList());
+
+    // TODO Zeitlich eingrenzen / Besseres matching
+
+    if (!alertsForTrain.isEmpty()) {
+      return alertsForTrain.get(0);
+    }
+
     return null;
   }
 

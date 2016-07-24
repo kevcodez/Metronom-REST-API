@@ -22,7 +22,7 @@ public class StationFinder {
 
   private static final Logger LOG = LoggerFactory.getLogger(StationFinder.class);
 
-  private static final String PATTERN_WORD = "[a-zA-ZäöüßÄÖÜ]+";
+  private static final String PATTERN_WORD = "[a-zA-ZäöüßÄÖÜ-]+";
 
   private static List<Pattern> alertPatterns = new ArrayList<>();
 
@@ -31,9 +31,12 @@ public class StationFinder {
     alertPatterns.add(Pattern.compile(format("nach (?<target>%1$s)(.+)ab (?<start>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("Strecke (?<start>%1$s)\\/(?<target>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("zwischen (?<start>%1$s) und (?<target>%1$s)", PATTERN_WORD)));
+    alertPatterns.add(Pattern.compile(format("Strecke (?<start>%1$s) - (?<target>%1$s)", PATTERN_WORD)));
+    alertPatterns.add(Pattern.compile(format("in (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
 
     // Only start station
     alertPatterns.add(Pattern.compile(format("ab (?<start>%1$s)", PATTERN_WORD)));
+    alertPatterns.add(Pattern.compile(format("von (?<start>(?!ME)%1$s)", PATTERN_WORD)));
   }
 
   @Inject
