@@ -18,6 +18,7 @@
  **/
 package de.kevcodez.metronom.model.alert;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,6 +58,13 @@ public class AlertCache {
       newAlert.fire(alert);
       alerts.add(alert);
     }
+
+    removeOldAlerts();
+  }
+
+  private void removeOldAlerts() {
+    LocalDateTime twentyFourHoursAgo = LocalDateTime.now().minusHours(24);
+    alerts.removeIf(alert -> alert.getCreationDate().isBefore(twentyFourHoursAgo));
   }
 
   public List<Alert> getAlerts() {
