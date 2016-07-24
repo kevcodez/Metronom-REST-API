@@ -34,7 +34,7 @@ import javax.servlet.annotation.WebFilter;
  * @author Kevin Grüneberg
  *
  */
-@WebFilter(urlPatterns = { "*" })
+@WebFilter(urlPatterns = { "/*" })
 public class CharacterEncodingFilter implements javax.servlet.Filter {
 
   @Override

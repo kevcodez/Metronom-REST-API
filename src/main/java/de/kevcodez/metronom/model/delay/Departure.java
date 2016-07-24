@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Kevin Grüneberg
  *
  */
-public class DelayedDeparture {
+public class Departure {
 
   private LocalTime time;
 
@@ -42,14 +42,14 @@ public class DelayedDeparture {
   private int delayInMinutes;
 
   /**
-   * Creates a new delayed departure with the given train, target station, time and delay in minutes.
+   * Creates a new departure with the given train, target station, time and delay in minutes.
    * 
    * @param train train
    * @param targetStation target station
    * @param time time
    * @param delayInMinutes delay in minutes
    */
-  public DelayedDeparture(String train, Station targetStation, LocalTime time, int delayInMinutes) {
+  public Departure(String train, Station targetStation, LocalTime time, int delayInMinutes) {
     this.train = train;
     this.targetStation = targetStation;
     this.time = time;
@@ -91,8 +91,8 @@ public class DelayedDeparture {
 
   @Override
   public String toString() {
-    return "DelayedDeparture [time=" + time + ", train=" + train + ", targetStation="
-      + targetStation + ", delayInMinutes=" + delayInMinutes + "]";
+    return "Departure [time=" + time + ", train=" + train + ", targetStation=" + targetStation + ", delayInMinutes="
+      + delayInMinutes + "]";
   }
 
 }

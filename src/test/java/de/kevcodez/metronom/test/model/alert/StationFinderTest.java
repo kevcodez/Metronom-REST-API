@@ -58,7 +58,9 @@ public class StationFinderTest {
       { "ME 82834 von Göttingen nach Hannover ab Göttingen", "Göttingen", "Hannover" },
       { "von Hannover (planm. ab 20:33 Uhr) nach Goettingen: Fahrgaeste, die in Goettingen Anschluesse brauchen, koennen ICE 1087 (Abfahrt Hannover 21:01 Uhr) bis Goettingen",
         "Hannover", "Goettingen" },
-      { " von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" }
+      { " von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" },
+      { " Wegen Erkrankung des Lokführer entfällt heute leider ME 82834 von Göttingen nach Hannover ab Göttingen(planm.Abfahrt 21:07 Uhr). Die Fahrgäste nutzen bitte den Folgetakt.",
+        "Göttingen", "Hannover" }
     });
   }
 

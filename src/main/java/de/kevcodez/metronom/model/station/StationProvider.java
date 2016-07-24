@@ -52,8 +52,8 @@ public class StationProvider {
     addStation("Winsen (Luhe)", "AWI", "Winsen");
     addStation("Radbruch", "ARH");
     addStation("Bardowick", "ABAD");
-    addStation("Lüneburg", "ALBG");
-    addStation("Bienenbüttel", "ABIL");
+    addStation("Lüneburg", "ALBG", "Lueneburg");
+    addStation("Bienenbüttel", "ABIL", "Bienenbuettel");
     addStation("Bad Bevensen", "ABVS");
     addStation("Uelzen", "HU");
     addStation("Hannover Hbf", "HH", "Hannover");
@@ -66,7 +66,7 @@ public class StationProvider {
     addStation("Kreiensen", "HK");
     addStation("Einbeck Salzderhelden", "HEB");
     addStation("Northeim (Han)", "HN", "Northeim");
-    addStation("Nörten-Hardenberg", "HNTH");
+    addStation("Nörten-Hardenberg", "HNTH", "Hardenberg", "Nörten", "Noerten-Hardenberg");
     addStation("Göttingen", "HG", "Goettingen", "Götingen");
     addStation("Buxtehude", "ABX");
     addStation("Horneburg", "AHOG");
@@ -81,21 +81,21 @@ public class StationProvider {
     addStation("Hittfeld", "AHIF");
     addStation("Klecken", "AKC");
     addStation("Buchholz (Nordheide)", "ABLZ", "Buchholz");
-    addStation("Sprötze", "ASP");
+    addStation("Sprötze", "ASP", "Sproetze");
     addStation("Tostedt", "ATST");
-    addStation("Lauenbrück", "ALUB");
+    addStation("Lauenbrück", "ALUB", "Lauenbrueck");
     addStation("Scheeßel", "ASL");
     addStation("Rotenburg (Wümme)", "AROG", "Rotenburg");
     addStation("Sottrum", "AS");
     addStation("Ottersberg (Han)", "AOBG", "Ottersberg");
     addStation("Sagehorn", "ASAG");
-    addStation("Bremen-Oberneuland", "HBON");
+    addStation("Bremen-Oberneuland", "HBON", "Oberneuland");
     addStation("Bremen Hbf", "HB", "Bremen");
     addStation("Suderburg", "HSUD");
-    addStation("Unterlüß", "HUNL");
+    addStation("Unterlüß", "HUNL", "Unterlüss", "Unterlueß");
     addStation("Eschede", "HESD");
     addStation("Celle", "HC");
-    addStation("Großburgwedel", "HGBW");
+    addStation("Großburgwedel", "HGBW", "Grossburgwedel");
     addStation("Isernhagen", "HIHG");
     addStation("Langenhagen Mitte", "HLGM", "Langenhagen");
   }

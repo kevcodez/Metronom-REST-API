@@ -59,29 +59,29 @@ public class StationDelayConverter {
 
     if (nodeDeparture.getNodeType() == JsonNodeType.OBJECT) {
       // Parse single object
-      DelayedDeparture delayedDeparture = parseDelayedDeparture(nodeDeparture);
+      Departure departure = parseDeparture(nodeDeparture);
 
-      stationDelay.addDeparture(delayedDeparture);
+      stationDelay.addDeparture(departure);
     } else {
       // Parse JSON array
       for (JsonNode singleDeparture : nodeDeparture) {
-        DelayedDeparture delayedDeparture = parseDelayedDeparture(singleDeparture);
+        Departure departure = parseDeparture(singleDeparture);
 
-        stationDelay.addDeparture(delayedDeparture);
+        stationDelay.addDeparture(departure);
       }
     }
 
     return stationDelay;
   }
 
-  private DelayedDeparture parseDelayedDeparture(JsonNode singleDeparture) {
+  private Departure parseDeparture(JsonNode singleDeparture) {
     String time = singleDeparture.get("zeit").asText();
     String train = singleDeparture.get("zug").asText();
     String targetStationName = singleDeparture.get("ziel").asText();
     int delayInMinutes = singleDeparture.get("prognosemin").asInt();
 
     Station targetStation = stationProvider.findStationByName(targetStationName);
-    return new DelayedDeparture(train, targetStation, LocalTime.parse(time), delayInMinutes);
+    return new Departure(train, targetStation, LocalTime.parse(time), delayInMinutes);
   }
 
 }

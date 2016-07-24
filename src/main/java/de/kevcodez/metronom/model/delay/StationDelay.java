@@ -39,7 +39,7 @@ public class StationDelay {
   private Station station;
   private LocalTime time;
 
-  private List<DelayedDeparture> departures = new ArrayList<>();
+  private List<Departure> departures = new ArrayList<>();
 
   /**
    * Creates a new station delay with the given station and time.
@@ -53,12 +53,12 @@ public class StationDelay {
   }
 
   /**
-   * Adds the given delayed depature to the list.
+   * Adds the given depature to the list.
    * 
-   * @param delayedDepature delayed departure to add
+   * @param depature departure to add
    */
-  public void addDeparture(DelayedDeparture delayedDepature) {
-    departures.add(delayedDepature);
+  public void addDeparture(Departure depature) {
+    departures.add(depature);
   }
 
   public Station getStation() {
@@ -78,7 +78,7 @@ public class StationDelay {
     this.time = time;
   }
 
-  public List<DelayedDeparture> getDepartures() {
+  public List<Departure> getDepartures() {
     return Collections.unmodifiableList(departures);
   }
 
