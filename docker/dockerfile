@@ -20,7 +20,7 @@ RUN cd $HOME \
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 # Expose the ports we're interested in
-EXPOSE 8080
+EXPOSE 8484
 
 # Add admin account
 RUN /opt/jboss/wildfly/bin/add-user.sh admin Admin#70365 --silent
