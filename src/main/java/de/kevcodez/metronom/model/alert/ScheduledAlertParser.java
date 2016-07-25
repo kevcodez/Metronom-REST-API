@@ -23,7 +23,7 @@ import javax.ejb.Singleton;
 import javax.inject.Inject;
 
 /**
- * Class to parse alert notifications every X seconds (scheduled job).
+ * Class to parse alert notifications every minute (scheduled job).
  * 
  * @author Kevin Grüneberg
  *
@@ -38,10 +38,10 @@ public class ScheduledAlertParser {
   private AlertCache alertCache;
 
   /**
-   * Parses the alert notifications frmo the Metronom SOAP endpoint and puts them in the {@link AlertCache}. This
-   * function is executed every 30 seconds.
+   * Parses the alert notifications from the Metronom SOAP endpoint and puts them in the {@link AlertCache}. This
+   * function is executed every minute.
    */
-  @Schedule(second = "*/30", minute = "*", hour = "*", persistent = false)
+  @Schedule(second = "*", minute = "*/1", hour = "*", persistent = false)
   public void parseAlerts() {
     alertParser.parseAlerts().forEach(alertCache::addAlert);
   }
