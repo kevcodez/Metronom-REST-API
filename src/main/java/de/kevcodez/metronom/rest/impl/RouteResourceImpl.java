@@ -24,6 +24,7 @@ import de.kevcodez.metronom.model.route.Route;
 import de.kevcodez.metronom.model.route.RouteProvider;
 import de.kevcodez.metronom.rest.RouteResource;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -49,7 +50,7 @@ public class RouteResourceImpl implements RouteResource {
   @Override
   public List<Route> findByStop(String stop) {
     if (stop == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     return routeProvider.getRoutes().stream()

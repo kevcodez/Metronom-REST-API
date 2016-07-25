@@ -48,14 +48,15 @@ public class StationDelayConverter {
    */
   public StationDelay convert(Station station, JsonNode node) {
     String timeAsString = node.get("stand").asText();
+    LocalTime time = LocalTime.parse(timeAsString);
+
+    StationDelay stationDelay = new StationDelay(station, time);
 
     JsonNode nodeDeparture = node.get("abfahrt");
 
     if (nodeDeparture == null) {
       return null;
     }
-
-    StationDelay stationDelay = new StationDelay(station, LocalTime.parse(timeAsString));
 
     if (nodeDeparture.getNodeType() == JsonNodeType.OBJECT) {
       // Parse single object
