@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<description></description>
+	<description>REST API for http://www.der-metronom.de/</description>
 
 	<scm>
 		<connection>scm:git:git@github.com:kevcodez/Metronom-REST-API.git</connection>
@@ -24,6 +24,7 @@
 		<hamcrest.junit.version>2.0.0.0</hamcrest.junit.version>
 		<javaee.api.version>7.0</javaee.api.version>
 		<jackson.databind.version>2.5.4</jackson.databind.version>
+		<jacoco.version>0.7.7.201606060606</jacoco.version>
 		<mockito.version>2.0.87-beta</mockito.version>
 		<slf4j.version>1.7.2</slf4j.version>
 	</properties>
@@ -70,7 +71,36 @@
 	</dependencies>
 
 	<build>
+
 		<finalName>metronom</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+					<dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
 	</build>
 
 	<url>https://github.com/kevcodez/Metronom-REST-API</url>
@@ -86,4 +116,5 @@
 			<timezone>UTC+1</timezone>
 		</developer>
 	</developers>
+
 </project>

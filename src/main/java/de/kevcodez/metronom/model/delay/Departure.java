@@ -41,6 +41,8 @@ public class Departure {
 
   private int delayInMinutes;
 
+  private String track;
+
   /**
    * Creates a new departure with the given train, target station, time and delay in minutes.
    * 
@@ -89,10 +91,18 @@ public class Departure {
     this.delayInMinutes = delayInMinutes;
   }
 
+  public void setTrack(String track) {
+    this.track = track;
+  }
+
+  public String getTrack() {
+    return track;
+  }
+
   @Override
   public String toString() {
     return "Departure [time=" + time + ", train=" + train + ", targetStation=" + targetStation + ", delayInMinutes="
-      + delayInMinutes + "]";
+      + delayInMinutes + ", track=" + track + "]";
   }
 
 }

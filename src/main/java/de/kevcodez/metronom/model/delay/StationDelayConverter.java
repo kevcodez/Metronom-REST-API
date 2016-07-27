@@ -25,6 +25,8 @@ import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.model.station.StationProvider;
 
 import java.time.LocalTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -35,6 +37,8 @@ import javax.inject.Inject;
  *
  */
 public class StationDelayConverter {
+
+  private static final Pattern PATTERN_TRACK = Pattern.compile("Gleis (\\d+)");
 
   @Inject
   private StationProvider stationProvider;
@@ -81,8 +85,18 @@ public class StationDelayConverter {
     String targetStationName = singleDeparture.get("ziel").asText();
     int delayInMinutes = singleDeparture.get("prognosemin").asInt();
 
+    String prognose = singleDeparture.get("prognose").asText();
+
     Station targetStation = stationProvider.findStationByName(targetStationName);
-    return new Departure(train, targetStation, LocalTime.parse(time), delayInMinutes);
+    Departure departure = new Departure(train, targetStation, LocalTime.parse(time), delayInMinutes);
+
+    Matcher matcher = PATTERN_TRACK.matcher(prognose);
+
+    if (matcher.find()) {
+      departure.setTrack(matcher.group(1));
+    }
+
+    return departure;
   }
 
 }
