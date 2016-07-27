@@ -1,0 +1,13 @@
+Server
+
+- Gleiswechsel berücksichtigen
+- Alerts, die nicht zugeordnet werden können handhaben
+- Diverse Tests schreiben, um Patterns und Zuordnung von Alerts zu einzelnen Verbindungen zu verbessern
+- REST API anders modellieren (XSD/Swagger/RAML)
+
+APP
+
+- Gleiswechsel anzeigen
+- Nicht zugeordnete Alerts anzeigen
+- Landscape Ansicht prüfen
+- Schema (XSD) nutzen

@@ -41,8 +41,9 @@ public class ScheduledAlertParser {
    * Parses the alert notifications from the Metronom SOAP endpoint and puts them in the {@link AlertCache}. This
    * function is executed every minute.
    */
-  @Schedule(second = "*", minute = "*/1", hour = "*", persistent = false)
+  @Schedule(second = "*/60", minute = "*", hour = "*", persistent = false)
   public void parseAlerts() {
+    System.out.println("parsing alerts");
     alertParser.parseAlerts().forEach(alertCache::addAlert);
   }
 

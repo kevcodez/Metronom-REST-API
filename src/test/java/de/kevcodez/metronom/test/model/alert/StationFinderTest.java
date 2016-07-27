@@ -60,9 +60,12 @@ public class StationFinderTest {
         "Hannover", "Goettingen" },
       { " von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" },
       { " Wegen Erkrankung des Lokführer entfällt heute leider ME 82834 von Göttingen nach Hannover ab Göttingen(planm.Abfahrt 21:07 Uhr). Die Fahrgäste nutzen bitte den Folgetakt.",
-        "Göttingen", "Hannover" }, 
-      {"Strecke Cuxhaven - Hamburg", "Cuxhaven", "Hamburg"},
-      {"in Cuxhaven, Fahrgäste nach Hamburg", "Cuxhaven", "Hamburg"}
+        "Göttingen", "Hannover" },
+      { "Strecke Cuxhaven - Hamburg", "Cuxhaven", "Hamburg" },
+      { "in Cuxhaven, Fahrgäste nach Hamburg", "Cuxhaven", "Hamburg" },
+      { " ab Hamburg (planmäßige Abfahrt 10:09 Uhr) in Richtung Cuxhaven", "Hamburg", "Cuxhaven" },
+      { " zurzeit in Cuxhaven, die Weiterfahrt Richtung Hamburg", "Cuxhaven", "Hamburg" },
+      { "82115 nach Cuxhaven noch in Hamburg", "Hamburg", "Cuxhaven" }
     });
   }
 

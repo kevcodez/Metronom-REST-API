@@ -43,7 +43,7 @@ public class StationProvider {
    */
   @PostConstruct
   public void constructStations() {
-    addStation("Hamburg Hbf", "AH", "Hamburg");
+    addStation("Hamburg Hbf", "AH", "Hamburg", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg");
     addStation("Hamburg-Harburg", "AHAR", "Harburg");
     addStation("Meckelfeld", "AMDH");
     addStation("Maschen", "AMA");
@@ -54,7 +54,7 @@ public class StationProvider {
     addStation("Bardowick", "ABAD");
     addStation("Lüneburg", "ALBG", "Lueneburg");
     addStation("Bienenbüttel", "ABIL", "Bienenbuettel");
-    addStation("Bad Bevensen", "ABVS");
+    addStation("Bad Bevensen", "ABVS", "Bevensen");
     addStation("Uelzen", "HU");
     addStation("Hannover Hbf", "HH", "Hannover");
     addStation("Sarstedt", "HSRD");
@@ -90,7 +90,7 @@ public class StationProvider {
     addStation("Ottersberg (Han)", "AOBG", "Ottersberg");
     addStation("Sagehorn", "ASAG");
     addStation("Bremen-Oberneuland", "HBON", "Oberneuland");
-    addStation("Bremen Hbf", "HB", "Bremen");
+    addStation("Bremen Hbf", "HB", "Bremen", "Bremen Hauptbahnhof");
     addStation("Suderburg", "HSUD");
     addStation("Unterlüß", "HUNL", "Unterlüss", "Unterlueß");
     addStation("Eschede", "HESD");
