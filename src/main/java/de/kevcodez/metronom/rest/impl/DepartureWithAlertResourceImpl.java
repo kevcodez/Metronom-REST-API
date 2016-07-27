@@ -47,7 +47,7 @@ public class DepartureWithAlertResourceImpl implements DepartureWithAlertResourc
     return departuresWithAlert;
   }
 
-  private Alert findAlert(Departure departure, List<Alert> alerts) {
+  private static Alert findAlert(Departure departure, List<Alert> alerts) {
     List<Alert> alertsForTrain = alerts.stream().filter(alert -> alert.getMessage().contains(departure.getTrain()))
       .collect(Collectors.toList());
 

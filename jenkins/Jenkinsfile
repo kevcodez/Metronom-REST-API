@@ -10,12 +10,14 @@ node {
     stage 'Build'
     
     // Run the maven build
-    sh "mvn clean install"
+    sh "mvn -B verify"
+    
+    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
 }
 
 node {
   stage 'Analyze with SonarQube'
-  sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube_runner/bin/sonar-runner -e -Dsonar.host.url=http://kevcodez.de:9000/ -Dsonar.login=${sonarLogin} -Dsonar.language=java -Dsonar.projectName=Metronom -Dsonar.projectVersion=0.1 -Dsonar.sourceEncoding=UTF-8 -Dsonar.projectKey=de.kevcodez:metronom -Dsonar.sources=src -Dsonar.binaries=target/classes -Dsonar.projectBaseDir=."
+  sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube_runner/bin/sonar-runner -e -Dsonar.host.url=http://kevcodez.de:9000/ -Dsonar.login=${sonarLogin} -Dsonar.language=java -Dsonar.projectName=Metronom -Dsonar.projectVersion=0.1 -Dsonar.sourceEncoding=UTF-8 -Dsonar.projectKey=de.kevcodez:metronom -Dsonar.sources=src -Dsonar.java.binaries=target/classes -Dsonar.projectBaseDir=."
 }
    
 node {
@@ -27,7 +29,6 @@ node {
 node {
     stage 'Build docker image'
     sh "docker build -t kevcodez:metronom ./docker"
-    
 }
 
 node {

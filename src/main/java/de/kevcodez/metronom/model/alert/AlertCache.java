@@ -53,7 +53,7 @@ public class AlertCache {
    */
   public void addAlert(Alert alert) {
     if (!alerts.contains(alert)) {
-      verifyStartStation(alert);
+      logUnknownStartStation(alert);
 
       newAlert.fire(alert);
       alerts.add(alert);
@@ -71,7 +71,7 @@ public class AlertCache {
     return Collections.unmodifiableList(alerts);
   }
 
-  private void verifyStartStation(Alert alert) {
+  private static void logUnknownStartStation(Alert alert) {
     if (alert.getStationStart() == null) {
       LOG.warn("start station not found for {}", alert.getMessage());
     }

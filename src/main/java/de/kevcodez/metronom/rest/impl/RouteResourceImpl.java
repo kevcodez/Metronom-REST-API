@@ -58,7 +58,7 @@ public class RouteResourceImpl implements RouteResource {
       .collect(toList());
   }
 
-  private boolean hasStation(Route route, String stationName) {
+  private static boolean hasStation(Route route, String stationName) {
     return route.getStations().stream()
       .anyMatch(
         station -> station.getName().equals(stationName) || station.getAlternativeNames().contains(stationName));
