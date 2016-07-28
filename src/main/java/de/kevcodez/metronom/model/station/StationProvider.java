@@ -44,7 +44,7 @@ public class StationProvider {
   @PostConstruct
   public void constructStations() {
     addStation("Hamburg", "AH", "Hamburg Hbf", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg");
-    addStation("Hamburg-Harburg", "AHAR", "Harburg", "Hamburg- Harburg");
+    addStation("Hamburg-Harburg", "AHAR", "Harburg", "Hamburg- Harburg", "Hamburg Harburg");
     addStation("Meckelfeld", "AMDH");
     addStation("Maschen", "AMA");
     addStation("Stelle", "ASTE");

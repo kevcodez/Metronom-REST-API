@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import de.kevcodez.metronom.model.station.StartAndTargetStation;
-import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.model.station.StationFinder;
 import de.kevcodez.metronom.model.station.StationProvider;
 
@@ -47,6 +46,8 @@ public class StationFinderTest {
   @Parameter(value = 2)
   public String expectedTarget;
 
+  private StationProvider realStationProvider;
+
   @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
@@ -57,7 +58,7 @@ public class StationFinderTest {
       { "Zug 82818 von Göttingen nach Hannover leider entfallen", "Göttingen", "Hannover" },
       { "ME 82834 von Göttingen nach Hannover ab Göttingen", "Göttingen", "Hannover" },
       { "von Hannover (planm. ab 20:33 Uhr) nach Goettingen: Fahrgaeste, die in Goettingen Anschluesse brauchen, koennen ICE 1087 (Abfahrt Hannover 21:01 Uhr) bis Goettingen",
-        "Hannover", "Goettingen" },
+        "Hannover", "Göttingen" },
       { "von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" },
       { "Wegen Erkrankung des Lokführer entfällt heute leider ME 82834 von Göttingen nach Hannover ab Göttingen(planm.Abfahrt 21:07 Uhr). Die Fahrgäste nutzen bitte den Folgetakt.",
         "Göttingen", "Hannover" },
@@ -69,13 +70,16 @@ public class StationFinderTest {
       { "Strecke zwischen Cuxhaven und Hamburg", "Cuxhaven", "Hamburg" },
       { "nach Cuxhaven ab Hamburg", "Hamburg", "Cuxhaven" },
       { "hinter Cuxhaven, die Fahrt nach Hamburg", "Cuxhaven", "Hamburg" },
-      { " zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg Hbf", "Hamburg Harburg" },
-      { " zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg Hbf", "Hamburg-Harburg" }
+      { " zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
+      { " zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" }
     });
   }
 
   @Before
   public void init() {
+    realStationProvider = new StationProvider();
+    realStationProvider.constructStations();
+
     MockitoAnnotations.initMocks(this);
 
     mockStation("Cuxhaven");
@@ -84,9 +88,9 @@ public class StationFinderTest {
     mockStation("Goettingen");
     mockStation("Hannover");
     mockStation("Uelzen");
-    mockStation("Hamburg Hbf");
-    mockStation("Hamburg Harburg");
     mockStation("Hamburg-Harburg");
+
+    Mockito.when(stationProvider.getStations()).thenReturn(realStationProvider.getStations());
   }
 
   @Test
@@ -100,6 +104,6 @@ public class StationFinderTest {
 
   private void mockStation(String station) {
     Mockito.when(stationProvider.findStationByName(station))
-      .thenReturn(new Station(station, station));
+      .thenReturn(realStationProvider.findStationByName(station));
   }
 }
