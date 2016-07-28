@@ -69,16 +69,8 @@ public class DeparturesWithAlert {
       return departure;
     }
 
-    public void setDeparture(Departure departure) {
-      this.departure = departure;
-    }
-
     public Alert getAlert() {
       return alert;
-    }
-
-    public void setAlert(Alert alert) {
-      this.alert = alert;
     }
 
   }
