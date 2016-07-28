@@ -7,17 +7,13 @@ Server
 WildFly
 
 - SSL
-- GZIP Support
 - Welcome Page entfernen
 - HTTP2 Support
-- Ungenutzte Subdomains entfernen
 - Undertow Upgrade
 
 APP
 
-- Gleiswechsel anzeigen
-- Nicht zugeordnete Alerts anzeigen
 - Landscape Ansicht prüfen
 - Schema (XSD) nutzen
 - Fehlermeldung wenn keine Internetverbindung da ist
-- Fehlermeldung bei Timeout
+- Favoriten hinzufügen (ignore-case matching)

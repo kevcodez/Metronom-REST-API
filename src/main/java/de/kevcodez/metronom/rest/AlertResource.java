@@ -62,7 +62,7 @@ public interface AlertResource {
    * @return list of alerts
    */
   @GET
-  @Path("unknownStations")
+  @Path("unassigned")
   List<Alert> findAlertsWithUnknownStation();
 
   /**
