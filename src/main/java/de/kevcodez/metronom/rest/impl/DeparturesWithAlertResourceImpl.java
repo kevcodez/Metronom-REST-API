@@ -24,7 +24,7 @@ import javax.inject.Inject;
  *
  */
 @Stateless
-public class DepartureWithAlertResourceImpl implements DeparturesWithAlertResource {
+public class DeparturesWithAlertResourceImpl implements DeparturesWithAlertResource {
 
   @Inject
   private StationDelayResource stationDelayResource;
@@ -35,11 +35,11 @@ public class DepartureWithAlertResourceImpl implements DeparturesWithAlertResour
   @Override
   public DeparturesWithAlert findByStation(String station) {
     StationDelay stationDelay = stationDelayResource.findStationDelayByName(station);
-    
+
     if (stationDelay == null) {
       return null;
     }
-    
+
     List<Alert> alerts = alertResource.findRelevantAlertsForStation(station);
 
     DeparturesWithAlert departuresWithAlert = new DeparturesWithAlert();
@@ -56,7 +56,7 @@ public class DepartureWithAlertResourceImpl implements DeparturesWithAlertResour
 
     // Adds alerts that have no start/stop station to the list of unassigned alerts
     List<Alert> alertsWithoutStation = alertResource.findAlertsWithUnknownStation().stream()
-      .filter(alert -> isMaxTwoHoursOld(alert)).collect(toList());
+      .filter(DeparturesWithAlertResourceImpl::isMaxTwoHoursOld).collect(toList());
     alertsWithoutStation.forEach(departuresWithAlert::addRemainingAlert);
 
     return departuresWithAlert;
@@ -68,7 +68,8 @@ public class DepartureWithAlertResourceImpl implements DeparturesWithAlertResour
       .collect(Collectors.toList());
 
     // Max 2 hours old
-    alertsForTrain = alertsForTrain.stream().filter(alert -> isMaxTwoHoursOld(alert)).collect(toList());
+    alertsForTrain = alertsForTrain.stream().filter(DeparturesWithAlertResourceImpl::isMaxTwoHoursOld)
+      .collect(toList());
 
     // TODO Besseres matching durch Tests
 

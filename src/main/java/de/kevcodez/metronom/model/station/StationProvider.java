@@ -116,10 +116,26 @@ public class StationProvider {
       .findFirst().orElse(null);
   }
 
+  /**
+   * Checks if the given station name matches the given station. The string is compared using
+   * {@link String#equalsIgnoreCase(String)}.
+   * 
+   * @param stationName station name to match
+   * @param station station to match
+   * @return true, if matches
+   */
   public static boolean stationNameMatches(String stationName, Station station) {
     return station.getName().equalsIgnoreCase(stationName);
   }
 
+  /**
+   * Checks if the given station name matches any of the alternative names of the given station. The string is compared
+   * using {@link String#equalsIgnoreCase(String)}.
+   * 
+   * @param stationName station name to match
+   * @param station station to match
+   * @return true, if matches
+   */
   public static boolean alternativeNameMatches(String stationName, Station station) {
     return station.getAlternativeNames().stream().anyMatch(name -> name.equalsIgnoreCase(stationName));
   }

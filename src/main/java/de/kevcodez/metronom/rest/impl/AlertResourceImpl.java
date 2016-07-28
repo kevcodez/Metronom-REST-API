@@ -89,7 +89,7 @@ public class AlertResourceImpl implements AlertResource {
       .collect(toList());
   }
 
-  private boolean isAlertRelevantForStation(List<Station> stations, Alert alert) {
+  private static boolean isAlertRelevantForStation(List<Station> stations, Alert alert) {
     if (alert.getStationStart() != null && alert.getStationEnd() != null) {
       return stations.contains(alert.getStationStart()) && stations.contains(alert.getStationEnd());
     } else if (alert.getStationStart() != null) {

@@ -57,10 +57,10 @@ public class StationFinder {
    * @return start and target station
    */
   public StartAndTargetStation findStartAndTarget(String alert) {
-    alert = replaceSpacesInStationNames(alert);
+    String alertNoSpacesInNames = replaceSpacesInStationNames(alert);
 
     for (Pattern pattern : alertPatterns) {
-      Matcher matcher = pattern.matcher(alert);
+      Matcher matcher = pattern.matcher(alertNoSpacesInNames);
 
       if (matcher.find()) {
         String start = matcher.group("start");
@@ -83,16 +83,18 @@ public class StationFinder {
   private String replaceSpacesInStationNames(String alert) {
     List<Station> stations = stationProvider.getStations();
 
+    String replacedSpaces = alert;
+
     for (Station station : stations) {
       List<String> namesWithSpace = station.getAlternativeNames().stream().filter(name -> name.contains(" "))
         .collect(Collectors.toList());
 
       for (String name : namesWithSpace) {
-        alert = alert.replace(name, station.getName());
+        replacedSpaces = replacedSpaces.replace(name, station.getName());
       }
     }
 
-    return alert;
+    return replacedSpaces;
   }
 
   private StartAndTargetStation findStartAndTarget(String start, String target, String originalAlert) {
