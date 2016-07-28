@@ -24,13 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.kevcodez.metronom.model.station.StartAndTargetStation;
 import de.kevcodez.metronom.model.station.StationFinder;
 import de.kevcodez.metronom.utility.Exceptions;
+import de.kevcodez.metronom.utility.WebsiteSourceDownloader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +40,7 @@ import javax.inject.Inject;
  */
 public class AlertParser {
 
-  private static final String METRONOM_ALERT_URL = "http://www.der-metronom.de/extern/sharepoint/sharepoint.soap.php";
+  public static final String METRONOM_ALERT_URL = "http://www.der-metronom.de/extern/sharepoint/sharepoint.soap.php";
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -60,7 +56,7 @@ public class AlertParser {
    * @return list of alerts
    */
   public List<Alert> parseAlerts() {
-    String pageSource = getWebPabeSource(METRONOM_ALERT_URL);
+    String pageSource = WebsiteSourceDownloader.getSource(METRONOM_ALERT_URL);
     try {
       JsonNode mainJsonNode = objectMapper.readTree(pageSource);
       JsonNode alertJsonNode = mainJsonNode.get("ListItem");
@@ -79,34 +75,6 @@ public class AlertParser {
       });
 
       return alerts;
-    } catch (IOException exc) {
-      throw Exceptions.unchecked(exc);
-    }
-  }
-
-  /**
-   * Gets the source of the web page at the given URL.
-   * 
-   * @param websiteUrl website URL
-   * @return page source
-   */
-  public static String getWebPabeSource(String websiteUrl) {
-    try {
-      URL url = new URL(websiteUrl);
-      URLConnection urlConn = url.openConnection();
-      BufferedReader inputStream = new BufferedReader(
-        new InputStreamReader(urlConn.getInputStream(), StandardCharsets.UTF_8));
-
-      String inputLine;
-      StringBuilder stringBuilder = new StringBuilder();
-
-      while ((inputLine = inputStream.readLine()) != null) {
-        stringBuilder.append(inputLine);
-      }
-
-      inputStream.close();
-
-      return stringBuilder.toString();
     } catch (IOException exc) {
       throw Exceptions.unchecked(exc);
     }

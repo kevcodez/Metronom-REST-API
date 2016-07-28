@@ -21,10 +21,10 @@ package de.kevcodez.metronom.model.delay;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.kevcodez.metronom.model.alert.AlertParser;
 import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.model.station.StationProvider;
 import de.kevcodez.metronom.utility.Exceptions;
+import de.kevcodez.metronom.utility.WebsiteSourceDownloader;
 
 import java.io.IOException;
 
@@ -76,7 +76,7 @@ public class StationDelayParser {
 
     String uri = buildStationDelayUri(station);
 
-    String result = AlertParser.getWebPabeSource(uri);
+    String result = WebsiteSourceDownloader.getSource(uri);
 
     try {
       JsonNode jsonNode = objectMapper.readTree(result);
