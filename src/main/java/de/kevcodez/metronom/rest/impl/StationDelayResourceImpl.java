@@ -24,6 +24,7 @@ import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.model.station.StationProvider;
 import de.kevcodez.metronom.rest.StationDelayResource;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
@@ -32,6 +33,7 @@ import javax.inject.Inject;
  * @author Kevin Grüneberg
  *
  */
+@Stateless
 public class StationDelayResourceImpl implements StationDelayResource {
 
   @Inject
@@ -40,6 +42,7 @@ public class StationDelayResourceImpl implements StationDelayResource {
   @Inject
   private StationProvider stationProvider;
 
+  // TODO Cache for at least 30 seconds
   @Override
   public StationDelay findStationDelayByName(String name) {
     return stationDelayParser.findDelays(name);
@@ -48,6 +51,6 @@ public class StationDelayResourceImpl implements StationDelayResource {
   @Override
   public StationDelay findStationDelayByCode(String code) {
     Station station = stationProvider.findStationByCode(code);
-    return stationDelayParser.findDelays(station);
+    return findStationDelayByName(station.getName());
   }
 }

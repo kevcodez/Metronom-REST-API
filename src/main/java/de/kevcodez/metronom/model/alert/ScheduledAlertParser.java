@@ -18,8 +18,10 @@
  **/
 package de.kevcodez.metronom.model.alert;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 
 /**
@@ -29,6 +31,7 @@ import javax.inject.Inject;
  *
  */
 @Singleton
+@Startup
 public class ScheduledAlertParser {
 
   @Inject
@@ -36,6 +39,14 @@ public class ScheduledAlertParser {
 
   @Inject
   private AlertCache alertCache;
+
+  /**
+   * Parse alerts once on startup.
+   */
+  @PostConstruct
+  public void onPostConstruct() {
+    parseAlerts();
+  }
 
   /**
    * Parses the alert notifications from the Metronom SOAP endpoint and puts them in the {@link AlertCache}. This

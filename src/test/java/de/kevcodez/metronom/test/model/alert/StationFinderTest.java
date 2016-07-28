@@ -58,14 +58,19 @@ public class StationFinderTest {
       { "ME 82834 von Göttingen nach Hannover ab Göttingen", "Göttingen", "Hannover" },
       { "von Hannover (planm. ab 20:33 Uhr) nach Goettingen: Fahrgaeste, die in Goettingen Anschluesse brauchen, koennen ICE 1087 (Abfahrt Hannover 21:01 Uhr) bis Goettingen",
         "Hannover", "Goettingen" },
-      { " von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" },
-      { " Wegen Erkrankung des Lokführer entfällt heute leider ME 82834 von Göttingen nach Hannover ab Göttingen(planm.Abfahrt 21:07 Uhr). Die Fahrgäste nutzen bitte den Folgetakt.",
+      { "von ME 81644 von Uelzen (planmäßige Abfahrt: 00:05 Uhr) nach Hamburg um", "Uelzen", "Hamburg" },
+      { "Wegen Erkrankung des Lokführer entfällt heute leider ME 82834 von Göttingen nach Hannover ab Göttingen(planm.Abfahrt 21:07 Uhr). Die Fahrgäste nutzen bitte den Folgetakt.",
         "Göttingen", "Hannover" },
       { "Strecke Cuxhaven - Hamburg", "Cuxhaven", "Hamburg" },
       { "in Cuxhaven, Fahrgäste nach Hamburg", "Cuxhaven", "Hamburg" },
-      { " ab Hamburg (planmäßige Abfahrt 10:09 Uhr) in Richtung Cuxhaven", "Hamburg", "Cuxhaven" },
-      { " zurzeit in Cuxhaven, die Weiterfahrt Richtung Hamburg", "Cuxhaven", "Hamburg" },
-      { "82115 nach Cuxhaven noch in Hamburg", "Hamburg", "Cuxhaven" }
+      { "ab Hamburg (planmäßige Abfahrt 10:09 Uhr) in Richtung Cuxhaven", "Hamburg", "Cuxhaven" },
+      { "zurzeit in Cuxhaven, die Weiterfahrt Richtung Hamburg", "Cuxhaven", "Hamburg" },
+      { "82115 nach Cuxhaven noch in Hamburg", "Hamburg", "Cuxhaven" },
+      { "Strecke zwischen Cuxhaven und Hamburg", "Cuxhaven", "Hamburg" },
+      { "nach Cuxhaven ab Hamburg", "Hamburg", "Cuxhaven" },
+      { "hinter Cuxhaven, die Fahrt nach Hamburg", "Cuxhaven", "Hamburg" },
+      { " zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg Hbf", "Hamburg Harburg" },
+      { " zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg Hbf", "Hamburg-Harburg" }
     });
   }
 
@@ -79,6 +84,9 @@ public class StationFinderTest {
     mockStation("Goettingen");
     mockStation("Hannover");
     mockStation("Uelzen");
+    mockStation("Hamburg Hbf");
+    mockStation("Hamburg Harburg");
+    mockStation("Hamburg-Harburg");
   }
 
   @Test

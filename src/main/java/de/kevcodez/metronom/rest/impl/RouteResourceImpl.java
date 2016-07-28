@@ -18,6 +18,8 @@
  **/
 package de.kevcodez.metronom.rest.impl;
 
+import static de.kevcodez.metronom.model.station.StationProvider.alternativeNameMatches;
+import static de.kevcodez.metronom.model.station.StationProvider.stationNameMatches;
 import static java.util.stream.Collectors.toList;
 
 import de.kevcodez.metronom.model.route.Route;
@@ -60,14 +62,13 @@ public class RouteResourceImpl implements RouteResource {
 
   private static boolean hasStation(Route route, String stationName) {
     return route.getStations().stream()
-      .anyMatch(
-        station -> station.getName().equals(stationName) || station.getAlternativeNames().contains(stationName));
+      .anyMatch(station -> stationNameMatches(stationName, station) || alternativeNameMatches(stationName, station));
   }
 
   @Override
   public Route findByName(String name) {
     return routeProvider.getRoutes().stream()
-      .filter(r -> name.equals(r.getName()))
+      .filter(r -> name.equalsIgnoreCase(r.getName()))
       .findFirst().orElse(null);
   }
 

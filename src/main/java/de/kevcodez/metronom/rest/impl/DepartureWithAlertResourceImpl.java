@@ -1,14 +1,16 @@
 package de.kevcodez.metronom.rest.impl;
 
+import static java.util.stream.Collectors.toList;
+
 import de.kevcodez.metronom.model.alert.Alert;
 import de.kevcodez.metronom.model.delay.Departure;
-import de.kevcodez.metronom.model.delay.DepartureWithAlert;
+import de.kevcodez.metronom.model.delay.DeparturesWithAlert;
 import de.kevcodez.metronom.model.delay.StationDelay;
 import de.kevcodez.metronom.rest.AlertResource;
-import de.kevcodez.metronom.rest.DepartureWithAlertResource;
+import de.kevcodez.metronom.rest.DeparturesWithAlertResource;
 import de.kevcodez.metronom.rest.StationDelayResource;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,13 +18,13 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- * Implements {@link DepartureWithAlertResource}.
+ * Implements {@link DeparturesWithAlertResource}.
  * 
  * @author Kevin Grüneberg
  *
  */
 @Stateless
-public class DepartureWithAlertResourceImpl implements DepartureWithAlertResource {
+public class DepartureWithAlertResourceImpl implements DeparturesWithAlertResource {
 
   @Inject
   private StationDelayResource stationDelayResource;
@@ -31,33 +33,56 @@ public class DepartureWithAlertResourceImpl implements DepartureWithAlertResourc
   private AlertResource alertResource;
 
   @Override
-  public List<DepartureWithAlert> findByStation(String station) {
+  public DeparturesWithAlert findByStation(String station) {
     StationDelay stationDelay = stationDelayResource.findStationDelayByName(station);
+    
+    if (stationDelay == null) {
+      return null;
+    }
+    
     List<Alert> alerts = alertResource.findRelevantAlertsForStation(station);
 
-    List<DepartureWithAlert> departuresWithAlert = new ArrayList<>();
+    DeparturesWithAlert departuresWithAlert = new DeparturesWithAlert();
     for (Departure departure : stationDelay.getDepartures()) {
       Alert alert = findAlert(departure, alerts);
 
       alerts.remove(alert);
 
-      departuresWithAlert.add(new DepartureWithAlert(departure, alert));
+      departuresWithAlert.addDeparture(departure, alert);
     }
+
+    // Add remaining, unassigned alerts
+    alerts.forEach(departuresWithAlert::addRemainingAlert);
+
+    // Adds alerts that have no start/stop station to the list of unassigned alerts
+    List<Alert> alertsWithoutStation = alertResource.findAlertsWithUnknownStation().stream()
+      .filter(alert -> isMaxTwoHoursOld(alert)).collect(toList());
+    alertsWithoutStation.forEach(departuresWithAlert::addRemainingAlert);
 
     return departuresWithAlert;
   }
 
   private static Alert findAlert(Departure departure, List<Alert> alerts) {
+    // Matches train number
     List<Alert> alertsForTrain = alerts.stream().filter(alert -> alert.getMessage().contains(departure.getTrain()))
       .collect(Collectors.toList());
 
-    // TODO Zeitlich eingrenzen / Besseres matching
+    // Max 2 hours old
+    alertsForTrain = alertsForTrain.stream().filter(alert -> isMaxTwoHoursOld(alert)).collect(toList());
+
+    // TODO Besseres matching durch Tests
 
     if (!alertsForTrain.isEmpty()) {
       return alertsForTrain.get(0);
     }
 
     return null;
+  }
+
+  private static boolean isMaxTwoHoursOld(Alert alert) {
+    LocalDateTime twoHoursAgo = LocalDateTime.now().minusHours(2);
+
+    return alert.getCreationDate().isAfter(twoHoursAgo);
   }
 
 }

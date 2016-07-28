@@ -57,6 +57,15 @@ public interface AlertResource {
   List<Alert> findRelevantAlertsForStation(@PathParam(value = "station") String station);
 
   /**
+   * Finds the alerts where the system could not assign a start or stop station.
+   * 
+   * @return list of alerts
+   */
+  @GET
+  @Path("unknownStations")
+  List<Alert> findAlertsWithUnknownStation();
+
+  /**
    * Finds all alerts since the given date time. The date time must be in ISO-8601 format, otherwise an empty collection
    * will be returned.
    * 

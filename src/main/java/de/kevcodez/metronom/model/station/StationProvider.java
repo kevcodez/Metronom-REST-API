@@ -43,30 +43,30 @@ public class StationProvider {
    */
   @PostConstruct
   public void constructStations() {
-    addStation("Hamburg Hbf", "AH", "Hamburg", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg");
-    addStation("Hamburg-Harburg", "AHAR", "Harburg");
+    addStation("Hamburg", "AH", "Hamburg Hbf", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg");
+    addStation("Hamburg-Harburg", "AHAR", "Harburg", "Hamburg- Harburg");
     addStation("Meckelfeld", "AMDH");
     addStation("Maschen", "AMA");
     addStation("Stelle", "ASTE");
     addStation("Ashausen", "AASN");
-    addStation("Winsen (Luhe)", "AWI", "Winsen");
+    addStation("Winsen", "AWI", "Winsen  (Luhe)");
     addStation("Radbruch", "ARH");
     addStation("Bardowick", "ABAD");
     addStation("Lüneburg", "ALBG", "Lueneburg");
     addStation("Bienenbüttel", "ABIL", "Bienenbuettel");
     addStation("Bad Bevensen", "ABVS", "Bevensen");
     addStation("Uelzen", "HU");
-    addStation("Hannover Hbf", "HH", "Hannover");
+    addStation("Hannover", "HH", "Hannover Hbf");
     addStation("Sarstedt", "HSRD");
     addStation("Nordstemmen", "HNOS");
-    addStation("Elze (Han)", "HELZ", "Elze");
+    addStation("Elze", "HELZ", "Elze  (Han)");
     addStation("Banteln", "HBAN");
-    addStation("Alfeld (Leine)", "HALF", "Alfeld");
-    addStation("Freden (Leine)", "HFRE", "Freden");
+    addStation("Alfeld", "HALF", "Alfeld  (Leine)");
+    addStation("Freden", "HFRE", "Freden  (Leine)");
     addStation("Kreiensen", "HK");
     addStation("Einbeck Salzderhelden", "HEB");
-    addStation("Northeim (Han)", "HN", "Northeim");
-    addStation("Nörten-Hardenberg", "HNTH", "Hardenberg", "Nörten", "Noerten-Hardenberg");
+    addStation("Northeim", "HN", "Northeim  (Han)");
+    addStation("Nörten-Hardenberg", "HNTH", "Hardenberg", "Nörten", "Noerten-Hardenberg", "Noerten");
     addStation("Göttingen", "HG", "Goettingen", "Götingen");
     addStation("Buxtehude", "ABX");
     addStation("Horneburg", "AHOG");
@@ -80,24 +80,24 @@ public class StationProvider {
     addStation("Cuxhaven", "ACV");
     addStation("Hittfeld", "AHIF");
     addStation("Klecken", "AKC");
-    addStation("Buchholz (Nordheide)", "ABLZ", "Buchholz");
+    addStation("Buchholz", "ABLZ", "Buchholz (Nordheide)");
     addStation("Sprötze", "ASP", "Sproetze");
     addStation("Tostedt", "ATST");
     addStation("Lauenbrück", "ALUB", "Lauenbrueck");
     addStation("Scheeßel", "ASL");
-    addStation("Rotenburg (Wümme)", "AROG", "Rotenburg");
+    addStation("Rotenburg", "AROG", "Rotenburg (Wümme)");
     addStation("Sottrum", "AS");
-    addStation("Ottersberg (Han)", "AOBG", "Ottersberg");
+    addStation("Ottersberg", "AOBG", "Ottersberg (Han)");
     addStation("Sagehorn", "ASAG");
     addStation("Bremen-Oberneuland", "HBON", "Oberneuland");
-    addStation("Bremen Hbf", "HB", "Bremen", "Bremen Hauptbahnhof");
+    addStation("Bremen", "HB", "Bremen Hbf", "Bremen Hauptbahnhof");
     addStation("Suderburg", "HSUD");
     addStation("Unterlüß", "HUNL", "Unterlüss", "Unterlueß");
     addStation("Eschede", "HESD");
     addStation("Celle", "HC");
     addStation("Großburgwedel", "HGBW", "Grossburgwedel");
     addStation("Isernhagen", "HIHG");
-    addStation("Langenhagen Mitte", "HLGM", "Langenhagen");
+    addStation("Langenhagen", "HLGM", "Langenhagen Mitte");
   }
 
   /**
@@ -112,8 +112,16 @@ public class StationProvider {
     }
 
     return stations.stream()
-      .filter(station -> station.getName().equalsIgnoreCase(name) || station.getAlternativeNames().contains(name))
+      .filter(station -> stationNameMatches(name, station) || alternativeNameMatches(name, station))
       .findFirst().orElse(null);
+  }
+
+  public static boolean stationNameMatches(String stationName, Station station) {
+    return station.getName().equalsIgnoreCase(stationName);
+  }
+
+  public static boolean alternativeNameMatches(String stationName, Station station) {
+    return station.getAlternativeNames().stream().anyMatch(name -> name.equalsIgnoreCase(stationName));
   }
 
   /**

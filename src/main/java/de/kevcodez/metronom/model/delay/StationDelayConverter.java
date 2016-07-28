@@ -30,6 +30,9 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Converts the JSON response from Metronom to a {@link StationDelay}.
  * 
@@ -37,6 +40,8 @@ import javax.inject.Inject;
  *
  */
 public class StationDelayConverter {
+
+  private static final Logger LOG = LoggerFactory.getLogger(StationDelayConverter.class);
 
   private static final Pattern PATTERN_TRACK = Pattern.compile("Gleis (\\d+)");
 
@@ -51,6 +56,13 @@ public class StationDelayConverter {
    * @return converted station delay
    */
   public StationDelay convert(Station station, JsonNode node) {
+    LOG.debug("converting json node {}", node);
+
+    // the content is false if there is an error on the metronom endpoint
+    if ("false".equals(node.toString())) {
+      return null;
+    }
+
     String timeAsString = node.get("stand").asText();
     LocalTime time = LocalTime.parse(timeAsString);
 

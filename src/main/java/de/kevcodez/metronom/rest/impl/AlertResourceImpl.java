@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.PathParam;
 
@@ -41,6 +42,7 @@ import javax.ws.rs.PathParam;
  * @author Kevin Grüneberg
  *
  */
+@Stateless
 public class AlertResourceImpl implements AlertResource {
 
   @Inject
@@ -71,10 +73,6 @@ public class AlertResourceImpl implements AlertResource {
     return streamAlerts().filter(d -> d.getMessage().contains(text)).collect(toList());
   }
 
-  private Stream<Alert> streamAlerts() {
-    return alertCache.getAlerts().stream();
-  }
-
   @Override
   public List<Alert> findRelevantAlertsForStation(String station) {
     List<Route> routes = routeResource.findByStop(station);
@@ -86,9 +84,29 @@ public class AlertResourceImpl implements AlertResource {
     LocalDateTime oneHourAgo = LocalDateTime.now().minusHours(1);
 
     return findAllAlerts().stream()
-      .filter(alert -> stations.contains(alert.getStationStart()))
       .filter(alert -> alert.getCreationDate().isAfter(oneHourAgo))
+      .filter(alert -> isAlertRelevantForStation(stations, alert))
       .collect(toList());
+  }
+
+  private boolean isAlertRelevantForStation(List<Station> stations, Alert alert) {
+    if (alert.getStationStart() != null && alert.getStationEnd() != null) {
+      return stations.contains(alert.getStationStart()) && stations.contains(alert.getStationEnd());
+    } else if (alert.getStationStart() != null) {
+      return stations.contains(alert.getStationStart());
+    }
+
+    return false;
+  }
+
+  @Override
+  public List<Alert> findAlertsWithUnknownStation() {
+    return streamAlerts().filter(alert -> alert.getStationEnd() == null && alert.getStationStart() == null)
+      .collect(toList());
+  }
+
+  private Stream<Alert> streamAlerts() {
+    return alertCache.getAlerts().stream();
   }
 
 }

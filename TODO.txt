@@ -1,9 +1,17 @@
 Server
 
-- Gleiswechsel berücksichtigen
-- Alerts, die nicht zugeordnet werden können handhaben
 - Diverse Tests schreiben, um Patterns und Zuordnung von Alerts zu einzelnen Verbindungen zu verbessern
-- REST API anders modellieren (XSD/Swagger/RAML)
+- REST API anders modellieren (Swagger/RAML)
+- Server-Side Caching von Abfahrten (Departures)
+
+WildFly
+
+- SSL
+- GZIP Support
+- Welcome Page entfernen
+- HTTP2 Support
+- Ungenutzte Subdomains entfernen
+- Undertow Upgrade
 
 APP
 
@@ -11,3 +19,5 @@ APP
 - Nicht zugeordnete Alerts anzeigen
 - Landscape Ansicht prüfen
 - Schema (XSD) nutzen
+- Fehlermeldung wenn keine Internetverbindung da ist
+- Fehlermeldung bei Timeout

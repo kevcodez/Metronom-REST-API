@@ -63,6 +63,10 @@ public class Route {
    * @param station station to add
    */
   public void addStation(Station station) {
+    if (station == null) {
+      throw new IllegalArgumentException("station cannot be null");
+    }
+
     stations.add(station);
   }
 

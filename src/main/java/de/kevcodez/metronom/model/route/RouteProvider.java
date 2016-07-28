@@ -63,8 +63,8 @@ public class RouteProvider {
     Route route = new Route("Elbe-Takt");
     route.addTrains("RB 31", "RE 3");
 
-    String[] stations = { "Hamburg HBF", "Hamburg-Harburg", "Meckelfeld", "Maschen", "Stelle",
-      "Ashausen", "Winsen (Luhe)", "Radbruch", "Bardowick", "Lüneburg", "Bienenbüttel",
+    String[] stations = { "Hamburg", "Hamburg-Harburg", "Meckelfeld", "Maschen", "Stelle",
+      "Ashausen", "Winsen", "Radbruch", "Bardowick", "Lüneburg", "Bienenbüttel",
       "Bad Bevensen", "Uelzen" };
 
     addStations(stations, route);
@@ -75,7 +75,7 @@ public class RouteProvider {
     Route route = new Route("Nordsee-Takt");
     route.addTrains("RE 5");
 
-    String[] stations = { "Hamburg Hbf", "Hamburg-Harburg", "Buxtehude", "Horneburg", "Stade",
+    String[] stations = { "Hamburg", "Hamburg-Harburg", "Buxtehude", "Horneburg", "Stade",
       "Hammah", "Himmelpforten", "Hechthausen", "Hemmoor", "Wingst", "Cadenberge", "Cuxhaven" };
 
     addStations(stations, route);
@@ -86,9 +86,9 @@ public class RouteProvider {
     Route route = new Route("Weser-Takt");
     route.addTrains("RB41", "RE 4");
 
-    String[] stations = { "Hamburg Hbf", "Hamburg-Harburg", "Hittfeld", "Klecken",
-      "Buchholz (Nordheide)", "Sprötze", "Tostedt", "Lauenbrück", "Scheeßel", "Rotenburg (Wümme)",
-      "Sottrum", "Ottersberg (Han)", "Sagehorn", "Bremen-Oberneuland", "Bremen Hbf" };
+    String[] stations = { "Hamburg", "Hamburg-Harburg", "Hittfeld", "Klecken",
+      "Buchholz", "Sprötze", "Tostedt", "Lauenbrück", "Scheeßel", "Rotenburg",
+      "Sottrum", "Ottersberg", "Sagehorn", "Bremen-Oberneuland", "Bremen" };
 
     addStations(stations, route);
     routes.add(route);
@@ -99,7 +99,7 @@ public class RouteProvider {
     route.addTrains("RE 2");
 
     String[] stations = { "Uelzen", "Suderburg", "Unterlüß", "Eschede", "Celle", "Großburgwedel",
-      "Isernhagen", "Langenhagen Mitte", "Hannover Hbf" };
+      "Isernhagen", "Langenhagen Mitte", "Hannover" };
 
     addStations(stations, route);
     routes.add(route);
@@ -109,8 +109,8 @@ public class RouteProvider {
     Route route = new Route("Leinetal-Takt");
     route.addTrains("RE 2");
 
-    String[] stations = { "Hannover Hbf", "Sarstedt", "Nordstemmen", "Elze (Han)", "Banteln",
-      "Alfeld (Leine)", "Freden (Leine)", "Kreiensen", "Einbeck Salzderhelden", "Northeim (Han)",
+    String[] stations = { "Hannover Hbf", "Sarstedt", "Nordstemmen", "Elze", "Banteln",
+      "Alfeld", "Freden", "Kreiensen", "Einbeck Salzderhelden", "Northeim",
       "Nörten-Hardenberg", "Göttingen" };
 
     addStations(stations, route);

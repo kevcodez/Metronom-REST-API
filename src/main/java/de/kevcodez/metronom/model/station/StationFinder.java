@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -34,6 +35,7 @@ public class StationFinder {
     alertPatterns.add(Pattern.compile(format("Strecke (?<start>%1$s) - (?<target>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("in (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("ab (?<start>(?!ME)%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD)));
+    alertPatterns.add(Pattern.compile(format("hinter (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
 
     // Unsafe patterns (may need to be optimized, if they happen to match faulty)
     alertPatterns.add(Pattern.compile(format("in (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD)));
@@ -42,6 +44,7 @@ public class StationFinder {
     // Only start station
     alertPatterns.add(Pattern.compile(format("ab (?<start>%1$s)", PATTERN_WORD)));
     alertPatterns.add(Pattern.compile(format("von (?<start>(?!ME)%1$s)", PATTERN_WORD)));
+    alertPatterns.add(Pattern.compile(format("Ankunft (.*) in (?<start>(?!ME)%1$s)", PATTERN_WORD)));
   }
 
   @Inject
@@ -54,6 +57,8 @@ public class StationFinder {
    * @return start and target station
    */
   public StartAndTargetStation findStartAndTarget(String alert) {
+    alert = replaceSpacesInStationNames(alert);
+
     for (Pattern pattern : alertPatterns) {
       Matcher matcher = pattern.matcher(alert);
 
@@ -73,6 +78,21 @@ public class StationFinder {
     }
 
     return null;
+  }
+
+  private String replaceSpacesInStationNames(String alert) {
+    List<Station> stations = stationProvider.getStations();
+
+    for (Station station : stations) {
+      List<String> namesWithSpace = station.getAlternativeNames().stream().filter(name -> name.contains(" "))
+        .collect(Collectors.toList());
+
+      for (String name : namesWithSpace) {
+        alert = alert.replace(name, station.getName());
+      }
+    }
+
+    return alert;
   }
 
   private StartAndTargetStation findStartAndTarget(String start, String target, String originalAlert) {
