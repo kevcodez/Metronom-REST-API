@@ -67,8 +67,8 @@ public class AlertCache {
   }
 
   private void removeOldAlerts() {
-    LocalDateTime twentyFourHoursAgo = LocalDateTime.now().minusHours(24);
-    alerts.removeIf(alert -> alert.getCreationDate().isBefore(twentyFourHoursAgo));
+    LocalDateTime fourHoursAgo = LocalDateTime.now().minusHours(4);
+    alerts.removeIf(alert -> alert.getCreationDate().isBefore(fourHoursAgo));
   }
 
   private static void logUnknownStartStation(Alert alert) {

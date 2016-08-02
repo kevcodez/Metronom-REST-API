@@ -28,23 +28,22 @@ public class StationFinder {
   private static List<Pattern> alertPatterns = new ArrayList<>();
 
   static {
-    alertPatterns.add(Pattern.compile(format("on (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("nach (?<target>%1$s)(.+)ab (?<start>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("Strecke (?<start>%1$s)\\/(?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("zwischen (?<start>%1$s) und (?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("Strecke (?<start>%1$s) - (?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("in (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("ab (?<start>(?!ME)%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("hinter (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD)));
+    addPattern(format("nach (?<target>%1$s)(.+)ab (?<start>%1$s)", PATTERN_WORD));
+    addPattern(format("Strecke (?<start>%1$s)\\/(?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("zwischen (?<start>%1$s) und (?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("Strecke (?<start>%1$s) - (?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("(on|in|hinter) (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("(ab|on) (?<start>(?!ME)%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("Bahnhof (?<start>%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
 
     // Unsafe patterns (may need to be optimized, if they happen to match faulty)
-    alertPatterns.add(Pattern.compile(format("in (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("nach (?<target>%1$s)(.+)? in (?<start>%1$s)", PATTERN_WORD)));
+    addPattern(format("in (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("nach (?<target>%1$s)(.+)? in (?<start>%1$s)", PATTERN_WORD));
 
     // Only start station
-    alertPatterns.add(Pattern.compile(format("ab (?<start>%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("von (?<start>(?!ME)%1$s)", PATTERN_WORD)));
-    alertPatterns.add(Pattern.compile(format("Ankunft (.*) in (?<start>(?!ME)%1$s)", PATTERN_WORD)));
+    addPattern(format("ab (?<start>%1$s)", PATTERN_WORD));
+    addPattern(format("von (?<start>(?!ME)%1$s)", PATTERN_WORD));
+    addPattern(format("Ankunft (.*) in (?<start>(?!ME)%1$s)", PATTERN_WORD));
   }
 
   @Inject
@@ -78,6 +77,10 @@ public class StationFinder {
     }
 
     return null;
+  }
+
+  private static void addPattern(String pattern) {
+    alertPatterns.add(Pattern.compile(pattern));
   }
 
   private String replaceSpacesInStationNames(String alert) {

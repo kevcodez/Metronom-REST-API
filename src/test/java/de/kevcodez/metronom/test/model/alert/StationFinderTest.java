@@ -48,7 +48,7 @@ public class StationFinderTest {
 
   private StationProvider realStationProvider;
 
-  @Parameters
+  @Parameters(name = "{0}, {1} - {2})")
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
       { "Auf der Strecke Cuxhaven/Hamburg und", "Cuxhaven", "Hamburg" },
@@ -70,8 +70,11 @@ public class StationFinderTest {
       { "Strecke zwischen Cuxhaven und Hamburg", "Cuxhaven", "Hamburg" },
       { "nach Cuxhaven ab Hamburg", "Hamburg", "Cuxhaven" },
       { "hinter Cuxhaven, die Fahrt nach Hamburg", "Cuxhaven", "Hamburg" },
-      { " zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
-      { " zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" }
+      { "zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
+      { "zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
+      { "von Hamburg in Richtung Cuxhaven", "Hamburg", "Cuxhaven" },
+      { "Bahnhof Cuxhaven zur Zeit gesperrt. Die Weiterfahrt der Züge nach Hamburg", "Cuxhaven", "Hamburg" },
+      {""}
     });
   }
 

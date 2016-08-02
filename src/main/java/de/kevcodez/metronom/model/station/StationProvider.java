@@ -54,7 +54,7 @@ public class StationProvider {
     addStation("Bardowick", "ABAD");
     addStation("Lüneburg", "ALBG", "Lueneburg");
     addStation("Bienenbüttel", "ABIL", "Bienenbuettel");
-    addStation("Bad Bevensen", "ABVS", "Bevensen");
+    addStation("Bevensen", "ABVS", "Bad Bevensen");
     addStation("Uelzen", "HU");
     addStation("Hannover", "HH", "Hannover Hbf");
     addStation("Sarstedt", "HSRD");
@@ -64,7 +64,7 @@ public class StationProvider {
     addStation("Alfeld", "HALF", "Alfeld  (Leine)");
     addStation("Freden", "HFRE", "Freden  (Leine)");
     addStation("Kreiensen", "HK");
-    addStation("Einbeck Salzderhelden", "HEB");
+    addStation("Salzderhelden", "HEB", "Einbeck", "Einbeck Salzderhelden");
     addStation("Northeim", "HN", "Northeim  (Han)");
     addStation("Nörten-Hardenberg", "HNTH", "Hardenberg", "Nörten", "Noerten-Hardenberg", "Noerten");
     addStation("Göttingen", "HG", "Goettingen", "Götingen");
@@ -89,7 +89,7 @@ public class StationProvider {
     addStation("Sottrum", "AS");
     addStation("Ottersberg", "AOBG", "Ottersberg (Han)");
     addStation("Sagehorn", "ASAG");
-    addStation("Bremen-Oberneuland", "HBON", "Oberneuland");
+    addStation("Bremen-Oberneuland", "HBON", "Oberneuland", "Bremen Oberland");
     addStation("Bremen", "HB", "Bremen Hbf", "Bremen Hauptbahnhof");
     addStation("Suderburg", "HSUD");
     addStation("Unterlüß", "HUNL", "Unterlüss", "Unterlueß");

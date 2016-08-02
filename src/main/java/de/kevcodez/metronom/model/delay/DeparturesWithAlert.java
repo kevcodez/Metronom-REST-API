@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * Departure with a single, optional alert.
  * 
@@ -49,7 +47,6 @@ public class DeparturesWithAlert {
 
   class SingleDeparture {
 
-    @NotNull
     private Departure departure;
 
     private Alert alert;
