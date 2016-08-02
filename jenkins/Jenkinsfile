@@ -10,7 +10,7 @@ node {
     stage 'Build'
     
     // Run the maven build
-    sh "mvn -B verify"
+    sh "mvn -B verify -T 2C -Dmaven.junit.jvmargs=-Xmx512m -Dmaven.compile.fork=true -Dmaven.junit.fork=true"
     
     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
 }
@@ -34,13 +34,8 @@ node {
 node {
     stage 'Remove old docker container'
     
-    sh 'docker ps -q $1 | wc -l > commandResult'
-    result = readFile('commandResult').trim()
-    
-    if (result != '0') {
-        sh 'docker stop $(docker ps -a -q)'
-        sh 'docker rm $(docker ps -a -q)'
-    }
+    sh 'docker stop metronom'
+    sh 'docker rm metronom'
     
     stage 'Run docker container'
     
