@@ -73,8 +73,7 @@ public class StationFinderTest {
       { "zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
       { "zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
       { "von Hamburg in Richtung Cuxhaven", "Hamburg", "Cuxhaven" },
-      { "Bahnhof Cuxhaven zur Zeit gesperrt. Die Weiterfahrt der Züge nach Hamburg", "Cuxhaven", "Hamburg" },
-      {""}
+      { "Bahnhof Cuxhaven zur Zeit gesperrt. Die Weiterfahrt der Züge nach Hamburg", "Cuxhaven", "Hamburg" }
     });
   }
 
