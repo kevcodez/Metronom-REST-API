@@ -21,7 +21,10 @@ package de.kevcodez.metronom.model.alert;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Converts the JSON object from the Metronom endpoint to the internal {@link Alert} object.
@@ -30,6 +33,8 @@ import java.time.format.DateTimeFormatter;
  *
  */
 public class AlertConverter {
+
+  private static final Pattern PATTERN_PLANNED_DEPARTURE = Pattern.compile("((?<time>\\d{1,2}:\\d{2})( ?)Uhr)");
 
   private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
@@ -44,8 +49,28 @@ public class AlertConverter {
     String empfangsdatum = alert.get("Empfangsdatum").textValue();
     String id = alert.get("@attributes").get("ID").textValue();
     LocalDateTime dateTime = LocalDateTime.parse(empfangsdatum, formatter);
+    LocalTime plannedDeparture = parsePlannedDeparture(meldung);
 
-    return new Alert(id, meldung, dateTime);
+    return new Alert(id, meldung, dateTime, plannedDeparture);
+  }
+
+  public LocalTime parsePlannedDeparture(String alert) {
+    Matcher matcher = PATTERN_PLANNED_DEPARTURE.matcher(alert);
+
+    if (matcher.find()) {
+      String time = matcher.group("time");
+
+      String[] splitTime = time.split(":");
+
+      // Add leading zero
+      if (splitTime[0].length() == 1) {
+        time = "0" + time;
+      }
+
+      return LocalTime.parse(time);
+    }
+
+    return null;
   }
 
 }

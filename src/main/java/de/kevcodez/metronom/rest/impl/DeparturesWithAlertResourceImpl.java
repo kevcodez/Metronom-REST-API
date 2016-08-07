@@ -56,7 +56,7 @@ public class DeparturesWithAlertResourceImpl implements DeparturesWithAlertResou
 
     // Adds alerts that have no start/stop station to the list of unassigned alerts
     List<Alert> alertsWithoutStation = alertResource.findAlertsWithUnknownStation().stream()
-      .filter(DeparturesWithAlertResourceImpl::isMaxTwoHoursOld).collect(toList());
+      .filter(DeparturesWithAlertResourceImpl::isMaxThreeHoursOld).collect(toList());
     alertsWithoutStation.forEach(departuresWithAlert::addRemainingAlert);
 
     return departuresWithAlert;
@@ -67,8 +67,8 @@ public class DeparturesWithAlertResourceImpl implements DeparturesWithAlertResou
     List<Alert> alertsForTrain = alerts.stream().filter(alert -> alert.getMessage().contains(departure.getTrain()))
       .collect(Collectors.toList());
 
-    // Max 2 hours old
-    alertsForTrain = alertsForTrain.stream().filter(DeparturesWithAlertResourceImpl::isMaxTwoHoursOld)
+    // Max 3 hours old
+    alertsForTrain = alertsForTrain.stream().filter(DeparturesWithAlertResourceImpl::isMaxThreeHoursOld)
       .collect(toList());
 
     // TODO Besseres matching durch Tests
@@ -80,8 +80,8 @@ public class DeparturesWithAlertResourceImpl implements DeparturesWithAlertResou
     return null;
   }
 
-  private static boolean isMaxTwoHoursOld(Alert alert) {
-    LocalDateTime twoHoursAgo = LocalDateTime.now().minusHours(2);
+  private static boolean isMaxThreeHoursOld(Alert alert) {
+    LocalDateTime twoHoursAgo = LocalDateTime.now().minusHours(3);
 
     return alert.getCreationDate().isAfter(twoHoursAgo);
   }

@@ -20,8 +20,10 @@ package de.kevcodez.metronom.model.alert;
 
 import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.rest.adapter.LocalDateTimeAdapter;
+import de.kevcodez.metronom.rest.adapter.LocalTimeAdapter;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -43,17 +45,21 @@ public class Alert {
 
   private Station stationEnd;
 
+  private LocalTime plannedDeparture;
+
   /**
    * Creates a new alert notification with the given ID, text and creation date.
    * 
    * @param id unique ID
    * @param message text message
    * @param creationDate creation date
+   * @param plannedDeparture planned departure as time
    */
-  public Alert(String id, String message, LocalDateTime creationDate) {
+  public Alert(String id, String message, LocalDateTime creationDate, LocalTime plannedDeparture) {
     this.id = id;
     this.message = message;
     this.creationDate = creationDate;
+    this.plannedDeparture = plannedDeparture;
   }
 
   /**
@@ -107,10 +113,19 @@ public class Alert {
     this.stationEnd = stationEnd;
   }
 
+  @XmlJavaTypeAdapter(LocalTimeAdapter.class)
+  public LocalTime getPlannedDeparture() {
+    return plannedDeparture;
+  }
+
+  public void setPlannedDeparture(LocalTime plannedDeparture) {
+    this.plannedDeparture = plannedDeparture;
+  }
+
   @Override
   public String toString() {
-    return "Alert [id=" + id + ", message=" + message + ", creationDate=" + creationDate
-      + ", stationStart=" + stationStart + ", stationEnd=" + stationEnd + "]";
+    return "Alert [id=" + id + ", message=" + message + ", creationDate=" + creationDate + ", stationStart="
+      + stationStart + ", stationEnd=" + stationEnd + ", plannedDeparture=" + plannedDeparture + "]";
   }
 
   @Override

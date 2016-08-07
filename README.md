@@ -27,7 +27,7 @@ Gibt eine Liste von allen Meldungen aus, die den übergebenen `text` enhalten.
 
 #### Beispiel-Response
 
-```[{"id":"43169","text":"Wegen einer Signalstörung und warten auf Anschlussgäste verkehrt ME 82829 von Uelzen nach Göttingen ab Celle (18:46 Uhr) mit einer Verspätung von ca. 16 Minuten","createdAt":"2016-07-17T19:04:32"},{"id":"43168","text":"Wegen Verspätung des Eingangszuges durch einen Personenunfall im Hamburger Hauptbahnhof verkehrt ME 82030 von Bremen nach Hamburg ab Bremen(planm. Abfahrt18:33 Uhr) mit einer Verspätung von ca. 15 Minuten","createdAt":"2016-07-17T19:01:32"},{"id":"43167","text":"Wegen eines Personenunfalls entfällt heute leider ME 81934 von Bremen nach Hamburg ab Bremen(planm. Abfahrt 18:59 Uhr) .Die Fahrgäste nutzen bitte den Folgetakt","createdAt":"2016-07-17T18:59:33"},{"id":"43147","text":"Wegen Überholung durch ICE 1156 verkehrt ME 81632 von Lüneburg nach Hamburg ab Bardowick(planm.Abfahrt 18:38 Uhr) mit einer Verspätung von ca. 10 Mintuen","createdAt":"2016-07-16T18:54:30"},{"id":"43144","text":"Wegen einer Störung am Fahrzeug entfällt heute leider ME 81631 von Hamburg nach Lüneburg ab Hamburg (planm. Abfahrt 18:34 Uhr). Die Fahrgäste nutzen bitte den Folgetakt ME 82129 von Hamburg nach Uelzen ab Hamburg(planm.Abfahrt 18:57 Uhr)","createdAt":"2016-07-16T18:07:30"}]```
+```[{"id":"43702","message":"Wegen einer Störung verkehrt Zug 82815 von Uelzen nach Hannover mit einer Verspätung von ca. +44 Minuten ab Uelzen (planmäßige Abfahrt 11:09 Uhr)","creationDate":"2016-08-07T11:59:22","stationStart":{"name":"Uelzen","code":"HU"},"stationEnd":{"name":"Hannover","code":"HH"},"plannedDeparture":"11:09"},{"id":"43701","message":"Wegen Krankmeldung des Lokführers muss Zug 82816 von Göttingen nach Uelzen heute leider entfallen (planmäßige Abfahrt 12:09 Uhr), Fahrgäste nutzen bitte den Folgetakt","creationDate":"2016-08-07T11:33:22","stationStart":{"name":"Göttingen","code":"HG"},"stationEnd":{"name":"Uelzen","code":"HU"},"plannedDeparture":"12:09"},{"id":"43700","message":"Wegen einer Türstörung wird sich die Abfahrt von 82815 Uelzen nach Hannover voraussichtlich ca. 10 - 15 Minuten verzögern (planmäßige Abfahrt 11:09 Uhr)","creationDate":"2016-08-07T11:06:22","stationStart":{"name":"Uelzen","code":"HU"},"stationEnd":{"name":"Hannover","code":"HH"},"plannedDeparture":"11:09"},{"id":"43699","message":"Wegen Verspätung des Eingangszuges verkehrt Zug 81614 von Lüneburg nach Hamburg mit einer Verspätung von ca. +11 Minuten ab Lüneburg (planmäßige Abfahrt 9:32 Uhr)","creationDate":"2016-08-07T09:51:22","stationStart":{"name":"Lüneburg","code":"ALBG"},"stationEnd":{"name":"Hamburg","code":"AH"},"plannedDeparture":"09:32"}]```
 
 ## Routes
 
@@ -49,7 +49,7 @@ Gibt die Strecken, in dem die Haltestelle `start` UND die Haltestelle `stop` vor
 
 #### Beispiel
 
-```{"name":"Elbe-Takt","trains":["RB 31","RE 3"],"stations":[null,{"name":"Hamburg-Harburg","code":"AHAR"},{"name":"Meckelfeld","code":"AMDH"},{"name":"Maschen","code":"AMA"},{"name":"Stelle","code":"ASTE"},null,{"name":"Winsen (Luhe)","code":"AWI"},{"name":"Radbruch","code":"ARH"},{"name":"Bardowick","code":"ABAD"},{"name":"Lüneburg","code":"ALBG"},{"name":"Bienenbüttel","code":"ABIL"},{"name":"Bad Bevensen","code":"ABVS"},{"name":"Uelzen","code":"HU"}]}```
+```[{"name":"Elbe-Takt","trains":["RB 31","RE 3"],"stations":[{"name":"Hamburg","code":"AH"},{"name":"Hamburg-Harburg","code":"AHAR"},{"name":"Meckelfeld","code":"AMDH"},{"name":"Maschen","code":"AMA"},{"name":"Stelle","code":"ASTE"},{"name":"Ashausen","code":"AASN"},{"name":"Winsen","code":"AWI"},{"name":"Radbruch","code":"ARH"},{"name":"Bardowick","code":"ABAD"},{"name":"Lüneburg","code":"ALBG"},{"name":"Bienenbüttel","code":"ABIL"},{"name":"Bevensen","code":"ABVS"},{"name":"Uelzen","code":"HU"}]}]```
 
 ## Stations
 
@@ -81,4 +81,14 @@ Gibt die Verspätungsinformationen zu der Haltestelle mit dem Kürzel `code`.
 
 #### Beispiel
 
-```{"station":{"name":"Maschen","code":"AMA"},"time":"18:28","departures":[{"time":"18:24","train":"81667","targetStation":{"name":"Lüneburg","code":"ALBG"},"delayInMinutes":11},{"time":"18:55","train":"81631","targetStation":{"name":"Lüneburg","code":"ALBG"},"delayInMinutes":0},{"time":"19:00","train":"81632","targetStation":{"name":"Hamburg Hbf","code":"AH"},"delayInMinutes":0},{"time":"19:24","train":"81669","targetStation":{"name":"Lüneburg","code":"ALBG"},"delayInMinutes":0},{"time":"19:55","train":"81633","targetStation":{"name":"Lüneburg","code":"ALBG"},"delayInMinutes":0},{"time":"20:01","train":"81634","targetStation":{"name":"Hamburg Hbf","code":"AH"},"delayInMinutes":0}]}```
+```{"station":{"name":"Maschen","code":"AMA"},"time":"13:30","departures":[{"time":"14:00","train":"81622","targetStation":{"name":"Hamburg","code":"AH"},"delayInMinutes":0,"track":null},{"time":"14:54","train":"81623","targetStation":{"name":"Lüneburg","code":"ALBG"},"delayInMinutes":0,"track":null}]}```
+
+## DeparturesWithAlert
+
+#### GET /departure/station/`station`
+
+Gibt die Verspätungsinformationen und relevanten Störmeldung zu der Haltestelle `station`.
+
+#### Beispiel
+
+```{"departures":[{"departure":{"time":"14:01","train":"82120","targetStation":{"name":"Hamburg","code":"AH"},"delayInMinutes":0,"track":null},"alert":null},{"departure":{"time":"14:09","train":"82821","targetStation":{"name":"Göttingen","code":"HG"},"delayInMinutes":0,"track":null},"alert":null},{"departure":{"time":"15:01","train":"82122","targetStation":{"name":"Hamburg","code":"AH"},"delayInMinutes":0,"track":null},"alert":null},{"departure":{"time":"15:09","train":"82823","targetStation":{"name":"Göttingen","code":"HG"},"delayInMinutes":0,"track":null},"alert":null}],"remainingAlerts":[]}```

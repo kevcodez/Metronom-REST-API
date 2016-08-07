@@ -23,7 +23,7 @@ public class StationFinder {
 
   private static final Logger LOG = LoggerFactory.getLogger(StationFinder.class);
 
-  private static final String PATTERN_WORD = "[a-zA-ZäöüßÄÖÜ-]+";
+  private static final String PATTERN_WORD = "([a-zA-ZäöüßÄÖÜ-]+){4}";
 
   private static List<Pattern> alertPatterns = new ArrayList<>();
 
@@ -35,8 +35,10 @@ public class StationFinder {
     addPattern(format("(on|in|hinter) (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
     addPattern(format("(ab|on) (?<start>(?!ME)%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD));
     addPattern(format("Bahnhof (?<start>%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
+    addPattern(format("Strecke (?<start>%1$s) nach (?<target>%1$s)", PATTERN_WORD));
 
     // Unsafe patterns (may need to be optimized, if they happen to match faulty)
+    addPattern(format("(\\d+) (?<start>%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
     addPattern(format("in (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD));
     addPattern(format("nach (?<target>%1$s)(.+)? in (?<start>%1$s)", PATTERN_WORD));
 

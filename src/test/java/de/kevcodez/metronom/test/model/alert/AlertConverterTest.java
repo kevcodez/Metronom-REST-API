@@ -10,6 +10,7 @@ import de.kevcodez.metronom.model.alert.Alert;
 import de.kevcodez.metronom.model.alert.AlertConverter;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +42,20 @@ public class AlertConverterTest {
     assertThat(alert.getId(), is("43445"));
     assertThat(alert.getMessage(), is("ME 82131 von Hamburg nach Uelzen ab Winsen ca. 10 Minuten"));
     assertThat(alert.getCreationDate().toString(), is("2016-07-28T20:33:20"));
+  }
+
+  @Test
+  public void shouldParsePlannedDeparture() {
+    LocalTime plannedDeparture = alertConverter.parsePlannedDeparture("(planmäßige Abfahrt 11:09 Uhr)");
+
+    assertThat(plannedDeparture, is(LocalTime.of(11, 9)));
+  }
+
+  @Test
+  public void shouldParsePlannedDeparture2() {
+    LocalTime plannedDeparture = alertConverter.parsePlannedDeparture("(planmäßige Abfahrt 9:11 Uhr)");
+
+    assertThat(plannedDeparture, is(LocalTime.of(9, 11)));
   }
 
 }

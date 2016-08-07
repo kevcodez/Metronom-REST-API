@@ -28,6 +28,7 @@ import de.kevcodez.metronom.rest.AlertResource;
 import de.kevcodez.metronom.rest.RouteResource;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -80,11 +81,11 @@ public class AlertResourceImpl implements AlertResource {
     List<Station> stations = routes.stream().map(Route::getStations).flatMap(l -> l.stream())
       .distinct().collect(toList());
 
-    // Assume that only information that are max. 1 hour old are still relevant
-    LocalDateTime oneHourAgo = LocalDateTime.now().minusHours(1);
+    // Assume that only information that are max. 1 1/2 hour old are still relevant
+    LocalTime oneAndAHalfHoursAgo = LocalTime.now().minusHours(1).minusMinutes(30);
 
     return findAllAlerts().stream()
-      .filter(alert -> alert.getCreationDate().isAfter(oneHourAgo))
+      .filter(alert -> alert.getPlannedDeparture() != null && alert.getPlannedDeparture().isAfter(oneAndAHalfHoursAgo))
       .filter(alert -> isAlertRelevantForStation(stations, alert))
       .collect(toList());
   }

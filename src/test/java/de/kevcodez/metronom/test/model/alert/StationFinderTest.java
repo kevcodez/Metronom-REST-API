@@ -72,8 +72,8 @@ public class StationFinderTest {
       { "hinter Cuxhaven, die Fahrt nach Hamburg", "Cuxhaven", "Hamburg" },
       { "zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
       { "zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
-      { "von Hamburg in Richtung Cuxhaven", "Hamburg", "Cuxhaven" },
-      { "Bahnhof Cuxhaven zur Zeit gesperrt. Die Weiterfahrt der Züge nach Hamburg", "Cuxhaven", "Hamburg" }
+      { "Abfahrt von 82815 Uelzen nach Hannover voraussichtlich", "Uelzen", "Hannover" },
+      { "Die Störung an der Strecke verursacht zur Zeit Verspätungen zwischen 5-10 Minuten auf der Strecke Cuxhaven nach Hamburg", "Cuxhaven", "Hamburg" }
     });
   }
 
