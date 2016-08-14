@@ -49,6 +49,9 @@ public class AlertParser {
 
   @Inject
   private StationFinder stationFinder;
+  
+  @Inject
+  private WebsiteSourceDownloader websiteSourceDownloader;
 
   /**
    * Parses the alerts from the Metronom SOAP endpoint.
@@ -56,7 +59,11 @@ public class AlertParser {
    * @return list of alerts
    */
   public List<Alert> parseAlerts() {
-    String pageSource = WebsiteSourceDownloader.getSource(METRONOM_ALERT_URL);
+    String pageSource = websiteSourceDownloader.getSource(METRONOM_ALERT_URL);
+    return parseAlertsFromSource(pageSource);
+  }
+
+  private List<Alert> parseAlertsFromSource(String pageSource) {
     try {
       JsonNode mainJsonNode = objectMapper.readTree(pageSource);
       JsonNode alertJsonNode = mainJsonNode.get("ListItem");

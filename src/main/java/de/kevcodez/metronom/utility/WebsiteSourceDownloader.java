@@ -21,7 +21,7 @@ public class WebsiteSourceDownloader {
    * @param websiteUrl website URL
    * @return page source
    */
-  public static String getSource(String websiteUrl) {
+  public String getSource(String websiteUrl) {
     try {
       URL url = new URL(websiteUrl);
       URLConnection urlConn = url.openConnection();

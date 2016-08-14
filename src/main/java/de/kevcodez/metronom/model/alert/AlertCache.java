@@ -27,9 +27,6 @@ import javax.ejb.Singleton;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Singleton to cache alert notifications.
  * 
@@ -38,8 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 @Singleton
 public class AlertCache {
-
-  private static final Logger LOG = LoggerFactory.getLogger(AlertCache.class);
 
   private List<Alert> alerts = new ArrayList<>();
 
@@ -53,8 +48,6 @@ public class AlertCache {
    */
   public void addAlert(Alert alert) {
     if (!alerts.contains(alert)) {
-      logUnknownStartStation(alert);
-
       newAlert.fire(alert);
       alerts.add(alert);
     }
@@ -69,12 +62,6 @@ public class AlertCache {
   private void removeOldAlerts() {
     LocalDateTime fourHoursAgo = LocalDateTime.now().minusHours(4);
     alerts.removeIf(alert -> alert.getCreationDate().isBefore(fourHoursAgo));
-  }
-
-  private static void logUnknownStartStation(Alert alert) {
-    if (alert.getStationStart() == null) {
-      LOG.warn("start station not found for {}", alert.getMessage());
-    }
   }
 
 }

@@ -50,6 +50,9 @@ public class StationDelayParser {
 
   @Inject
   private StationDelayConverter stationDelayConverter;
+  
+  @Inject
+  private WebsiteSourceDownloader websiteSourceDownloader;
 
   /**
    * Finds the delay for the station with the given name.
@@ -76,7 +79,7 @@ public class StationDelayParser {
 
     String uri = buildStationDelayUri(station);
 
-    String result = WebsiteSourceDownloader.getSource(uri);
+    String result = websiteSourceDownloader.getSource(uri);
 
     try {
       JsonNode jsonNode = objectMapper.readTree(result);
