@@ -21,9 +21,9 @@ package de.kevcodez.metronom.rest.impl;
 import static java.util.stream.Collectors.toList;
 
 import de.kevcodez.metronom.model.alert.Alert;
-import de.kevcodez.metronom.model.alert.AlertCache;
 import de.kevcodez.metronom.model.route.Route;
 import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.provider.AlertCache;
 import de.kevcodez.metronom.rest.AlertResource;
 import de.kevcodez.metronom.rest.RouteResource;
 

@@ -16,9 +16,11 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.alert;
+package de.kevcodez.metronom.converter;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import de.kevcodez.metronom.model.alert.Alert;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

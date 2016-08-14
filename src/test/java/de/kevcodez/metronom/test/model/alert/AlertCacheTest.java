@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import de.kevcodez.metronom.model.alert.Alert;
-import de.kevcodez.metronom.model.alert.AlertCache;
+import de.kevcodez.metronom.provider.AlertCache;
 
 import java.time.LocalDateTime;
 

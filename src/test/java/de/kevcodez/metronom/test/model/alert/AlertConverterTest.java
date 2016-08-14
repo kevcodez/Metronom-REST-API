@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.kevcodez.metronom.converter.AlertConverter;
 import de.kevcodez.metronom.model.alert.Alert;
-import de.kevcodez.metronom.model.alert.AlertConverter;
 
 import java.io.IOException;
 import java.time.LocalTime;

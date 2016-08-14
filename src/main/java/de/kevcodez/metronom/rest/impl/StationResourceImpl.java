@@ -19,7 +19,7 @@
 package de.kevcodez.metronom.rest.impl;
 
 import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.model.station.StationProvider;
+import de.kevcodez.metronom.provider.StationProvider;
 import de.kevcodez.metronom.rest.StationResource;
 
 import java.util.List;

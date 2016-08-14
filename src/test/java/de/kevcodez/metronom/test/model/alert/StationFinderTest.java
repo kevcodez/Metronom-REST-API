@@ -5,8 +5,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import de.kevcodez.metronom.model.station.StartAndTargetStation;
-import de.kevcodez.metronom.model.station.StationFinder;
-import de.kevcodez.metronom.model.station.StationProvider;
+import de.kevcodez.metronom.provider.StationFinder;
+import de.kevcodez.metronom.provider.StationProvider;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -16,52 +16,47 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.alert;
+package de.kevcodez.metronom.parser;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import de.kevcodez.metronom.provider.AlertCache;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
-import javax.enterprise.event.Event;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 
 /**
- * Singleton to cache alert notifications.
+ * Class to parse alert notifications every minute (scheduled job).
  * 
  * @author Kevin Grüneberg
  *
  */
 @Singleton
-public class AlertCache {
-
-  private List<Alert> alerts = new ArrayList<>();
+@Startup
+public class ScheduledAlertParser {
 
   @Inject
-  private Event<Alert> newAlert;
+  private AlertParser alertParser;
+
+  @Inject
+  private AlertCache alertCache;
 
   /**
-   * Adds the given alert to the list of alerts.
-   * 
-   * @param alert alert to add
+   * Parse alerts once on startup.
    */
-  public void addAlert(Alert alert) {
-    if (!alerts.contains(alert)) {
-      newAlert.fire(alert);
-      alerts.add(alert);
-    }
-
-    removeOldAlerts();
+  @PostConstruct
+  public void onPostConstruct() {
+    parseAlerts();
   }
 
-  public List<Alert> getAlerts() {
-    return Collections.unmodifiableList(alerts);
-  }
-
-  private void removeOldAlerts() {
-    LocalDateTime fourHoursAgo = LocalDateTime.now().minusHours(4);
-    alerts.removeIf(alert -> alert.getCreationDate().isBefore(fourHoursAgo));
+  /**
+   * Parses the alert notifications from the Metronom SOAP endpoint and puts them in the {@link AlertCache}. This
+   * function is executed every minute.
+   */
+  @Schedule(second = "*/60", minute = "*", hour = "*", persistent = false)
+  public void parseAlerts() {
+    alertParser.parseAlerts().forEach(alertCache::addAlert);
   }
 
 }

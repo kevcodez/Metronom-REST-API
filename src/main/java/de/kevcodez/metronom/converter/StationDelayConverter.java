@@ -16,13 +16,15 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.delay;
+package de.kevcodez.metronom.converter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 
+import de.kevcodez.metronom.model.delay.Departure;
+import de.kevcodez.metronom.model.delay.StationDelay;
 import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.model.station.StationProvider;
+import de.kevcodez.metronom.provider.StationProvider;
 
 import java.time.LocalTime;
 import java.util.regex.Matcher;

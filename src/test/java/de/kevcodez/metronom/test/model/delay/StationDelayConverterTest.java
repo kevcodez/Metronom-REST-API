@@ -6,11 +6,11 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.kevcodez.metronom.converter.StationDelayConverter;
 import de.kevcodez.metronom.model.delay.Departure;
 import de.kevcodez.metronom.model.delay.StationDelay;
-import de.kevcodez.metronom.model.delay.StationDelayConverter;
 import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.model.station.StationProvider;
+import de.kevcodez.metronom.provider.StationProvider;
 
 import java.io.IOException;
 

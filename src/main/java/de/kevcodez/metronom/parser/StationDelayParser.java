@@ -16,75 +16,87 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.alert;
+package de.kevcodez.metronom.parser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.kevcodez.metronom.model.station.StartAndTargetStation;
-import de.kevcodez.metronom.model.station.StationFinder;
+import de.kevcodez.metronom.converter.StationDelayConverter;
+import de.kevcodez.metronom.model.delay.StationDelay;
+import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.provider.StationProvider;
 import de.kevcodez.metronom.utility.Exceptions;
 import de.kevcodez.metronom.utility.WebsiteSourceDownloader;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.core.UriBuilder;
 
 /**
- * Class to parse alert notifications from the Metronom SOAP endpoint.
+ * Parses the station delays from the Metronom station information endpoint.
  * 
  * @author Kevin Grüneberg
  *
  */
-public class AlertParser {
+@Stateless
+public class StationDelayParser {
 
-  public static final String METRONOM_ALERT_URL = "http://www.der-metronom.de/extern/sharepoint/sharepoint.soap.php";
+  private static final String BASE_URL = "http://www.der-metronom.de/extern/etc.data.php?type=stationsauskunft";
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
   @Inject
-  private AlertConverter alertConverter;
+  private StationProvider stationProvider;
 
   @Inject
-  private StationFinder stationFinder;
+  private StationDelayConverter stationDelayConverter;
   
   @Inject
   private WebsiteSourceDownloader websiteSourceDownloader;
 
   /**
-   * Parses the alerts from the Metronom SOAP endpoint.
+   * Finds the delay for the station with the given name.
    * 
-   * @return list of alerts
+   * @param stationName station name to search for
+   * @return station delay
    */
-  public List<Alert> parseAlerts() {
-    String pageSource = websiteSourceDownloader.getSource(METRONOM_ALERT_URL);
-    return parseAlertsFromSource(pageSource);
+  public StationDelay findDelays(String stationName) {
+    Station station = stationProvider.findStationByName(stationName);
+
+    return findDelays(station);
   }
 
-  private List<Alert> parseAlertsFromSource(String pageSource) {
+  /**
+   * Finds the delay for the given station.
+   * 
+   * @param station station to search for
+   * @return station delay
+   */
+  public StationDelay findDelays(Station station) {
+    if (station == null) {
+      return null;
+    }
+
+    String uri = buildStationDelayUri(station);
+
+    String result = websiteSourceDownloader.getSource(uri);
+
     try {
-      JsonNode mainJsonNode = objectMapper.readTree(pageSource);
-      JsonNode alertJsonNode = mainJsonNode.get("ListItem");
+      JsonNode jsonNode = objectMapper.readTree(result);
 
-      List<Alert> alerts = new ArrayList<>();
-      alertJsonNode.forEach(jsonAlert -> {
-        Alert alert = alertConverter.convert(jsonAlert);
-        StartAndTargetStation startAndTarget = stationFinder.findStartAndTarget(alert.getMessage());
-
-        if (startAndTarget != null) {
-          alert.setStationStart(startAndTarget.getStart());
-          alert.setStationEnd(startAndTarget.getTarget());
-        }
-
-        alerts.add(alert);
-      });
-
-      return alerts;
+      return stationDelayConverter.convert(station, jsonNode);
     } catch (IOException exc) {
       throw Exceptions.unchecked(exc);
     }
+  }
+
+  private String buildStationDelayUri(Station station) {
+    UriBuilder uriBuilder = UriBuilder.fromUri(BASE_URL);
+    uriBuilder.queryParam("bhf", station.getCode());
+
+    return uriBuilder.build().toString();
   }
 
 }

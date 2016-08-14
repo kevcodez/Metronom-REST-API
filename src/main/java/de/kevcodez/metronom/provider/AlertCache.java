@@ -16,45 +16,54 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-package de.kevcodez.metronom.model.alert;
+package de.kevcodez.metronom.provider;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Schedule;
+import de.kevcodez.metronom.model.alert.Alert;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 /**
- * Class to parse alert notifications every minute (scheduled job).
+ * Singleton to cache alert notifications.
  * 
  * @author Kevin Grüneberg
  *
  */
 @Singleton
-@Startup
-public class ScheduledAlertParser {
+public class AlertCache {
+
+  private List<Alert> alerts = new ArrayList<>();
 
   @Inject
-  private AlertParser alertParser;
-
-  @Inject
-  private AlertCache alertCache;
+  private Event<Alert> newAlert;
 
   /**
-   * Parse alerts once on startup.
+   * Adds the given alert to the list of alerts.
+   * 
+   * @param alert alert to add
    */
-  @PostConstruct
-  public void onPostConstruct() {
-    parseAlerts();
+  public void addAlert(Alert alert) {
+    if (!alerts.contains(alert)) {
+      newAlert.fire(alert);
+      alerts.add(alert);
+    }
+
+    removeOldAlerts();
   }
 
-  /**
-   * Parses the alert notifications from the Metronom SOAP endpoint and puts them in the {@link AlertCache}. This
-   * function is executed every minute.
-   */
-  @Schedule(second = "*/60", minute = "*", hour = "*", persistent = false)
-  public void parseAlerts() {
-    alertParser.parseAlerts().forEach(alertCache::addAlert);
+  public List<Alert> getAlerts() {
+    return Collections.unmodifiableList(alerts);
+  }
+
+  private void removeOldAlerts() {
+    LocalDateTime fourHoursAgo = LocalDateTime.now().minusHours(4);
+    alerts.removeIf(alert -> alert.getCreationDate().isBefore(fourHoursAgo));
   }
 
 }

@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
 import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.model.station.StationProvider;
+import de.kevcodez.metronom.provider.StationProvider;
 
 import java.util.List;
 

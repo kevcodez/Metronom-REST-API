@@ -1,9 +1,9 @@
 package de.kevcodez.metronom.test.model.alert;
 
 import de.kevcodez.metronom.model.alert.Alert;
-import de.kevcodez.metronom.model.alert.AlertCache;
-import de.kevcodez.metronom.model.alert.AlertParser;
-import de.kevcodez.metronom.model.alert.ScheduledAlertParser;
+import de.kevcodez.metronom.parser.AlertParser;
+import de.kevcodez.metronom.parser.ScheduledAlertParser;
+import de.kevcodez.metronom.provider.AlertCache;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

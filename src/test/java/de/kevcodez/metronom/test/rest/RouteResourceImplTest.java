@@ -7,8 +7,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 import de.kevcodez.metronom.model.route.Route;
-import de.kevcodez.metronom.model.route.RouteProvider;
 import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.provider.RouteProvider;
 import de.kevcodez.metronom.rest.impl.RouteResourceImpl;
 
 import java.util.ArrayList;

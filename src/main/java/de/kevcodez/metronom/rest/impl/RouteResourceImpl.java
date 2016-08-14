@@ -18,12 +18,12 @@
  **/
 package de.kevcodez.metronom.rest.impl;
 
-import static de.kevcodez.metronom.model.station.StationProvider.alternativeNameMatches;
-import static de.kevcodez.metronom.model.station.StationProvider.stationNameMatches;
+import static de.kevcodez.metronom.provider.StationProvider.alternativeNameMatches;
+import static de.kevcodez.metronom.provider.StationProvider.stationNameMatches;
 import static java.util.stream.Collectors.toList;
 
 import de.kevcodez.metronom.model.route.Route;
-import de.kevcodez.metronom.model.route.RouteProvider;
+import de.kevcodez.metronom.provider.RouteProvider;
 import de.kevcodez.metronom.rest.RouteResource;
 
 import java.util.Collections;

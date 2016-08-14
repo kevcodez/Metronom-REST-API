@@ -1,6 +1,9 @@
-package de.kevcodez.metronom.model.station;
+package de.kevcodez.metronom.provider;
 
 import static java.lang.String.format;
+
+import de.kevcodez.metronom.model.station.StartAndTargetStation;
+import de.kevcodez.metronom.model.station.Station;
 
 import java.util.ArrayList;
 import java.util.List;

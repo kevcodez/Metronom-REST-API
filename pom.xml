@@ -87,6 +87,7 @@
 						<exclude>**/JAXRSConfiguration.java</exclude>
 						<exclude>**/CharacterEncodingFilter.java</exclude>
 						<exclude>**/Exceptions.java</exclude>
+						<exclude>**/model/*/*.java</exclude>
 					</excludes>
 				</configuration>
 				<executions>
