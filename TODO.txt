@@ -7,7 +7,6 @@ Server
 WildFly
 
 - SSL
-- Welcome Page entfernen
 - HTTP2 Support
 - Undertow Upgrade
 
@@ -15,5 +14,4 @@ APP
 
 - Landscape Ansicht prüfen
 - Schema (XSD) nutzen
-- Fehlermeldung wenn keine Internetverbindung da ist
 - Favoriten hinzufügen (ignore-case matching)

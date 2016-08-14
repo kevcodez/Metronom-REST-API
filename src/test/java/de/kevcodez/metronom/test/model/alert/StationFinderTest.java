@@ -70,10 +70,16 @@ public class StationFinderTest {
       { "Strecke zwischen Cuxhaven und Hamburg", "Cuxhaven", "Hamburg" },
       { "nach Cuxhaven ab Hamburg", "Hamburg", "Cuxhaven" },
       { "hinter Cuxhaven, die Fahrt nach Hamburg", "Cuxhaven", "Hamburg" },
-      { "zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
-      { "zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Hamburg-Harburg" },
+      { "zwischen Hamburg Hbf und Hamburg Harburg ist aufgehoben", "Hamburg", "Harburg" },
+      { "zwischen Hamburg Hbf und Hamburg-Harburg ist aufgehoben", "Hamburg", "Harburg" },
       { "Abfahrt von 82815 Uelzen nach Hannover voraussichtlich", "Uelzen", "Hannover" },
-      { "Die Störung an der Strecke verursacht zur Zeit Verspätungen zwischen 5-10 Minuten auf der Strecke Cuxhaven nach Hamburg", "Cuxhaven", "Hamburg" }
+      { "Die Störung an der Strecke verursacht zur Zeit Verspätungen zwischen 5-10 Minuten auf der Strecke Cuxhaven nach Hamburg",
+        "Cuxhaven", "Hamburg" },
+      { " Wegen Aufgrund von Fussballfans steht 82129 von Hamburg nach Uelzen derzeit in Harburg.", "Hamburg",
+        "Uelzen" },
+      { "Wegen einer Stellwerksstörung verkehrt 82817 von Hannover nach Göttingen ab Vinnhorst", "Hannover",
+        "Göttingen" },
+      {"Die Streckensperrung Cuxhaven - Stade/ Hamburg-Stade aufgrund", "Cuxhaven", "Stade"}
     });
   }
 
@@ -83,16 +89,13 @@ public class StationFinderTest {
     realStationProvider.constructStations();
 
     MockitoAnnotations.initMocks(this);
-
-    mockStation("Cuxhaven");
-    mockStation("Hamburg");
-    mockStation("Göttingen");
-    mockStation("Goettingen");
-    mockStation("Hannover");
-    mockStation("Uelzen");
-    mockStation("Hamburg-Harburg");
-
+    Mockito.when(stationProvider.findStationByName(Mockito.anyString()))
+      .then(i -> realStationProvider.findStationByName((String) i.getArgument(0)));
     Mockito.when(stationProvider.getStations()).thenReturn(realStationProvider.getStations());
+    
+    
+    stationFinder.init();
+
   }
 
   @Test
@@ -104,8 +107,4 @@ public class StationFinderTest {
     assertThat(startStopStation.getTarget().getName(), is(expectedTarget));
   }
 
-  private void mockStation(String station) {
-    Mockito.when(stationProvider.findStationByName(station))
-      .thenReturn(realStationProvider.findStationByName(station));
-  }
 }

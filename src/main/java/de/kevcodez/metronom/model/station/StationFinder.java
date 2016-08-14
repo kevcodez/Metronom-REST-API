@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -19,37 +21,42 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Grüneberg
  *
  */
+@Singleton
 public class StationFinder {
 
   private static final Logger LOG = LoggerFactory.getLogger(StationFinder.class);
 
-  private static final String PATTERN_WORD = "([a-zA-ZäöüßÄÖÜ-]+){4}";
-
-  private static List<Pattern> alertPatterns = new ArrayList<>();
-
-  static {
-    addPattern(format("nach (?<target>%1$s)(.+)ab (?<start>%1$s)", PATTERN_WORD));
-    addPattern(format("Strecke (?<start>%1$s)\\/(?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("zwischen (?<start>%1$s) und (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("Strecke (?<start>%1$s) - (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("(on|in|hinter) (?<start>(?!ME)%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("(ab|on) (?<start>(?!ME)%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("Bahnhof (?<start>%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("Strecke (?<start>%1$s) nach (?<target>%1$s)", PATTERN_WORD));
-
-    // Unsafe patterns (may need to be optimized, if they happen to match faulty)
-    addPattern(format("(\\d+) (?<start>%1$s)(.+)? nach (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("in (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", PATTERN_WORD));
-    addPattern(format("nach (?<target>%1$s)(.+)? in (?<start>%1$s)", PATTERN_WORD));
-
-    // Only start station
-    addPattern(format("ab (?<start>%1$s)", PATTERN_WORD));
-    addPattern(format("von (?<start>(?!ME)%1$s)", PATTERN_WORD));
-    addPattern(format("Ankunft (.*) in (?<start>(?!ME)%1$s)", PATTERN_WORD));
-  }
-
   @Inject
   private StationProvider stationProvider;
+
+  private List<Pattern> alertPatterns = new ArrayList<>();
+
+  /**
+   * Initializes the station finder by defining the regular expression patterns for finding stations.
+   */
+  @PostConstruct
+  public void init() {
+    String stationPattern = buildStationPattern();
+
+    addPattern(format("(on|in|hinter) (?<start>%1$s)(.+)? nach (?<target>%1$s)", stationPattern));
+    addPattern(format("nach (?<target>%1$s)(.+)ab (?<start>%1$s)", stationPattern));
+    addPattern(format("Strecke (?<start>%1$s)\\/(?<target>%1$s)", stationPattern));
+    addPattern(format("zwischen (?<start>%1$s) und (?<target>%1$s)", stationPattern));
+    addPattern(format("(Strecke|Streckensperrung) (?<start>%1$s) - (?<target>%1$s)", stationPattern));
+    addPattern(format("(ab|on) (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", stationPattern));
+    addPattern(format("Bahnhof (?<start>%1$s)(.+)? nach (?<target>%1$s)", stationPattern));
+    addPattern(format("Strecke (?<start>%1$s) nach (?<target>%1$s)", stationPattern));
+
+    // Unsafe patterns (may need to be optimized, if they happen to match faulty)
+    addPattern(format("(\\d+) (?<start>%1$s)(.+)? nach (?<target>%1$s)", stationPattern));
+    addPattern(format("in (?<start>%1$s)(.+)? Richtung (?<target>%1$s)", stationPattern));
+    addPattern(format("nach (?<target>%1$s)(.+)? in (?<start>%1$s)", stationPattern));
+
+    // Only start station
+    addPattern(format("ab (?<start>%1$s)", stationPattern));
+    addPattern(format("von (?<start>%1$s)", stationPattern));
+    addPattern(format("Ankunft (.*) in (?<start>%1$s)", stationPattern));
+  }
 
   /**
    * Finds the start and the target station from the given alert.
@@ -58,10 +65,10 @@ public class StationFinder {
    * @return start and target station
    */
   public StartAndTargetStation findStartAndTarget(String alert) {
-    String alertNoSpacesInNames = replaceSpacesInStationNames(alert);
+    String alertWithoutAlternativeNames = replaceAlternativeNames(alert);
 
     for (Pattern pattern : alertPatterns) {
-      Matcher matcher = pattern.matcher(alertNoSpacesInNames);
+      Matcher matcher = pattern.matcher(alertWithoutAlternativeNames);
 
       if (matcher.find()) {
         String start = matcher.group("start");
@@ -81,25 +88,24 @@ public class StationFinder {
     return null;
   }
 
-  private static void addPattern(String pattern) {
+  private String buildStationPattern() {
+    String innerRegex = stationProvider.getStations().stream().map(Station::getName).collect(Collectors.joining("|"));
+    return String.format("(%s)", innerRegex);
+  }
+
+  private void addPattern(String pattern) {
     alertPatterns.add(Pattern.compile(pattern));
   }
 
-  private String replaceSpacesInStationNames(String alert) {
-    List<Station> stations = stationProvider.getStations();
-
-    String replacedSpaces = alert;
-
-    for (Station station : stations) {
-      List<String> namesWithSpace = station.getAlternativeNames().stream().filter(name -> name.contains(" "))
-        .collect(Collectors.toList());
-
-      for (String name : namesWithSpace) {
-        replacedSpaces = replacedSpaces.replace(name, station.getName());
+  private String replaceAlternativeNames(String alert) {
+    String alertWithoutAlternativeNames = alert;
+    for (Station station : stationProvider.getStations()) {
+      for (String alternativeName : station.getAlternativeNames()) {
+        alertWithoutAlternativeNames = alertWithoutAlternativeNames.replace(alternativeName, station.getName());
       }
     }
 
-    return replacedSpaces;
+    return alertWithoutAlternativeNames;
   }
 
   private StartAndTargetStation findStartAndTarget(String start, String target, String originalAlert) {
@@ -109,17 +115,13 @@ public class StationFinder {
       startStation = stationProvider.findStationByName(start);
 
       // If the regex pattern matched, but the station provider cannot find any station, log it
-      if (startStation == null) {
-        LOG.warn("station not found {}, original alert {}", start, originalAlert);
-      }
+      logMissingStation(start, originalAlert, startStation);
     }
 
     if (target != null) {
       targetStation = stationProvider.findStationByName(target);
 
-      if (targetStation == null) {
-        LOG.warn("station not found {}, original alert {}", target, originalAlert);
-      }
+      logMissingStation(target, originalAlert, targetStation);
     }
 
     if (targetStation == null && startStation == null) {
@@ -127,6 +129,12 @@ public class StationFinder {
     }
 
     return new StartAndTargetStation(startStation, targetStation);
+  }
+
+  private void logMissingStation(String start, String originalAlert, Station station) {
+    if (station == null) {
+      LOG.warn("station not found {}, original alert {}", start, originalAlert);
+    }
   }
 
 }
