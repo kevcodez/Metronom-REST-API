@@ -43,7 +43,7 @@ import javax.ws.rs.core.UriBuilder;
 @Stateless
 public class StationDelayParser {
 
-  private static final String BASE_URL = "http://www.der-metronom.de/extern/etc.data.php?type=stationsauskunft";
+  private static final String BASE_URL = "http://www.der-metronom.de/extern/etc.proxy.php?type=stationsauskunft";
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
