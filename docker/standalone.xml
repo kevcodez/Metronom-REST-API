@@ -22,7 +22,6 @@
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
 
-
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -267,7 +266,7 @@
             </core-environment>
             <recovery-environment socket-binding="txn-recovery-environment" status-socket-binding="txn-status-manager"/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:undertow:3.0">
+        <subsystem xmlns="urn:jboss:domain:undertow:3.1">
             <buffer-cache name="default"/>
             <server name="default-server">
                 <http-listener name="default" write-timeout="10000" read-timeout="10000" socket-binding="http" redirect-socket="https"/>
