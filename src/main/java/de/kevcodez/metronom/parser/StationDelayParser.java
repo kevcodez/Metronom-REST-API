@@ -26,9 +26,18 @@ import de.kevcodez.metronom.model.delay.StationDelay;
 import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.provider.StationProvider;
 import de.kevcodez.metronom.utility.Exceptions;
-import de.kevcodez.metronom.utility.WebsiteSourceDownloader;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -43,7 +52,7 @@ import javax.ws.rs.core.UriBuilder;
 @Stateless
 public class StationDelayParser {
 
-  private static final String BASE_URL = "http://www.der-metronom.de/extern/etc.proxy.php?type=stationsauskunft";
+  private static final String BASE_URL = "http://www.der-metronom.de/livedata/etc?type=stationsauskunft";
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -52,9 +61,6 @@ public class StationDelayParser {
 
   @Inject
   private StationDelayConverter stationDelayConverter;
-  
-  @Inject
-  private WebsiteSourceDownloader websiteSourceDownloader;
 
   /**
    * Finds the delay for the station with the given name.
@@ -69,7 +75,9 @@ public class StationDelayParser {
   }
 
   /**
-   * Finds the delay for the given station.
+   * Finds the delay for the given station.<br>
+   * To avoid getting an access denied exception when retrieving the station delays, we have to get the cookies from any
+   * other URL first. We retrieve a CSRF token and a CraftSessionID that are used for authentication.
    * 
    * @param station station to search for
    * @return station delay
@@ -80,8 +88,9 @@ public class StationDelayParser {
     }
 
     String uri = buildStationDelayUri(station);
-
-    String result = websiteSourceDownloader.getSource(uri);
+    // Get cookies from any URL to avoid access denied exception
+    Map<String, String> cookies = getCookiesFromUrl("http://www.der-metronom.de/ueber-metronom/wer-wir-sind/");
+    String result = getStationDelays(cookies, uri);
 
     try {
       JsonNode jsonNode = objectMapper.readTree(result);
@@ -97,6 +106,61 @@ public class StationDelayParser {
     uriBuilder.queryParam("bhf", station.getCode());
 
     return uriBuilder.build().toString();
+  }
+
+  private String getStationDelays(Map<String, String> cookies, String uri) {
+    try {
+      URL myUrl = new URL(uri);
+      URLConnection urlConn = myUrl.openConnection();
+
+      String cookie = cookies.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue())
+        .collect(Collectors.joining(";"));
+      urlConn.setRequestProperty("Cookie", cookie);
+
+      return getContentFromUrlConn(urlConn);
+    } catch (IOException exc) {
+      throw Exceptions.unchecked(exc);
+    }
+  }
+
+  private String getContentFromUrlConn(URLConnection urlConn) throws IOException {
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()))) {
+      StringBuilder stringBuilder = new StringBuilder();
+      String inputLine;
+      while ((inputLine = in.readLine()) != null) {
+        stringBuilder.append(inputLine);
+      }
+
+      return stringBuilder.toString();
+    }
+  }
+
+  private Map<String, String> getCookiesFromUrl(String uri) {
+    try {
+      URL url = new URL(uri);
+      URLConnection conn = url.openConnection();
+
+      Map<String, List<String>> headerFields = conn.getHeaderFields();
+
+      Set<String> headerFieldsSet = headerFields.keySet();
+      Iterator<String> hearerFieldsIter = headerFieldsSet.iterator();
+
+      while (hearerFieldsIter.hasNext()) {
+        String headerFieldKey = hearerFieldsIter.next();
+
+        if ("Set-Cookie".equalsIgnoreCase(headerFieldKey)) {
+          List<String> headerFieldValue = headerFields.get(headerFieldKey);
+          return headerFieldValue.stream()
+            .map(header -> header.split(";\\s*"))
+            .map(h -> h[0].split("="))
+            .collect(Collectors.toMap(f -> f[0], f -> f[1]));
+        }
+      }
+    } catch (IOException exc) {
+      throw Exceptions.unchecked(exc);
+    }
+
+    return Collections.emptyMap();
   }
 
 }
