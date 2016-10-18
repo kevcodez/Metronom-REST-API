@@ -18,14 +18,6 @@
  **/
 package de.kevcodez.metronom.converter;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
-
-import de.kevcodez.metronom.model.delay.Departure;
-import de.kevcodez.metronom.model.delay.StationDelay;
-import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.provider.StationProvider;
-
 import java.time.LocalTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +26,13 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+import de.kevcodez.metronom.model.delay.Departure;
+import de.kevcodez.metronom.model.delay.StationDelay;
+import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.provider.StationProvider;
 
 /**
  * Converts the JSON response from Metronom to a {@link StationDelay}.
@@ -99,15 +98,19 @@ public class StationDelayConverter {
     String targetStationName = singleDeparture.get("ziel").asText();
     int delayInMinutes = singleDeparture.get("prognosemin").asInt();
 
-    String prognose = singleDeparture.get("prognose").asText();
 
     Station targetStation = stationProvider.findStationByName(targetStationName);
     Departure departure = new Departure(train, targetStation, LocalTime.parse(time), delayInMinutes);
 
-    Matcher matcher = PATTERN_TRACK.matcher(prognose);
+    String prognose = singleDeparture.get("prognose").asText();
 
+    Matcher matcher = PATTERN_TRACK.matcher(prognose);
     if (matcher.find()) {
       departure.setTrack(matcher.group(1));
+    }
+
+    if (prognose.toLowerCase().contains("fällt")) {
+      departure.setCancelled(true);
     }
 
     return departure;

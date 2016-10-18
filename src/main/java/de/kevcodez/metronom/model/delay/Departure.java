@@ -18,12 +18,12 @@
  **/
 package de.kevcodez.metronom.model.delay;
 
-import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.rest.adapter.LocalTimeAdapter;
-
 import java.time.LocalTime;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import de.kevcodez.metronom.model.station.Station;
+import de.kevcodez.metronom.rest.adapter.LocalTimeAdapter;
 
 /**
  * Contains the possible delay, target station, train number and time of a departure.
@@ -42,6 +42,8 @@ public class Departure {
   private int delayInMinutes;
 
   private String track;
+
+  private boolean cancelled;
 
   /**
    * Creates a new departure with the given train, target station, time and delay in minutes.
@@ -97,6 +99,14 @@ public class Departure {
 
   public String getTrack() {
     return track;
+  }
+
+  public boolean isCancelled() {
+    return cancelled;
+  }
+
+  public void setCancelled(boolean cancelled) {
+    this.cancelled = cancelled;
   }
 
   @Override
