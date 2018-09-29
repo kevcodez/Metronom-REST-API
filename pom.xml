@@ -32,7 +32,6 @@
         <jackson.version>2.9.7</jackson.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
         <hamcrest.junit.version>2.0.0.0</hamcrest.junit.version>
-        <jacoco.version>0.8.2</jacoco.version>
         <mockito.version>2.22.0</mockito.version>
     </properties>
 
@@ -85,39 +84,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <configuration>
-                    <skip>${skipTests}</skip>
-                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-                    <excludes>
-                        <exclude>**/JAXRSConfiguration.java</exclude>
-                        <exclude>**/CharacterEncodingFilter.java</exclude>
-                        <exclude>**/Exceptions.java</exclude>
-                        <exclude>**/model/*/*.java</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>jacoco-initialize</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco-site</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
