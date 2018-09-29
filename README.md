@@ -15,7 +15,7 @@ git clone https://github.com/kevcodez/Metronom-REST-API.git
 cd Metronom-REST-API
 # Für Windows gradlew.bat nutzen
 ./gradlew build
-java -jar ./target/metronom.jar
+java -jar ./build/libs/metronom-0.0.1-SNAPSHOT.jar
 ``` 
 
 # REST-API
