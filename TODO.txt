@@ -1,14 +1,7 @@
 Server
 
 - Diverse Tests schreiben, um Patterns und Zuordnung von Alerts zu einzelnen Verbindungen zu verbessern
-- REST API anders modellieren (Swagger/RAML)
 - Server-Side Caching von Abfahrten (Departures)
-
-WildFly
-
-- SSL
-- HTTP2 Support
-- Undertow Upgrade
 
 APP
 

@@ -1,16 +1,16 @@
 /**
  * MIT License
- * 
+ * <p>
  * Copyright (c) 2016 Kevin Grüneberg
- * 
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to the following conditions:
- * 
+ * <p>
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
  * Software.
- * 
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
@@ -19,146 +19,103 @@
 package de.kevcodez.metronom.model.alert;
 
 import de.kevcodez.metronom.model.station.Station;
-import de.kevcodez.metronom.rest.adapter.LocalDateTimeAdapter;
-import de.kevcodez.metronom.rest.adapter.LocalTimeAdapter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 /**
  * Class that contains all relevant information for a single alert notification from the Metronom website.
- * 
+ *
  * @author Kevin Grüneberg
  *
  */
 public class Alert {
 
-  private String id;
+    private String message;
 
-  private String message;
+    private LocalDate creationDate;
 
-  private LocalDateTime creationDate;
+    private LocalTime timeFrom;
 
-  private Station stationStart;
+    private LocalTime timeTo;
 
-  private Station stationEnd;
+    private Station stationStart;
 
-  private LocalTime plannedDeparture;
+    private Station stationEnd;
 
-  /**
-   * Creates a new alert notification with the given ID, text and creation date.
-   * 
-   * @param id unique ID
-   * @param message text message
-   * @param creationDate creation date
-   * @param plannedDeparture planned departure as time
-   */
-  public Alert(String id, String message, LocalDateTime creationDate, LocalTime plannedDeparture) {
-    this.id = id;
-    this.message = message;
-    this.creationDate = creationDate;
-    this.plannedDeparture = plannedDeparture;
-  }
+    private LocalTime plannedDeparture;
 
-  /**
-   * Gets the unique ID.
-   * 
-   * @return unique ID
-   */
-  public String getId() {
-    return id;
-  }
-
-  /**
-   * Sets the unique ID.
-   * 
-   * @param id unique ID
-   */
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-  public LocalDateTime getCreationDate() {
-    return creationDate;
-  }
-
-  public void setCreationDate(LocalDateTime creationDate) {
-    this.creationDate = creationDate;
-  }
-
-  public Station getStationStart() {
-    return stationStart;
-  }
-
-  public void setStationStart(Station stationStart) {
-    this.stationStart = stationStart;
-  }
-
-  public Station getStationEnd() {
-    return stationEnd;
-  }
-
-  public void setStationEnd(Station stationEnd) {
-    this.stationEnd = stationEnd;
-  }
-
-  @XmlJavaTypeAdapter(LocalTimeAdapter.class)
-  public LocalTime getPlannedDeparture() {
-    return plannedDeparture;
-  }
-
-  public void setPlannedDeparture(LocalTime plannedDeparture) {
-    this.plannedDeparture = plannedDeparture;
-  }
-
-  @Override
-  public String toString() {
-    return "Alert [id=" + id + ", message=" + message + ", creationDate=" + creationDate + ", stationStart="
-      + stationStart + ", stationEnd=" + stationEnd + ", plannedDeparture=" + plannedDeparture + "]";
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int hashId = 0;
-    if (id != null) {
-      hashId = id.hashCode();
+    public Alert(String message, LocalDate creationDate, LocalTime plannedDeparture) {
+        this.message = message;
+        this.creationDate = creationDate;
+        this.plannedDeparture = plannedDeparture;
     }
 
-    return prime + hashId;
-  }
+    public String getMessage() {
+        return message;
+    }
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
+    public void setMessage(String message) {
+        this.message = message;
     }
-    if (obj == null) {
-      return false;
+
+    public LocalDateTime getDateTime() {
+        return LocalDateTime.of(getCreationDate(), getTimeFrom());
     }
-    if (getClass() != obj.getClass()) {
-      return false;
+
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
-    Alert other = (Alert) obj;
-    if (id == null) {
-      if (other.id != null) {
-        return false;
-      }
-    } else if (!id.equals(other.id)) {
-      return false;
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
-    return true;
-  }
+
+    public Station getStationStart() {
+        return stationStart;
+    }
+
+    public void setStationStart(Station stationStart) {
+        this.stationStart = stationStart;
+    }
+
+    public Station getStationEnd() {
+        return stationEnd;
+    }
+
+    public void setStationEnd(Station stationEnd) {
+        this.stationEnd = stationEnd;
+    }
+
+    public LocalTime getPlannedDeparture() {
+        return plannedDeparture;
+    }
+
+    public void setPlannedDeparture(LocalTime plannedDeparture) {
+        this.plannedDeparture = plannedDeparture;
+    }
+
+    public LocalTime getTimeFrom() {
+        return timeFrom;
+    }
+
+    public void setTimeFrom(LocalTime timeFrom) {
+        this.timeFrom = timeFrom;
+    }
+
+    public LocalTime getTimeTo() {
+        return timeTo;
+    }
+
+    public void setTimeTo(LocalTime timeTo) {
+        this.timeTo = timeTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Alert [message=" + message + ", creationDate=" + creationDate + ", stationStart="
+                + stationStart + ", stationEnd=" + stationEnd + ", plannedDeparture=" + plannedDeparture + "]";
+    }
 
 }

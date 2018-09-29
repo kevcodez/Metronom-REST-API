@@ -8,68 +8,56 @@ import java.util.List;
 
 /**
  * Departure with a single, optional alert.
- * 
- * @author Kevin Grüneberg
  *
+ * @author Kevin Grüneberg
  */
 public class DeparturesWithAlert {
 
-  private List<SingleDeparture> departures = new ArrayList<>();
+    private List<SingleDeparture> departures = new ArrayList<>();
 
-  private List<Alert> remainingAlerts = new ArrayList<>();
-
-  /**
-   * Adds the given departure and alert to the list of departures. The given alert refers to the given departure.
-   * 
-   * @param departure departure
-   * @param alert alert that refers to the departure
-   */
-  public void addDeparture(Departure departure, Alert alert) {
-    departures.add(new SingleDeparture(departure, alert));
-  }
-
-  /**
-   * Adds the given alert to the list of remaining alerts.
-   * 
-   * @param alert alert to add
-   */
-  public void addRemainingAlert(Alert alert) {
-    remainingAlerts.add(alert);
-  }
-
-  public List<SingleDeparture> getDepartures() {
-    return Collections.unmodifiableList(departures);
-  }
-
-  public List<Alert> getRemainingAlerts() {
-    return Collections.unmodifiableList(remainingAlerts);
-  }
-
-  class SingleDeparture {
-
-    private Departure departure;
-
-    private Alert alert;
+    private List<Alert> remainingAlerts = new ArrayList<>();
 
     /**
-     * Creates a new deparute alert with the given departure and alert.
-     * 
+     * Adds the given departure and alert to the list of departures. The given alert refers to the given departure.
+     *
      * @param departure departure
-     * @param alert optional alert
+     * @param alert     alert that refers to the departure
      */
-    SingleDeparture(Departure departure, Alert alert) {
-      this.departure = departure;
-      this.alert = alert;
+    public void addDeparture(Departure departure, Alert alert) {
+        departures.add(new SingleDeparture(departure, alert));
     }
 
-    public Departure getDeparture() {
-      return departure;
+    public void addRemainingAlert(Alert alert) {
+        remainingAlerts.add(alert);
     }
 
-    public Alert getAlert() {
-      return alert;
+    public List<SingleDeparture> getDepartures() {
+        return Collections.unmodifiableList(departures);
     }
 
-  }
+    public List<Alert> getRemainingAlerts() {
+        return Collections.unmodifiableList(remainingAlerts);
+    }
+
+    class SingleDeparture {
+
+        private Departure departure;
+
+        private Alert alert;
+
+        SingleDeparture(Departure departure, Alert alert) {
+            this.departure = departure;
+            this.alert = alert;
+        }
+
+        public Departure getDeparture() {
+            return departure;
+        }
+
+        public Alert getAlert() {
+            return alert;
+        }
+
+    }
 
 }

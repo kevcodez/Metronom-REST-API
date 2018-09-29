@@ -1,127 +1,140 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.kevcodez</groupId>
-	<artifactId>de.kevcodez.metronom</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.kevcodez</groupId>
+    <artifactId>de.kevcodez.metronom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-	<description>REST API for http://www.der-metronom.de/</description>
+    <description>REST API for http://www.der-metronom.de/</description>
 
-	<scm>
-		<connection>scm:git:git@github.com:kevcodez/Metronom-REST-API.git</connection>
-		<developerConnection>scm:git:git@github.com:kevcodez/Metronom-REST-API.git</developerConnection>
-		<url>git@github.com:kevcodez/Metronom-REST-API.git</url>
-		<tag>HEAD</tag>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:kevcodez/Metronom-REST-API.git</connection>
+        <developerConnection>scm:git:git@github.com:kevcodez/Metronom-REST-API.git</developerConnection>
+        <url>git@github.com:kevcodez/Metronom-REST-API.git</url>
+        <tag>HEAD</tag>
+    </scm>
 
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<failOnMissingWebXml>false</failOnMissingWebXml>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
-		<!-- Versions -->
-		<hamcrest.junit.version>2.0.0.0</hamcrest.junit.version>
-		<javaee.api.version>7.0</javaee.api.version>
-		<jackson.databind.version>2.5.4</jackson.databind.version>
-		<jacoco.version>0.7.7.201606060606</jacoco.version>
-		<mockito.version>2.0.87-beta</mockito.version>
-		<slf4j.version>1.7.2</slf4j.version>
-	</properties>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-	<dependencies>
-		<!-- Provided dependencies -->
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>${javaee.api.version}</version>
-			<scope>provided</scope>
-		</dependency>
+        <!-- Versions -->
+        <jackson.version>2.9.7</jackson.version>
+        <springfox.swagger.version>2.9.2</springfox.swagger.version>
+        <hamcrest.junit.version>2.0.0.0</hamcrest.junit.version>
+        <jacoco.version>0.8.2</jacoco.version>
+        <mockito.version>2.22.0</mockito.version>
+    </properties>
 
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.databind.version}</version>
-			<scope>provided</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.swagger.version}</version>
+        </dependency>
 
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.swagger.version}</version>
+        </dependency>
 
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-junit</artifactId>
-			<version>${hamcrest.junit.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
-	<build>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-junit</artifactId>
+            <version>${hamcrest.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<finalName>metronom</finalName>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
-				<configuration>
-					<skip>${skipTests}</skip>
-					<destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-					<dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-					<excludes>
-						<exclude>**/JAXRSConfiguration.java</exclude>
-						<exclude>**/CharacterEncodingFilter.java</exclude>
-						<exclude>**/Exceptions.java</exclude>
-						<exclude>**/model/*/*.java</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>jacoco-initialize</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>jacoco-site</id>
-						<phase>package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+    </dependencies>
 
-		</plugins>
-	</build>
+    <build>
 
-	<url>https://github.com/kevcodez/Metronom-REST-API</url>
+        <finalName>metronom</finalName>
 
-	<developers>
-		<developer>
-			<id>kgrueneberg</id>
-			<name>Kevin Grüneberg</name>
-			<email>k.grueneberg1994@gmail.com</email>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>UTC+1</timezone>
-		</developer>
-	</developers>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <skip>${skipTests}</skip>
+                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                    <excludes>
+                        <exclude>**/JAXRSConfiguration.java</exclude>
+                        <exclude>**/CharacterEncodingFilter.java</exclude>
+                        <exclude>**/Exceptions.java</exclude>
+                        <exclude>**/model/*/*.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <url>https://github.com/kevcodez/Metronom-REST-API</url>
+
+    <developers>
+        <developer>
+            <id>kgrueneberg</id>
+            <name>Kevin Grüneberg</name>
+            <email>k.grueneberg1994@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>UTC+1</timezone>
+        </developer>
+    </developers>
 
 </project>

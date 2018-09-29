@@ -2,13 +2,29 @@
 
 API um Verkehrsmeldungen vom Metronom abzufragen.
 
-Das Projekt basiert auf Java EE 7 und setzt einen Application-Server voraus. Die Entwicklung lief auf dem WildFly 10.
+Das Projekt basiert auf Spring Boot 2.
 
 [![Build Status](http://kevcodez.de:8080/job/metronom-pipeline/badge/icon)](http://kevcodez.de:8080/job/metronom-pipeline/)
 
-# REST-API:
+# Lokal starten
 
-`Einstiegspunkt: /api/v1`
+Voraussetzungen:
+
+* Java 8+ ist installiert
+
+```
+git clone https://github.com/kevcodez/Metronom-REST-API.git
+cd Metronom-REST-API
+# Für Windows mvnw.bat nutzen
+./mvnw clean install spring-boot:repackage
+java -jar ./target/metronom.jar
+``` 
+
+# REST-API
+
+Das Projekt nutzt Swagger 2 samt Swagger-UI. Erreichbar unter `/swagger-ui.html`
+
+Beispiel: http://localhost:8080/swagger-ui.html
 
 ## Alerts
 

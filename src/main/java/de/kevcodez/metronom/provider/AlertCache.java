@@ -1,16 +1,16 @@
 /**
  * MIT License
- * 
+ * <p>
  * Copyright (c) 2016 Kevin Grüneberg
- * 
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to the following conditions:
- * 
+ * <p>
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
  * Software.
- * 
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
@@ -19,51 +19,33 @@
 package de.kevcodez.metronom.provider;
 
 import de.kevcodez.metronom.model.alert.Alert;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.ejb.Singleton;
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
-
-/**
- * Singleton to cache alert notifications.
- * 
- * @author Kevin Grüneberg
- *
- */
-@Singleton
+@Component
 public class AlertCache {
 
-  private List<Alert> alerts = new ArrayList<>();
+    private List<Alert> alerts = new ArrayList<>();
 
-  @Inject
-  private Event<Alert> newAlert;
+    public void addAlert(Alert alert) {
+        if (!alerts.contains(alert)) {
+            alerts.add(alert);
+        }
 
-  /**
-   * Adds the given alert to the list of alerts.
-   * 
-   * @param alert alert to add
-   */
-  public void addAlert(Alert alert) {
-    if (!alerts.contains(alert)) {
-      newAlert.fire(alert);
-      alerts.add(alert);
+        removeOldAlerts();
     }
 
-    removeOldAlerts();
-  }
+    public List<Alert> getAlerts() {
+        return Collections.unmodifiableList(alerts);
+    }
 
-  public List<Alert> getAlerts() {
-    return Collections.unmodifiableList(alerts);
-  }
-
-  private void removeOldAlerts() {
-    LocalDateTime fourHoursAgo = LocalDateTime.now().minusHours(4);
-    alerts.removeIf(alert -> alert.getCreationDate().isBefore(fourHoursAgo));
-  }
+    private void removeOldAlerts() {
+        LocalDateTime fourHoursAgo = LocalDateTime.now().minusHours(4);
+        alerts.removeIf(alert -> alert.getDateTime().isBefore(fourHoursAgo));
+    }
 
 }

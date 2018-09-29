@@ -1,41 +1,37 @@
 package de.kevcodez.metronom.test.rest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-
 import de.kevcodez.metronom.model.route.Route;
 import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.provider.RouteProvider;
-import de.kevcodez.metronom.rest.impl.RouteResourceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import de.kevcodez.metronom.rest.RouteResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 /**
- * Tests {@link RouteResourceImpl}.
+ * Tests {@link RouteResource}.
  * 
  * @author Kevin Grüneberg
  *
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RouteResourceImplTest {
+public class RouteResourceTest {
 
   @Mock
   private RouteProvider routeProvider;
 
   @InjectMocks
-  private RouteResourceImpl routeResource;
+  private RouteResource routeResource;
 
   @Before
   public void setup() {

@@ -4,17 +4,16 @@ import de.kevcodez.metronom.model.alert.Alert;
 import de.kevcodez.metronom.parser.AlertParser;
 import de.kevcodez.metronom.parser.ScheduledAlertParser;
 import de.kevcodez.metronom.provider.AlertCache;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tests {@link ScheduledAlertParser}.
@@ -49,8 +48,8 @@ public class ScheduledAlertParserTest {
 
   private List<Alert> constructSampleAlerts() {
     List<Alert> alerts = new ArrayList<>();
-    alerts.add(new Alert("1", "msg", LocalDateTime.now(), null));
-    alerts.add(new Alert("2", "msg", LocalDateTime.now(), null));
+    alerts.add(new Alert("msg", LocalDate.now(), null));
+    alerts.add(new Alert("msg", LocalDate.now(), null));
     
     return alerts;
   }
