@@ -1,0 +1,67 @@
+buildscript {
+    ext {
+        kotlinVersion = "1.2.71"
+        springBootVersion = "2.1.0.M4"
+        junitVersion = "5.3.1"
+        springfoxSwaggerVersion = "2.9.2"
+        jacksonKotlinVersion = "2.9.7"
+        mockkVersion = "1.8.8"
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    }
+}
+
+plugins {
+    id "com.github.ben-manes.versions" version "0.20.0"
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: "kotlin"
+apply plugin: "idea"
+
+group = "de.kevcodez.metronom"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = 1.8
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
+    compile "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
+
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonKotlinVersion")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+
+    testCompile "io.mockk:mockk:$mockkVersion"
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion") {
+        exclude group: "junit", module: "junit"
+    }
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
