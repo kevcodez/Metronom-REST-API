@@ -1,5 +1,5 @@
 FROM openjdk:8-jre-alpine
 
-COPY target/metronom.jar app.jar
+COPY build/libs/metronom-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8081
 CMD ["java", "-Xms256m", "-Xmx256m", "-jar", "app.jar"]
