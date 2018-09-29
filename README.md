@@ -4,8 +4,6 @@ API um Verkehrsmeldungen vom Metronom abzufragen.
 
 Das Projekt basiert auf Spring Boot 2.
 
-[![Build Status](http://kevcodez.de:8080/job/metronom-pipeline/badge/icon)](http://kevcodez.de:8080/job/metronom-pipeline/)
-
 # Lokal starten
 
 Voraussetzungen:
