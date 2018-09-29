@@ -18,12 +18,6 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-/**
- * Tests {@link RouteResource}.
- * 
- * @author Kevin Grüneberg
- *
- */
 @RunWith(MockitoJUnitRunner.class)
 public class RouteResourceTest {
 

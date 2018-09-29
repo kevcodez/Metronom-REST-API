@@ -10,11 +10,6 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Utility class to download the source from an URL.
- *
- * @author Kevin Grüneberg
- */
 @Component
 public class WebsiteSourceDownloader {
 

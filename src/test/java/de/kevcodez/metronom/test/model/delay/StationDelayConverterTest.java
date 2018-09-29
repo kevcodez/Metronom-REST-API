@@ -1,19 +1,11 @@
 package de.kevcodez.metronom.test.model.delay;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.kevcodez.metronom.converter.StationDelayConverter;
 import de.kevcodez.metronom.model.delay.Departure;
 import de.kevcodez.metronom.model.delay.StationDelay;
 import de.kevcodez.metronom.model.station.Station;
 import de.kevcodez.metronom.provider.StationProvider;
-
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -21,12 +13,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-/**
- * Tests {@link StationDelayConverter}.
- * 
- * @author Kevin Grüneberg
- *
- */
+import java.io.IOException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+
 public class StationDelayConverterTest {
 
   private static final ObjectMapper objectMapper = new ObjectMapper();

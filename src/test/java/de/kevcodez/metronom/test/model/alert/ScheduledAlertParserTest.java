@@ -15,12 +15,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Tests {@link ScheduledAlertParser}.
- * 
- * @author Kevin Grüneberg
- *
- */
 @RunWith(MockitoJUnitRunner.class)
 public class ScheduledAlertParserTest {
 
