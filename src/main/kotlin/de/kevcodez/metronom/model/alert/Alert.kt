@@ -28,7 +28,8 @@ data class Alert(
         if (other == null || other !is Alert)
             return false
 
-        return Objects.equals(message, other.message)
+        return Objects.equals(message, other.message) ||
+                (Objects.equals(creationDate, other.creationDate) && Objects.equals(timeFrom, other.timeFrom))
     }
 
     override fun hashCode(): Int {
