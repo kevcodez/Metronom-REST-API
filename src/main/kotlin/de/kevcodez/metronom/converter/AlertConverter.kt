@@ -23,14 +23,22 @@ class AlertConverter @Autowired constructor(private val stationProvider: Station
         val timeFrom = alert.get("time_von").textValue()
         val timeTo = alert.get("time_von").textValue()
 
+        val bhfVon = alert.get("bhfvon").textValue()
+        val startStation =
+            stationProvider.findStationByName(bhfVon) ?: throw IllegalStateException("Unbekannte Station $bhfVon")
+
+        val bhfNach = alert.get("bhfnach").textValue()
+        val stopStation =
+            stationProvider.findStationByName(bhfNach) ?: throw IllegalStateException("Unbekannte Station $bhfNach")
+
         return Alert(
             message = text,
             creationDate = LocalDate.parse(date!!.split("\\+".toRegex())[0]),
             plannedDeparture = parsePlannedDeparture(text),
             timeFrom = LocalTime.parse(timeFrom.split("\\+".toRegex())[0]),
             timeTo = LocalTime.parse(timeTo.split("\\+".toRegex())[0]),
-            stationStart = stationProvider.findStationByName(alert.get("bhfvon").textValue())!!,
-            stationEnd = stationProvider.findStationByName(alert.get("bhfnach").textValue())!!
+            stationStart = startStation,
+            stationEnd = stopStation
         )
     }
 

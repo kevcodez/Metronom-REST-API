@@ -19,11 +19,11 @@ class StationProvider {
     fun constructStations() {
         addStation("Hamburg", "AH", "Hamburg Hbf", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg")
         addStation("Harburg", "AHAR", "Hamburg-Harburg", "Harburg", "Hamburg- Harburg", "Hamburg Harburg")
-        addStation("Meckelfeld", "AMDH")
+        addStation("Meckelfeld", "AMDH", "Meckelfeld HP")
         addStation("Maschen", "AMA")
         addStation("Stelle", "ASTE")
         addStation("Ashausen", "AASN")
-        addStation("Winsen", "AWI", "Winsen  (Luhe)")
+        addStation("Winsen", "AWI", "Winsen (Luhe)")
         addStation("Radbruch", "ARH")
         addStation("Bardowick", "ABAD")
         addStation("Lüneburg", "ALBG", "Lueneburg")
@@ -33,13 +33,13 @@ class StationProvider {
         addStation("Hannover", "HH", "Hannover Hbf")
         addStation("Sarstedt", "HSRD")
         addStation("Nordstemmen", "HNOS")
-        addStation("Elze", "HELZ", "Elze  (Han)")
+        addStation("Elze", "HELZ", "Elze (Han)")
         addStation("Banteln", "HBAN")
-        addStation("Alfeld", "HALF", "Alfeld  (Leine)")
-        addStation("Freden", "HFRE", "Freden  (Leine)")
+        addStation("Alfeld", "HALF", "Alfeld (Leine)")
+        addStation("Freden", "HFRE", "Freden (Leine)")
         addStation("Kreiensen", "HK")
         addStation("Salzderhelden", "HEB", "Einbeck", "Einbeck Salzderhelden")
-        addStation("Northeim", "HN", "Northeim  (Han)")
+        addStation("Northeim", "HN", "Northeim (Han)")
         addStation("Nörten-Hardenberg", "HNTH", "Hardenberg", "Nörten", "Noerten-Hardenberg", "Noerten")
         addStation("Göttingen", "HG", "Goettingen", "Götingen")
         addStation("Buxtehude", "ABX")
@@ -77,10 +77,12 @@ class StationProvider {
     fun findStationByName(name: String?): Station? {
         return if (name == null) {
             null
-        } else stations.stream()
-            .filter { station -> stationNameMatches(name, station) || alternativeNameMatches(name, station) }
-            .findFirst().orElse(null)
-
+        } else stations.firstOrNull { station ->
+            stationNameMatches(name, station) || alternativeNameMatches(
+                name,
+                station
+            )
+        }
     }
 
     fun findStationByCode(code: String): Station {
@@ -101,11 +103,13 @@ class StationProvider {
     companion object {
 
         fun stationNameMatches(stationName: String, station: Station): Boolean {
-            return station.name.equals(stationName, ignoreCase = true)
+            return station.name.replace(" ", "").equals(stationName.replace(" ", ""), ignoreCase = true)
         }
 
         fun alternativeNameMatches(stationName: String, station: Station): Boolean {
-            return station.alternativeNames.stream().anyMatch { name -> name.equals(stationName, ignoreCase = true) }
+            return station.alternativeNames.any {
+                it.replace(" ", "").equals(stationName.replace(" ", ""), ignoreCase = true)
+            }
         }
     }
 

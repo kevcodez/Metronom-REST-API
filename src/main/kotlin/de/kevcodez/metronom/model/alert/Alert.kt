@@ -5,6 +5,7 @@ import de.kevcodez.metronom.model.station.Station
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.util.*
 
 /**
  * Class that contains all relevant information for a single alert notification from the Metronom website.
@@ -22,5 +23,16 @@ data class Alert(
 ) {
 
     val dateTime: LocalDateTime get() = LocalDateTime.of(creationDate, timeFrom)
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Alert)
+            return false
+
+        return Objects.equals(message, other.message)
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hashCode(message)
+    }
 
 }
