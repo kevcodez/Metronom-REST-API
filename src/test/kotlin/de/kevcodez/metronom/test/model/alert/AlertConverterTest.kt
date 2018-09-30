@@ -2,7 +2,6 @@ package de.kevcodez.metronom.test.model.alert
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import de.kevcodez.metronom.converter.AlertConverter
-import de.kevcodez.metronom.provider.StationProvider
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.notNullValue
@@ -14,12 +13,9 @@ class AlertConverterTest {
 
     private var alertConverter: AlertConverter? = null
 
-    private val stationProvider = StationProvider()
-
     @BeforeEach
     fun init() {
-        stationProvider.constructStations()
-        alertConverter = AlertConverter(stationProvider)
+        alertConverter = AlertConverter()
     }
 
     @Test

@@ -3,7 +3,6 @@ package de.kevcodez.metronom.converter
 import com.fasterxml.jackson.databind.JsonNode
 import de.kevcodez.metronom.model.alert.Alert
 import de.kevcodez.metronom.provider.StationProvider
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalTime
@@ -15,7 +14,7 @@ import java.util.regex.Pattern
  * @author Kevin Grüneberg
  */
 @Component
-class AlertConverter @Autowired constructor(private val stationProvider: StationProvider) {
+class AlertConverter {
 
     fun convert(alert: JsonNode): Alert {
         val text = alert.get("text").textValue()
@@ -25,11 +24,11 @@ class AlertConverter @Autowired constructor(private val stationProvider: Station
 
         val bhfVon = alert.get("bhfvon").textValue()
         val startStation =
-            stationProvider.findStationByName(bhfVon) ?: throw IllegalStateException("Unbekannte Station $bhfVon")
+            StationProvider.findStationByName(bhfVon) ?: throw IllegalStateException("Unbekannte Station $bhfVon")
 
         val bhfNach = alert.get("bhfnach").textValue()
         val stopStation =
-            stationProvider.findStationByName(bhfNach) ?: throw IllegalStateException("Unbekannte Station $bhfNach")
+            StationProvider.findStationByName(bhfNach) ?: throw IllegalStateException("Unbekannte Station $bhfNach")
 
         return Alert(
             message = text,

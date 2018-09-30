@@ -1,22 +1,18 @@
 package de.kevcodez.metronom.provider
 
 import de.kevcodez.metronom.model.station.Station
-import org.springframework.stereotype.Component
 import java.util.*
-import javax.annotation.PostConstruct
 
 /**
  * Provides all stations statically.
  *
  * @author Kevin Grüneberg
  */
-@Component
-class StationProvider {
+object StationProvider {
 
     private val stations = ArrayList<Station>()
 
-    @PostConstruct
-    fun constructStations() {
+   init {
         addStation("Hamburg", "AH", "Hamburg Hbf", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg")
         addStation("Harburg", "AHAR", "Hamburg-Harburg", "Harburg", "Hamburg- Harburg", "Hamburg Harburg")
         addStation("Meckelfeld", "AMDH", "Meckelfeld HP")
@@ -100,16 +96,13 @@ class StationProvider {
         stations.add(station)
     }
 
-    companion object {
+    fun stationNameMatches(stationName: String, station: Station): Boolean {
+        return station.name.replace(" ", "").equals(stationName.replace(" ", ""), ignoreCase = true)
+    }
 
-        fun stationNameMatches(stationName: String, station: Station): Boolean {
-            return station.name.replace(" ", "").equals(stationName.replace(" ", ""), ignoreCase = true)
-        }
-
-        fun alternativeNameMatches(stationName: String, station: Station): Boolean {
-            return station.alternativeNames.any {
-                it.replace(" ", "").equals(stationName.replace(" ", ""), ignoreCase = true)
-            }
+    fun alternativeNameMatches(stationName: String, station: Station): Boolean {
+        return station.alternativeNames.any {
+            it.replace(" ", "").equals(stationName.replace(" ", ""), ignoreCase = true)
         }
     }
 

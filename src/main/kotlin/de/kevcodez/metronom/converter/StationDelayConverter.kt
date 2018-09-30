@@ -7,7 +7,6 @@ import de.kevcodez.metronom.model.delay.StationDelay
 import de.kevcodez.metronom.model.station.Station
 import de.kevcodez.metronom.provider.StationProvider
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.time.LocalTime
 import java.util.regex.Pattern
@@ -18,9 +17,7 @@ import java.util.regex.Pattern
  * @author Kevin Grüneberg
  */
 @Component
-class StationDelayConverter @Autowired constructor(
-    private val stationProvider: StationProvider
-) {
+class StationDelayConverter {
 
     fun convert(station: Station, node: JsonNode): StationDelay? {
         LOG.debug("converting json node {}", node)
@@ -70,7 +67,7 @@ class StationDelayConverter @Autowired constructor(
 
         val cancelled = prognose.toLowerCase().contains("fällt")
 
-        val targetStation = stationProvider.findStationByName(targetStationName)!!
+        val targetStation = StationProvider.findStationByName(targetStationName)!!
 
         return Departure(
             train = train,

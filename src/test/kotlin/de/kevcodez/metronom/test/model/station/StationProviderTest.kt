@@ -4,27 +4,19 @@ import de.kevcodez.metronom.model.station.Station
 import de.kevcodez.metronom.provider.StationProvider
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class StationProviderTest {
 
-    private var stationProvider: StationProvider = StationProvider()
-
-    @BeforeEach
-    fun before() {
-        stationProvider.constructStations()
-    }
-
     @Test
     fun shouldProvideStations() {
-        val stations = stationProvider.getStations()
+        val stations = StationProvider.getStations()
         assertThat(stations.size, greaterThan(0))
     }
 
     @Test
     fun shouldFindStationByCode() {
-        val station = stationProvider.findStationByCode("AMA")
+        val station = StationProvider.findStationByCode("AMA")
 
         assertThat(station, notNullValue())
         assertThat<String>(station.name, `is`("Maschen"))
@@ -33,7 +25,7 @@ class StationProviderTest {
 
     @Test
     fun shouldFindStationByName() {
-        val station = stationProvider.findStationByName("Harburg")
+        val station = StationProvider.findStationByName("Harburg")
 
         assertThat<Station>(station, notNullValue())
         assertThat<String>(station!!.name, `is`("Harburg"))
@@ -41,7 +33,7 @@ class StationProviderTest {
 
     @Test
     fun shouldFindStationByAlternativeName() {
-        val station = stationProvider.findStationByName("Hamburg-Harburg")
+        val station = StationProvider.findStationByName("Hamburg-Harburg")
 
         assertThat<Station>(station, notNullValue())
         assertThat<String>(station!!.name, `is`("Harburg"))
@@ -49,14 +41,14 @@ class StationProviderTest {
 
     @Test
     fun shouldHaveEqualStations() {
-        val stationByCode = stationProvider.findStationByCode("AMA")
-        val stationByName = stationProvider.findStationByName("Maschen")
+        val stationByCode = StationProvider.findStationByCode("AMA")
+        val stationByName = StationProvider.findStationByName("Maschen")
 
-        assertThat(stationByCode, `is`<Station>(stationByName))
+        assertThat(stationByCode, `is`(stationByName))
         assertThat(stationByCode.hashCode(), `is`(stationByName!!.hashCode()))
 
-        val differentStation = stationProvider.findStationByName("Harburg")
-        assertThat(stationByCode, not<Station>(differentStation))
+        val differentStation = StationProvider.findStationByName("Harburg")
+        assertThat(stationByCode, not(differentStation))
         assertThat(stationByCode.hashCode(), not(differentStation!!.hashCode()))
     }
 

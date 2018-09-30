@@ -17,15 +17,13 @@ import org.springframework.stereotype.Component
  */
 @Component
 class StationDelayParser @Autowired constructor(
-    private val stationProvider: StationProvider,
     private val stationDelayConverter: StationDelayConverter,
     private val websiteSourceDownloader: WebsiteSourceDownloader,
     private val objectMapper: ObjectMapper
 ) {
 
-
     fun findDelays(stationName: String): StationDelay? {
-        val station = stationProvider.findStationByName(stationName)
+        val station = StationProvider.findStationByName(stationName)
 
         return findDelays(station)
     }

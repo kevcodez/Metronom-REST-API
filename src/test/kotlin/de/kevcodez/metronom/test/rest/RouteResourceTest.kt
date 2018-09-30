@@ -1,25 +1,14 @@
 package de.kevcodez.metronom.test.rest
 
 import de.kevcodez.metronom.model.route.Route
-import de.kevcodez.metronom.provider.RouteProvider
-import de.kevcodez.metronom.provider.StationProvider
 import de.kevcodez.metronom.rest.RouteResource
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class RouteResourceTest {
 
-    private val stationProvider = StationProvider()
-    private val routeProvider: RouteProvider = RouteProvider(stationProvider)
-    private val routeResource: RouteResource = RouteResource(routeProvider)
-
-    @BeforeEach
-    fun setup() {
-        stationProvider.constructStations()
-        routeProvider.constructRoutes()
-    }
+    private val routeResource: RouteResource = RouteResource()
 
     @Test
     fun shouldFindAllRoutes() {

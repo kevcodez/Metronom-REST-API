@@ -1,25 +1,18 @@
 package de.kevcodez.metronom.provider
 
 import de.kevcodez.metronom.model.route.Route
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import java.util.*
-import javax.annotation.PostConstruct
 
 /**
  * The route provider provides all routes statically.
  *
  * @author Kevin Grüneberg
  */
-@Component
-class RouteProvider @Autowired constructor(
-    private val stationProvider: StationProvider
-) {
+object RouteProvider {
 
     private val routes = ArrayList<Route>()
 
-    @PostConstruct
-    fun constructRoutes() {
+    init {
         addRouteElbeTakt()
         addRouteNordseeTakt()
         addRouteWeserTakt()
@@ -149,7 +142,7 @@ class RouteProvider @Autowired constructor(
 
     private fun addStations(stops: Array<String>, route: Route) {
         Arrays.stream(stops)
-            .map { stationProvider.findStationByName(it) }
+            .map { StationProvider.findStationByName(it) }
             .forEach { route.addStation(it) }
     }
 

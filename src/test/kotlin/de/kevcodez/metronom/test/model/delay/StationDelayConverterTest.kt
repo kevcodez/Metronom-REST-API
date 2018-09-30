@@ -7,20 +7,11 @@ import de.kevcodez.metronom.provider.StationProvider
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.notNullValue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.IOException
 
 class StationDelayConverterTest {
 
-    private val stationProvider = StationProvider()
-
-    private val stationDelayConverter = StationDelayConverter(stationProvider)
-
-    @BeforeEach
-    fun init() {
-        stationProvider.constructStations()
-    }
+    private val stationDelayConverter = StationDelayConverter()
 
     @Test
     fun shouldConvertJsonDepartures() {
@@ -28,7 +19,7 @@ class StationDelayConverterTest {
             "{'name':'Cuxhaven','stand':'22:44','abfahrt':[{'zeit':'23:15','zug':'81942','ziel':'Hamburg','prognose':'p\u00fcnktlich','prognosemin':'0'},{'zeit':'00:15','zug':'81944','ziel':'Rotenburg','prognose':'p\u00fcnktlich','prognosemin':'5'}]}"
                 .replace("'".toRegex(), "\"")
 
-        val station = stationProvider.findStationByName("Cuxhaven")
+        val station = StationProvider.findStationByName("Cuxhaven")
         val stationDelay = stationDelayConverter.convert(station!!, objectMapper.readTree(json))
 
         assertThat<StationDelay>(stationDelay, `is`(notNullValue()))
@@ -48,13 +39,12 @@ class StationDelayConverterTest {
     }
 
     @Test
-    @Throws(IOException::class)
     fun shouldParseTrack() {
         val json =
             "{'name':'Cuxhaven','stand':'22:10','abfahrt':[{'zeit':'22:33','zug':'82835','ziel':'Hamburg','prognose':'p\u00fcnktlich, heute Gleis 8','prognosemin':'0','gleiswechsel':'8B'}]}"
                 .replace("'".toRegex(), "\"")
 
-        val station = stationProvider.findStationByName("Cuxhaven")
+        val station = StationProvider.findStationByName("Cuxhaven")
         val stationDelay = stationDelayConverter.convert(station!!, objectMapper.readTree(json))
 
         assertThat<StationDelay>(stationDelay, `is`(notNullValue()))

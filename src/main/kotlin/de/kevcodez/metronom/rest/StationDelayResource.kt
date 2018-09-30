@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(value = ["stationDelay"], produces = ["application/json"])
 class StationDelayResource @Autowired constructor(
-    private val stationDelayParser: StationDelayParser,
-    private val stationProvider: StationProvider
+    private val stationDelayParser: StationDelayParser
 ) {
 
     /**
@@ -41,7 +40,7 @@ class StationDelayResource @Autowired constructor(
      */
     @GetMapping("code/{code}")
     fun findStationDelayByCode(@PathVariable("code") code: String): StationDelay? {
-        val station = stationProvider.findStationByCode(code)
+        val station = StationProvider.findStationByCode(code)
         return findStationDelayByName(station.name)
     }
 }
