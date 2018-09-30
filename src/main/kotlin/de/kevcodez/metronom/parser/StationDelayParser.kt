@@ -6,7 +6,6 @@ import de.kevcodez.metronom.model.delay.StationDelay
 import de.kevcodez.metronom.model.station.Station
 import de.kevcodez.metronom.provider.StationProvider
 import de.kevcodez.metronom.utility.WebsiteSourceDownloader
-import de.kevcodez.metronom.utility.WebsiteSourceDownloader.Companion.getCookiesFromUrl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -43,7 +42,7 @@ class StationDelayParser @Autowired constructor(
 
         val uri = buildStationDelayUri(station)
         // Get cookies from any URL to avoid access denied exception
-        val cookies = getCookiesFromUrl("https://www.der-metronom.de/ueber-metronom/wer-wir-sind")
+        val cookies = websiteSourceDownloader.getCookiesFromUrl("https://www.der-metronom.de/ueber-metronom/wer-wir-sind")
         val result = websiteSourceDownloader.getSource(uri, cookies)
 
         val jsonNode = objectMapper.readTree(result)

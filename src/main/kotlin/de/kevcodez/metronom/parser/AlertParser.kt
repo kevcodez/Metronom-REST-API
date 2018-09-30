@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import de.kevcodez.metronom.converter.AlertConverter
 import de.kevcodez.metronom.model.alert.Alert
 import de.kevcodez.metronom.utility.WebsiteSourceDownloader
-import de.kevcodez.metronom.utility.WebsiteSourceDownloader.Companion.getCookiesFromUrl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
@@ -27,7 +26,7 @@ class AlertParser @Autowired constructor(
      * @return list of alerts
      */
     fun parseAlerts(): List<Alert> {
-        val cookies = getCookiesFromUrl("https://www.der-metronom.de/ueber-metronom/wer-wir-sind")
+        val cookies = websiteSourceDownloader.getCookiesFromUrl("https://www.der-metronom.de/ueber-metronom/wer-wir-sind")
         val pageSource = websiteSourceDownloader.getSource(METRONOM_ALERT_URL, cookies)
         return parseAlertsFromSource(pageSource)
     }
