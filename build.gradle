@@ -5,7 +5,7 @@ buildscript {
         junitVersion = "5.3.1"
         springfoxSwaggerVersion = "2.9.2"
         jacksonKotlinVersion = "2.9.7"
-        mockkVersion = "1.8.8"
+        mockkVersion = "1.8.9"
     }
     repositories {
         mavenCentral()
