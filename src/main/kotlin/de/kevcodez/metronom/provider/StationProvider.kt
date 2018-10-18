@@ -12,7 +12,7 @@ object StationProvider {
 
     private val stations = ArrayList<Station>()
 
-   init {
+    init {
         addStation("Hamburg", "AH", "Hamburg Hbf", "Hamburger Hauptbahnhof", "Hauptbahnhof Hamburg")
         addStation("Harburg", "AHAR", "Hamburg-Harburg", "Harburg", "Hamburg- Harburg", "Hamburg Harburg")
         addStation("Meckelfeld", "AMDH", "Meckelfeld HP")

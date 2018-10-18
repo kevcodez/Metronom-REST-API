@@ -40,7 +40,8 @@ class DeparturesWithAlertResource @Autowired constructor(
 
             alerts.remove(alert)
 
-            departuresWithAlert.addDeparture(departure, alert!!)
+            if (alert != null)
+                departuresWithAlert.addDeparture(departure, alert)
         }
 
         // Add remaining, unassigned alerts
