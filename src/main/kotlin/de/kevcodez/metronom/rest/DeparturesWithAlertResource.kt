@@ -5,6 +5,7 @@ import de.kevcodez.metronom.model.delay.Departure
 import de.kevcodez.metronom.model.delay.DeparturesWithAlert
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
@@ -22,14 +23,13 @@ class DeparturesWithAlertResource @Autowired constructor(
 ) {
 
     /**
-     * Finds all departures and their related alert for the given station. The unassigned, but probably relevant alerts
-     * will also be included in a separate segment.
+     * Finds all departures and their related alert for the given station.
      *
      * @param station station name
      * @return list of departures and their alert
      */
     @GetMapping("/station/{station}")
-    fun findByStation(station: String): DeparturesWithAlert? {
+    fun findByStation(@PathVariable station: String): DeparturesWithAlert? {
         val stationDelay = stationDelayResource.findStationDelayByName(station) ?: return null
 
         val alerts = alertResource.findRelevantAlertsForStation(station).toMutableList()
@@ -44,12 +44,7 @@ class DeparturesWithAlertResource @Autowired constructor(
                 departuresWithAlert.addDeparture(departure, alert)
         }
 
-        // Add remaining, unassigned alerts
         alerts.forEach { departuresWithAlert.addRemainingAlert(it) }
-
-        // Adds alerts that have no start/stop station to the list of unassigned alerts
-        val alertsWithoutStation = alertResource.findAlertsWithUnknownStation().filter { isMaxThreeHoursOld(it) }
-        alertsWithoutStation.forEach { departuresWithAlert.addRemainingAlert(it) }
 
         return departuresWithAlert
     }
