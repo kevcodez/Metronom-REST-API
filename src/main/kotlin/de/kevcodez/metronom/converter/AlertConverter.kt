@@ -24,7 +24,7 @@ class AlertConverter {
 
         val bhfVon = alert.get("bhfvon").textValue()
         val startStation =
-            StationProvider.findStationByName(bhfVon) ?: throw IllegalStateException("Unbekannte Station $bhfVon")
+            StationProvider.findStationByName(bhfVon) ?: throw IllegalStateException("Unbekannte Station $bhfVon\n$text")
 
         val bhfNach = alert.get("bhfnach").textValue()
         val stopStation =

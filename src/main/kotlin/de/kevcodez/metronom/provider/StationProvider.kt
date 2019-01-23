@@ -68,6 +68,23 @@ object StationProvider {
         addStation("Großburgwedel", "HGBW", "Grossburgwedel")
         addStation("Isernhagen", "HIHG")
         addStation("Langenhagen", "HLGM", "Langenhagen Mitte")
+        addStation("Braunschweig Hbf", "HBS")
+        addStation("Calberlah", "HCAL")
+        addStation("Dedenhausen", "HDEH")
+        addStation("Dollbergen", "HDOG")
+        addStation("Fallersleben", "HF")
+        addStation("Gifhorn", "HGI")
+        addStation("Hannover Hbf", "HH", "Hannover")
+        addStation("Hildesheim Hbf", "HHI", "Hildesheim")
+        addStation("Hoheneggelsen Hp", "HHEP", "Hoheneggelsen")
+        addStation("Immensen-Arpke", "HIMS")
+        addStation("Lehrte", "HLER")
+        addStation("Leiferde(b Gifhorn)", "HLFG", "Leiferde")
+        addStation("Lengede-Broistedt", "HBST")
+        addStation("Meinersen", "HMRS")
+        addStation("Weddel(Braunschw)", "HWED", "Weddel")
+        addStation("Wolfsburg Hbf", "HWOB", "Wolfsburg")
+        addStation("Woltwiesche", "HWWI")
     }
 
     fun findStationByName(name: String?): Station? {

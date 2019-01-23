@@ -75,17 +75,7 @@ class AlertResource @Autowired constructor(
     }
 
     private fun isAlertRelevantForStation(stations: List<Station>, alert: Alert): Boolean {
-        return stations.contains(alert.stationStart) && stations.contains(alert.stationEnd)
-    }
-
-    /**
-     * Finds the alerts where the system could not assign a start or stop station.
-     *
-     * @return list of alerts
-     */
-    @GetMapping("unassigned")
-    fun findAlertsWithUnknownStation(): List<Alert> {
-        return streamAlerts().toList()
+        return stations.contains(alert.stationStart) || stations.contains(alert.stationEnd)
     }
 
     private fun streamAlerts(): Stream<Alert> {

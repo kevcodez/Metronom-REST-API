@@ -18,6 +18,8 @@ object RouteProvider {
         addRouteWeserTakt()
         addRouteAllerTakt()
         addRouteLeinetalTakt()
+        addRouteEnnoHannover()
+        addRouteEnnoHildesheim()
     }
 
     fun getRoutes(): List<Route> {
@@ -134,6 +136,47 @@ object RouteProvider {
             "Northeim",
             "Nörten-Hardenberg",
             "Göttingen"
+        )
+
+        addStations(stations, route)
+        routes.add(route)
+    }
+
+    private fun addRouteEnnoHannover() {
+        val route = Route("enno Hannover")
+        route.addTrains("RE30")
+
+        val stations = arrayOf(
+            "Hannover Hbf",
+            "Lehrte",
+            "Immensen-Arpke",
+            "Dollbergen",
+            "Dedenhausen",
+            "Meinersen",
+            "Leiferde",
+            "Gifhorn",
+            "Calberlah",
+            "Fallersleben",
+            "Wolfsburg Hbf"
+        )
+
+        addStations(stations, route)
+        routes.add(route)
+    }
+
+    private fun addRouteEnnoHildesheim() {
+        val route = Route("enno Hildesheim")
+        route.addTrains("RE50")
+
+        val stations = arrayOf(
+            "Hildesheim Hbf",
+            "Hoheneggelsen",
+            "Woltwiesche",
+            "Lengede-Broistedt",
+            "Braunschweig Hbf",
+            "Weddel",
+            "Fallersleben",
+            "Wolfsburg Hbf"
         )
 
         addStations(stations, route)
